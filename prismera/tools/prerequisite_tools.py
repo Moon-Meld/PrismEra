@@ -1,83 +1,104 @@
-"""Prerequisite knowledge graph comparison tool for prism_facet."""
+"""Prerequisite knowledge graph comparison tool for prism_facet.
+
+Queries GraphStore for prerequisite course nodes and requirement edges,
+performing topological course alignment against student transcripts.
+"""
 
 from __future__ import annotations
 from typing import Dict, Any, List
 
+from prismera.db.graph_store import get_graph_store
 
-# Built-in Prerequisite Knowledge Graph Ontology
-PREREQUISITE_KG = {
-    "CS": {
-        "required_modules": [
-            {
-                "module": "离散数学与逻辑 (Discrete Mathematics)",
-                "aliases": ["离散数学", "discrete math", "discrete mathematics"],
-                "importance": "Mandatory"
-            },
-            {
-                "module": "数据结构与算法 (Data Structures & Algorithms)",
-                "aliases": ["数据结构", "算法", "data structures", "algorithms"],
-                "importance": "Mandatory"
-            },
-            {
-                "module": "计算机系统/体系结构 (Computer Systems / Architecture)",
-                "aliases": ["计算机组成原理", "操作系统", "computer architecture", "operating systems"],
-                "importance": "High"
-            },
-            {
-                "module": "高等微积分与线性代数 (Calculus & Linear Algebra)",
-                "aliases": ["微积分", "高等数学", "线性代数", "calculus", "linear algebra"],
-                "importance": "Mandatory"
-            },
-            {
-                "module": "概率论与数理统计 (Probability & Statistics)",
-                "aliases": ["概率论", "数理统计", "probability", "statistics"],
-                "importance": "High"
-            }
-        ]
-    },
-    "DS": {
-        "required_modules": [
-            {
-                "module": "高级程序设计 (Python / C++ Programming)",
-                "aliases": ["程序设计", "python", "c++", "object-oriented programming"],
-                "importance": "Mandatory"
-            },
-            {
-                "module": "多元微积分与线性代数 (Multivariable Calculus & Linear Algebra)",
-                "aliases": ["微积分", "高等数学", "线性代数", "calculus", "linear algebra"],
-                "importance": "Mandatory"
-            },
-            {
-                "module": "概率论与数理统计 (Probability & Statistics)",
-                "aliases": ["概率论", "数理统计", "probability", "statistics"],
-                "importance": "Mandatory"
-            },
-            {
-                "module": "数据结构与数据管理 (Data Structures & Databases)",
-                "aliases": ["数据结构", "数据库", "data structures", "sql", "database systems"],
-                "importance": "High"
-            }
-        ]
-    },
-    "BA": {
-        "required_modules": [
-            {
-                "module": "微积分与线性代数 (Calculus & Linear Algebra)",
-                "aliases": ["微积分", "高等数学", "线性代数", "calculus"],
-                "importance": "Mandatory"
-            },
-            {
-                "module": "商业统计或计量经济学 (Statistics / Econometrics)",
-                "aliases": ["统计学", "应用统计", "计量经济学", "econometrics", "business statistics"],
-                "importance": "Mandatory"
-            },
-            {
-                "module": "编程基础 (Python / R / SQL)",
-                "aliases": ["python", "r", "sql", "数据库", "编程"],
-                "importance": "High"
-            }
-        ]
-    }
+# Built-in fallback ontology in case GraphStore is uninitialized
+DEFAULT_PREREQUISITE_KG = {
+    "CS": [
+        {
+            "module": "离散数学与逻辑 (Discrete Mathematics)",
+            "aliases": ["离散数学", "discrete math", "discrete mathematics"],
+            "importance": "Mandatory"
+        },
+        {
+            "module": "数据结构与算法 (Data Structures & Algorithms)",
+            "aliases": ["数据结构", "算法", "data structures", "algorithms"],
+            "importance": "Mandatory"
+        },
+        {
+            "module": "计算机系统/体系结构 (Computer Systems / Architecture)",
+            "aliases": ["计算机组成原理", "操作系统", "computer architecture", "operating systems", "systems"],
+            "importance": "Mandatory"
+        },
+        {
+            "module": "高等微积分与线性代数 (Calculus & Linear Algebra)",
+            "aliases": ["微积分", "高等数学", "线性代数", "calculus", "linear algebra"],
+            "importance": "Mandatory"
+        },
+        {
+            "module": "概率论与数理统计 (Probability & Statistics)",
+            "aliases": ["概率论", "数理统计", "probability", "statistics"],
+            "importance": "High"
+        }
+    ],
+    "DS": [
+        {
+            "module": "高级程序设计 (Python / C++ Programming)",
+            "aliases": ["程序设计", "python", "c++", "object-oriented programming"],
+            "importance": "Mandatory"
+        },
+        {
+            "module": "多元微积分与线性代数 (Multivariable Calculus & Linear Algebra)",
+            "aliases": ["微积分", "高等数学", "线性代数", "calculus", "linear algebra"],
+            "importance": "Mandatory"
+        },
+        {
+            "module": "概率论与数理统计 (Probability & Statistics)",
+            "aliases": ["概率论", "数理统计", "probability", "statistics"],
+            "importance": "Mandatory"
+        },
+        {
+            "module": "数据结构与数据管理 (Data Structures & Databases)",
+            "aliases": ["数据结构", "数据库", "data structures", "sql", "database systems"],
+            "importance": "High"
+        }
+    ],
+    "BA": [
+        {
+            "module": "微积分与线性代数 (Calculus & Linear Algebra)",
+            "aliases": ["微积分", "高等数学", "线性代数", "calculus"],
+            "importance": "Mandatory"
+        },
+        {
+            "module": "商业统计或计量经济学 (Statistics / Econometrics)",
+            "aliases": ["统计学", "应用统计", "计量经济学", "econometrics", "business statistics"],
+            "importance": "Mandatory"
+        },
+        {
+            "module": "编程基础 (Python / R / SQL)",
+            "aliases": ["python", "r", "sql", "数据库", "编程"],
+            "importance": "High"
+        }
+    ],
+    "FIN": [
+        {
+            "module": "微观与宏观经济学基础 (Micro & Macroeconomics)",
+            "aliases": ["微观经济学", "宏观经济学", "经济学", "microeconomics", "macroeconomics"],
+            "importance": "Mandatory"
+        },
+        {
+            "module": "财务会计与公司金融 (Accounting & Finance)",
+            "aliases": ["会计学", "公司金融", "财务管理", "accounting", "finance"],
+            "importance": "Mandatory"
+        },
+        {
+            "module": "微积分与线性代数 (Calculus & Linear Algebra)",
+            "aliases": ["微积分", "高等数学", "线性代数", "calculus"],
+            "importance": "Mandatory"
+        },
+        {
+            "module": "计量经济学与统计 (Econometrics & Statistics)",
+            "aliases": ["商业统计", "计量经济学", "统计学", "econometrics"],
+            "importance": "Mandatory"
+        }
+    ]
 }
 
 
@@ -88,21 +109,33 @@ def check_prerequisite_graph(
     """Check completed courses against the target program's prerequisite subgraph.
 
     Args:
-        target_major: Target field abbreviation, e.g. 'CS', 'DS', 'BA'.
+        target_major: Target field abbreviation, e.g. 'CS', 'DS', 'BA', 'FIN'.
         completed_courses: List of courses completed or in progress.
 
     Returns:
         Structured prerequisite alignment table and remediation recommendations.
     """
     key = target_major.upper()
-    if key not in PREREQUISITE_KG:
-        key = "CS"  # default fallback
 
-    requirements = PREREQUISITE_KG[key]["required_modules"]
+    # Attempt to load from GraphStore
+    gs = get_graph_store()
+    graph_prereqs = gs.get_prerequisites_for_major(key)
+
+    requirements = []
+    if graph_prereqs:
+        for p in graph_prereqs:
+            importance = "Mandatory" if p.get("level") == "mandatory" else "High"
+            requirements.append({
+                "module": f"{p['name_cn']} ({p['name_en']})",
+                "aliases": p.get("aliases", []),
+                "importance": importance
+            })
+    else:
+        req_key = key if key in DEFAULT_PREREQUISITE_KG else "CS"
+        requirements = DEFAULT_PREREQUISITE_KG[req_key]
+
     alignment_table: List[Dict[str, str]] = []
     has_missing = False
-
-    normalized_completed = [c.lower() for c in completed_courses]
 
     for req in requirements:
         mod_name = req["module"]

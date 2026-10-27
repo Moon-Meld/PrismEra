@@ -6,6 +6,7 @@ from prismera.prompts.facet import FACET_SYSTEM_PROMPT
 from prismera.prompts.locus import LOCUS_SYSTEM_PROMPT
 from prismera.prompts.disperser import DISPERSER_SYSTEM_PROMPT
 from prismera.prompts.resonator import RESONATOR_SYSTEM_PROMPT
+from prismera.prompts.echo import ECHO_SYSTEM_PROMPT
 
 __all__ = [
     "BRAND_VOICE_GUIDELINES",
@@ -15,4 +16,5 @@ __all__ = [
     "LOCUS_SYSTEM_PROMPT",
     "DISPERSER_SYSTEM_PROMPT",
     "RESONATOR_SYSTEM_PROMPT",
+    "ECHO_SYSTEM_PROMPT",
 ]

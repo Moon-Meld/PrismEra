@@ -1,0 +1,2095 @@
+"""Script to build and validate prismera/data/seed_graph_data.json."""
+
+from __future__ import annotations
+import json
+import os
+from pathlib import Path
+
+SEED_DATA_PATH = Path(__file__).resolve().parent.parent / "prismera" / "data" / "seed_graph_data.json"
+
+universities = [
+    {
+        "id": "cmu",
+        "name_cn": "卡耐基梅隆大学",
+        "name_en": "Carnegie Mellon University",
+        "region": "US",
+        "qs_ranking": 52,
+        "location": "Pittsburgh, PA, USA"
+    },
+    {
+        "id": "uiuc",
+        "name_cn": "伊利诺伊大学香槟分校",
+        "name_en": "University of Illinois Urbana-Champaign",
+        "region": "US",
+        "qs_ranking": 69,
+        "location": "Urbana-Champaign, IL, USA"
+    },
+    {
+        "id": "usc",
+        "name_cn": "南加州大学",
+        "name_en": "University of Southern California",
+        "region": "US",
+        "qs_ranking": 125,
+        "location": "Los Angeles, CA, USA"
+    },
+    {
+        "id": "columbia",
+        "name_cn": "哥伦比亚大学",
+        "name_en": "Columbia University",
+        "region": "US",
+        "qs_ranking": 34,
+        "location": "New York, NY, USA"
+    },
+    {
+        "id": "nyu",
+        "name_cn": "纽约大学",
+        "name_en": "New York University",
+        "region": "US",
+        "qs_ranking": 43,
+        "location": "New York, NY, USA"
+    },
+    {
+        "id": "ic",
+        "name_cn": "帝国理工学院",
+        "name_en": "Imperial College London",
+        "region": "UK",
+        "qs_ranking": 2,
+        "location": "London, UK"
+    },
+    {
+        "id": "ucl",
+        "name_cn": "伦敦大学学院",
+        "name_en": "University College London",
+        "region": "UK",
+        "qs_ranking": 9,
+        "location": "London, UK"
+    },
+    {
+        "id": "edinburgh",
+        "name_cn": "爱丁堡大学",
+        "name_en": "University of Edinburgh",
+        "region": "UK",
+        "qs_ranking": 27,
+        "location": "Edinburgh, UK"
+    },
+    {
+        "id": "oxford",
+        "name_cn": "牛津大学",
+        "name_en": "University of Oxford",
+        "region": "UK",
+        "qs_ranking": 3,
+        "location": "Oxford, UK"
+    },
+    {
+        "id": "lse",
+        "name_cn": "伦敦政治经济学院",
+        "name_en": "London School of Economics and Political Science",
+        "region": "UK",
+        "qs_ranking": 50,
+        "location": "London, UK"
+    },
+    {
+        "id": "nus",
+        "name_cn": "新加坡国立大学",
+        "name_en": "National University of Singapore",
+        "region": "SG",
+        "qs_ranking": 8,
+        "location": "Singapore"
+    },
+    {
+        "id": "ntu",
+        "name_cn": "南洋理工大学",
+        "name_en": "Nanyang Technological University",
+        "region": "SG",
+        "qs_ranking": 15,
+        "location": "Singapore"
+    },
+    {
+        "id": "hku",
+        "name_cn": "香港大学",
+        "name_en": "The University of Hong Kong",
+        "region": "HK",
+        "qs_ranking": 17,
+        "location": "Hong Kong SAR"
+    },
+    {
+        "id": "cuhk",
+        "name_cn": "香港中文大学",
+        "name_en": "The Chinese University of Hong Kong",
+        "region": "HK",
+        "qs_ranking": 36,
+        "location": "Hong Kong SAR"
+    },
+    {
+        "id": "hkust",
+        "name_cn": "香港科技大学",
+        "name_en": "The Hong Kong University of Science and Technology",
+        "region": "HK",
+        "qs_ranking": 47,
+        "location": "Hong Kong SAR"
+    }
+]
+
+chinese_uni_tiers = [
+    {
+        "id": "985",
+        "name": "985工程重点高校 (含C9)",
+        "rank_range": "软科 1-40"
+    },
+    {
+        "id": "211",
+        "name": "211工程重点高校 (纯211)",
+        "rank_range": "软科 41-115"
+    },
+    {
+        "id": "双非一本",
+        "name": "双非一本及省属高水平高校",
+        "rank_range": "软科 116-250"
+    },
+    {
+        "id": "海本",
+        "name": "海外知名高校本科学位",
+        "rank_range": "QS Top 100 / 海外优质本科"
+    }
+]
+
+courses = [
+    {
+        "id": "course_discrete_math",
+        "name_cn": "离散数学与逻辑",
+        "name_en": "Discrete Mathematics & Logic",
+        "aliases": ["离散数学", "离散数学与逻辑", "discrete math", "discrete mathematics"],
+        "category": "Math"
+    },
+    {
+        "id": "course_dsa",
+        "name_cn": "数据结构与算法",
+        "name_en": "Data Structures & Algorithms",
+        "aliases": ["数据结构", "算法", "数据结构与算法", "data structures", "algorithms"],
+        "category": "CS_Core"
+    },
+    {
+        "id": "course_systems_arch",
+        "name_cn": "计算机系统与体系结构",
+        "name_en": "Computer Systems & Architecture",
+        "aliases": ["计算机组成原理", "操作系统", "计算机系统", "computer architecture", "operating systems", "systems"],
+        "category": "Systems"
+    },
+    {
+        "id": "course_calculus_linalg",
+        "name_cn": "高等微积分与线性代数",
+        "name_en": "Calculus & Linear Algebra",
+        "aliases": ["微积分", "高等数学", "线性代数", "高数", "calculus", "linear algebra"],
+        "category": "Math"
+    },
+    {
+        "id": "course_prob_stats",
+        "name_cn": "概率论与数理统计",
+        "name_en": "Probability & Mathematical Statistics",
+        "aliases": ["概率论", "数理统计", "概率论与数理统计", "probability", "statistics"],
+        "category": "Math"
+    },
+    {
+        "id": "course_programming_advanced",
+        "name_cn": "高级程序设计 (Python / C++ / Java)",
+        "name_en": "Advanced Programming (Python / C++ / Java)",
+        "aliases": ["高级程序设计", "程序设计", "面向对象程序设计", "python", "c++", "java", "object-oriented programming"],
+        "category": "CS_Core"
+    },
+    {
+        "id": "course_databases",
+        "name_cn": "数据库系统与数据管理",
+        "name_en": "Database Systems & Data Management",
+        "aliases": ["数据库", "数据库原理", "sql", "database systems", "data management"],
+        "category": "CS_Core"
+    },
+    {
+        "id": "course_econometrics",
+        "name_cn": "商业统计或计量经济学",
+        "name_en": "Business Statistics & Econometrics",
+        "aliases": ["商业统计", "计量经济学", "统计学", "应用统计", "econometrics", "business statistics"],
+        "category": "Business_Finance"
+    },
+    {
+        "id": "course_micro_macro_econ",
+        "name_cn": "微观与宏观经济学基础",
+        "name_en": "Microeconomics & Macroeconomics",
+        "aliases": ["微观经济学", "宏观经济学", "经济学原理", "microeconomics", "macroeconomics"],
+        "category": "Business_Finance"
+    },
+    {
+        "id": "course_financial_accounting",
+        "name_cn": "财务会计与公司金融",
+        "name_en": "Financial Accounting & Corporate Finance",
+        "aliases": ["会计学", "公司金融", "财务管理", "financial accounting", "corporate finance"],
+        "category": "Business_Finance"
+    }
+]
+
+professors = [
+    {
+        "id": "indranil_gupta",
+        "name": "Indranil Gupta",
+        "institution": "UIUC (Department of Computer Science)",
+        "lab": "Distributed Protocols Research Group (DPRG)",
+        "research_areas": ["Distributed Systems", "Cloud Computing", "Peer-to-Peer Networks", "Fault Tolerance"],
+        "openings": {
+            "phd_fall_2027": "Open (2 funded positions available for candidates with strong distributed systems or cloud telemetry background)",
+            "ra_positions": "Open for enrolled graduate students",
+            "funding_status": "Fully funded via NSF Large-Scale Cloud Grant and industrial sponsorship",
+            "lab_page": "https://dprg.cs.uiuc.edu"
+        },
+        "recent_papers": [
+            {
+                "title": "Adaptive Gossip Consensus in Latency-Asymmetric Edge Meshes",
+                "year": 2025,
+                "venue": "USENIX OSDI 2025",
+                "abstract": "We explore gossip-based peer membership in non-uniform WAN edge networks. When packet loss exceeds 12%, traditional failure detectors induce cascading heartbeat storms.",
+                "methodology": "Constructed an event-driven C++ simulation harness coupled with an eBPF kernel network throttle to evaluate convergence delay under Byzantine drops.",
+                "future_work_bottleneck": "Scalable membership convergence under highly partitioned topologies and ultra-sparse heartbeat feedback remains an open scalability barrier."
+            },
+            {
+                "title": "Hierarchical Straggler Mitigation in Heterogeneous ML Accelerators",
+                "year": 2024,
+                "venue": "IEEE S&P / Distributed Systems",
+                "abstract": "Investigated GPU tensor streaming bottlenecks across mixed PCIe and NVLink topologies during distributed mixture-of-experts (MoE) training.",
+                "methodology": "Profiling PyTorch distributed collectives with custom CUDA telemetry hooks.",
+                "future_work_bottleneck": "Dynamic gradient chunking under bursty network contention."
+            }
+        ]
+    },
+    {
+        "id": "david_garlan",
+        "name": "David Garlan",
+        "institution": "Carnegie Mellon University (Software and Societal Systems)",
+        "lab": "ABLE Research Group (Self-Adaptive Software Systems)",
+        "research_areas": ["Software Architecture", "Self-Adaptive Systems", "Formal Verification", "Robotics Architecture"],
+        "openings": {
+            "phd_fall_2027": "Open (1 funded PhD student in Autonomous Systems Verification)",
+            "ra_positions": "Limited Master's research assistantships",
+            "funding_status": "Active DARPA and NSF awards",
+            "lab_page": "https://able.cs.cmu.edu"
+        },
+        "recent_papers": [
+            {
+                "title": "Formal Architecture Models for Uncertainty-Aware Autonomous Systems",
+                "year": 2025,
+                "venue": "ACM Transactions on Software Engineering and Methodology (TOSEM)",
+                "abstract": "Self-adaptive software architectures must reason over stochastic sensor noise and adversarial drift without re-verifying full state spaces at runtime.",
+                "methodology": "Combined probabilistic model checking (PRISM) with reactive architectural feedback loops.",
+                "future_work_bottleneck": "Reducing runtime verification latency down to millisecond thresholds for safety-critical edge robotics."
+            }
+        ]
+    },
+    {
+        "id": "william_knottenbelt",
+        "name": "William Knottenbelt",
+        "institution": "Imperial College London (Department of Computing)",
+        "lab": "Centre for Cryptocurrency Research and Engineering (CCRE)",
+        "research_areas": ["Distributed Ledgers", "Performance Modelling", "Queueing Theory", "Consensus Algorithms"],
+        "openings": {
+            "phd_fall_2027": "Open (1 PhD position on High-Throughput Layer-2 Verification)",
+            "ra_positions": "Available for MSc Computing individual projects",
+            "funding_status": "EPSRC & UKRI Industrial Strategy Grant",
+            "lab_page": "https://www.imperial.ac.uk/cryptocurrency"
+        },
+        "recent_papers": [
+            {
+                "title": "Stochastic State Channel Latency Bounds under Non-Stationary Transaction Arrival",
+                "year": 2024,
+                "venue": "IEEE Transactions on Dependable and Secure Computing",
+                "abstract": "Analyzed dispute settlement wait times on optimistic rollup state channels subject to correlated Poisson transaction bursts.",
+                "methodology": "Derived closed-form queuing bounds backed by empirical validation on Ethereum testnet mempools.",
+                "future_work_bottleneck": "Zero-knowledge fraud proof generation overhead under peak network congestion."
+            }
+        ]
+    },
+    {
+        "id": "stefanos_zafeiriou",
+        "name": "Stefanos Zafeiriou",
+        "institution": "Imperial College London (Department of Computing)",
+        "lab": "Intelligent Behaviour Understanding Group (iBUG)",
+        "research_areas": ["Computer Vision", "Statistical Pattern Recognition", "3D Reconstruction", "Generative Models"],
+        "openings": {
+            "phd_fall_2027": "Open (2 positions in 3D Generative Diffusion Models)",
+            "ra_positions": "Available for Imperial Master's Thesis researchers",
+            "funding_status": "European Research Council (ERC) Consolidator Grant",
+            "lab_page": "https://ibug.doc.ic.ac.uk"
+        },
+        "recent_papers": [
+            {
+                "title": "High-Fidelity Neural 3D Gaussian Avatars from Monocular Video Streams",
+                "year": 2025,
+                "venue": "IEEE TPAMI 2025",
+                "abstract": "Proposed continuous topological deformation fields for real-time 3D human head synthesis from wild phone captures.",
+                "methodology": "Coupled dense optical flow priors with anisotropic 3D Gaussian splatting.",
+                "future_work_bottleneck": "Artifact-free temporal consistency under extreme non-rigid facial expression shifts."
+            }
+        ]
+    },
+    {
+        "id": "ooi_beng_chin",
+        "name": "Ooi Beng Chin",
+        "institution": "National University of Singapore (School of Computing)",
+        "lab": "Database System Research Group",
+        "research_areas": ["Distributed Databases", "Healthcare Analytics", "Federated Learning", "Cloud Storage"],
+        "openings": {
+            "phd_fall_2027": "Open (2 funded positions in Trustworthy Distributed AI & Data Systems)",
+            "ra_positions": "Active openings for MComp students",
+            "funding_status": "Singapore NRF Investigator Award and Ministry of Education Tier 2",
+            "lab_page": "https://www.comp.nus.edu.sg/~ooibc"
+        },
+        "recent_papers": [
+            {
+                "title": "Verifiable Multi-Party Privacy Queries on Heterogeneous Federated Data Lakes",
+                "year": 2024,
+                "venue": "ACM SIGMOD 2024",
+                "abstract": "Formulated a secure hardware enclave protocol allowing multi-institutional SQL joins without revealing record-level attributes.",
+                "methodology": "Engineered confidential computing primitives atop Intel SGX and AMD SEV-SNP.",
+                "future_work_bottleneck": "Mitigating memory page paging side-channel leakage during massive terabyte-scale analytical joins."
+            }
+        ]
+    },
+    {
+        "id": "reynold_cheng",
+        "name": "Reynold Cheng",
+        "institution": "The University of Hong Kong (Department of Computer Science)",
+        "lab": "Data Science and Social Computing Laboratory",
+        "research_areas": ["Graph Databases", "Spatial Data Mining", "Uncertain Data Management", "AI for Social Good"],
+        "openings": {
+            "phd_fall_2027": "Open (1-2 HKPFS funded PhD positions)",
+            "ra_positions": "Open for MSc CS graduates",
+            "funding_status": "HK RGC Theme-based Research Scheme and CRF Grants",
+            "lab_page": "https://i.cs.hku.hk/~ckcheng"
+        },
+        "recent_papers": [
+            {
+                "title": "Scalable Subgraph Matching over Temporal Knowledge Graphs with Delay Guarantees",
+                "year": 2025,
+                "venue": "IEEE ICDE 2025",
+                "abstract": "Developed an index-pruned dynamic graph exploration scheme for streaming fraud subgraph detection.",
+                "methodology": "Time-decayed inverted adjacency indexing with vectorized SIMD filtering.",
+                "future_work_bottleneck": "Handling out-of-order temporal edge insertions in highly asynchronous graph ingestion streams."
+            }
+        ]
+    },
+    {
+        "id": "jason_nieh",
+        "name": "Jason Nieh",
+        "institution": "Columbia University (Department of Computer Science)",
+        "lab": "Operating Systems and Virtualization Lab",
+        "research_areas": ["Operating Systems", "Virtualization", "Mobile Computing", "Systems Security"],
+        "openings": {
+            "phd_fall_2027": "Open (1 PhD researcher in Confidential ARM Hypervisors)",
+            "ra_positions": "Open for MS CS candidates with kernel hacking background",
+            "funding_status": "NSF SaTC Grant and Arm Research Collaborative Support",
+            "lab_page": "https://www.cs.columbia.edu/~nieh"
+        },
+        "recent_papers": [
+            {
+                "title": "Formally Verified Nested Virtualization for Arm Confidential Compute Architecture",
+                "year": 2024,
+                "venue": "USENIX OSDI / ATC 2024",
+                "abstract": "Constructed machine-checkable Coq proofs verifying memory confidentiality invariants across multi-tier hypervisor hierarchies.",
+                "methodology": "Formal interactive theorem proving coupled with live KVM hypervisor integration.",
+                "future_work_bottleneck": "Automating proof maintenance when upstream Linux kernel stage-2 page table management changes."
+            }
+        ]
+    },
+    {
+        "id": "marta_kwiatkowska",
+        "name": "Marta Kwiatkowska",
+        "institution": "University of Oxford (Department of Computer Science)",
+        "lab": "Automated Verification and AI Safety Group",
+        "research_areas": ["Probabilistic Model Checking", "Trustworthy AI", "Autonomous Vehicles Safety", "Formal Methods"],
+        "openings": {
+            "phd_fall_2027": "Open (2 funded DPhil positions in Neurosymbolic Robustness)",
+            "ra_positions": "Open for Oxford MSc ACS thesis scholars",
+            "funding_status": "UKRI Turing AI World-Leading Researcher Fellowship",
+            "lab_page": "https://www.cs.ox.ac.uk/marta.kwiatkowska"
+        },
+        "recent_papers": [
+            {
+                "title": "Exact Verification of Deep Neural Network Lipschitz Bounds via Branch-and-Prune Interval Arithmetic",
+                "year": 2024,
+                "venue": "Computer Aided Verification (CAV 2024)",
+                "abstract": "Derived exact non-convex perturbation robustness bounds for vision-based transformer controllers in safety-critical robotics.",
+                "methodology": "Formulated mixed-integer linear programming formulations accelerated with GPU interval propagation.",
+                "future_work_bottleneck": "Scaling formal robustness guarantees beyond 100-million parameter vision transformers."
+            }
+        ]
+    }
+]
+
+programs = [
+    {
+        "id": "cmu_msit_se",
+        "university_id": "cmu",
+        "name_cn": "卡耐基梅隆大学 - 软件工程硕士 (MSIT-SE)",
+        "name_en": "Carnegie Mellon University - MS in Information Technology - Software Engineering",
+        "region": "US",
+        "major_category": "CS",
+        "duration": "1.5 年",
+        "tuition_usd": 54000,
+        "stem": True,
+        "gpa_min_4_0": 3.6,
+        "gpa_min_100": 88.0,
+        "min_undergrad_tier": ["985", "211", "海本"],
+        "min_ielts": {"total": 7.5, "subscore": 7.0, "speaking": 7.0},
+        "min_toefl": {"total": 102, "subscore": 25},
+        "gre_required": False,
+        "deadline": "2027-01-15 (Final Round)",
+        "tier_bracket": "Reach",
+        "mission_ethos": "Bridging rigorous systems software architecture with agile enterprise delivery; emphasizes scalable distributed engineering, testing pipelines, and real-client capstone execution.",
+        "distinctive_courses": [
+            {"code": "17-651", "title": "Models of Software Systems", "focus": "Formal specification, invariants, and structural abstraction"},
+            {"code": "17-652", "title": "Methods: Deciding What to Design", "focus": "Requirements engineering and architectural tradeoff analysis"},
+            {"code": "17-653", "title": "Managing Software Development", "focus": "Agile team dynamics, CI/CD observability, defect velocity"}
+        ],
+        "capstone_nature": "Year-long industry-sponsored Practicum under dedicated executive mentorship.",
+        "faculty_leads": ["Prof. David Garlan", "Prof. Mary Shaw"],
+        "nuance": "极其看重系统级编程经历与高信噪比开源代码，偏好有一年左右高含金量工程实习的学生。"
+    },
+    {
+        "id": "uiuc_mcs",
+        "university_id": "uiuc",
+        "name_cn": "伊利诺伊大学香槟分校 - 计算机科学硕士 (MCS)",
+        "name_en": "UIUC - Master of Computer Science",
+        "region": "US",
+        "major_category": "CS",
+        "duration": "1.5 年",
+        "tuition_usd": 42000,
+        "stem": True,
+        "gpa_min_4_0": 3.4,
+        "gpa_min_100": 85.0,
+        "min_undergrad_tier": ["985", "211", "双非一本", "海本"],
+        "min_ielts": {"total": 7.0, "subscore": 6.5, "speaking": 6.5},
+        "min_toefl": {"total": 100, "subscore": 24},
+        "gre_required": False,
+        "deadline": "2027-01-30",
+        "tier_bracket": "Match",
+        "mission_ethos": "Theoretical rigor coupled with high-throughput cloud infrastructure and algorithmic problem solving; ideal for students targeting tier-1 software research or deep engineering.",
+        "distinctive_courses": [
+            {"code": "CS 425", "title": "Distributed Systems", "focus": "Consensus protocols, Raft/Paxos, fault-tolerant replication"},
+            {"code": "CS 440", "title": "Artificial Intelligence", "focus": "Probabilistic graphical models and heuristic search"},
+            {"code": "CS 525", "title": "Advanced Distributed Systems", "focus": "P2P overlays, geo-distributed transactions, zero-trust topologies"}
+        ],
+        "capstone_nature": "Advanced coursework-driven with options for high-performance computing practicum.",
+        "faculty_leads": ["Prof. Indranil Gupta", "Prof. Klara Nahrstedt"],
+        "nuance": "对双非顶尖学霸友好（GPA>=88），核心看算法与硬核专业课均分，就业导向明显。"
+    },
+    {
+        "id": "usc_cs37",
+        "university_id": "usc",
+        "name_cn": "南加州大学 - 计算机科学（计算机科学家培养计划 37学分）",
+        "name_en": "USC - MS in Computer Science (Scientists and Engineers - 37 Units)",
+        "region": "US",
+        "major_category": "CS",
+        "duration": "2 年",
+        "tuition_usd": 58000,
+        "stem": True,
+        "gpa_min_4_0": 3.2,
+        "gpa_min_100": 80.0,
+        "min_undergrad_tier": ["985", "211", "双非一本", "海本"],
+        "min_ielts": {"total": 6.5, "subscore": 6.0, "speaking": 6.0},
+        "min_toefl": {"total": 90, "subscore": 20},
+        "gre_required": False,
+        "deadline": "2027-02-15",
+        "tier_bracket": "Safety",
+        "mission_ethos": "Comprehensive computer science immersion tailored for non-CS engineering graduates with strong computational aptitudes.",
+        "distinctive_courses": [
+            {"code": "CSCI 455", "title": "Introduction to Programming Systems Design", "focus": "C++/Java object systems, dynamic memory management"},
+            {"code": "CSCI 570", "title": "Analysis of Algorithms", "focus": "Divide-and-conquer, graph flows, dynamic programming proofs"}
+        ],
+        "capstone_nature": "Collaborative software engineering project portfolio review.",
+        "faculty_leads": ["Prof. Ramesh Govindan"],
+        "nuance": "跨专业/转码第一神项目，招生规模大，标化控（GPA和语言过线即大概率录取），容错率高。"
+    },
+    {
+        "id": "columbia_ms_cs",
+        "university_id": "columbia",
+        "name_cn": "哥伦比亚大学 - 计算机科学理学硕士",
+        "name_en": "Columbia University - MS in Computer Science",
+        "region": "US",
+        "major_category": "CS",
+        "duration": "1.5 年",
+        "tuition_usd": 62000,
+        "stem": True,
+        "gpa_min_4_0": 3.5,
+        "gpa_min_100": 87.0,
+        "min_undergrad_tier": ["985", "211", "海本"],
+        "min_ielts": {"total": 7.0, "subscore": 6.5, "speaking": 6.5},
+        "min_toefl": {"total": 101, "subscore": 24},
+        "gre_required": False,
+        "deadline": "2027-01-15",
+        "tier_bracket": "Reach",
+        "mission_ethos": "Blending Ivy League prestige with Wall Street and Silicon Alley tech ecosystems; offers specialized tracks in Machine Learning, Systems, and Network Security.",
+        "distinctive_courses": [
+            {"code": "COMS 4118", "title": "Operating Systems I", "focus": "Kernel modification, concurrency synchronization, ARM virtualization"},
+            {"code": "COMS 4771", "title": "Machine Learning", "focus": "Statistical learning theory, kernel ridge regression, neural embeddings"}
+        ],
+        "capstone_nature": "Graduate thesis or advanced master's project with affiliated systems labs.",
+        "faculty_leads": ["Prof. Jason Nieh", "Prof. Salvatore Stolfo"],
+        "nuance": "偏好高标化背景（托福105+/GRE325+加分明显）及知名科技大厂工程经历，对985/海本认可度极高。"
+    },
+    {
+        "id": "nyu_ms_ds",
+        "university_id": "nyu",
+        "name_cn": "纽约大学 - 数据科学理学硕士",
+        "name_en": "New York University - MS in Data Science (CDS)",
+        "region": "US",
+        "major_category": "DS",
+        "duration": "2 年",
+        "tuition_usd": 59000,
+        "stem": True,
+        "gpa_min_4_0": 3.5,
+        "gpa_min_100": 86.0,
+        "min_undergrad_tier": ["985", "211", "双非一本", "海本"],
+        "min_ielts": {"total": 7.0, "subscore": 6.5, "speaking": 6.5},
+        "min_toefl": {"total": 100, "subscore": 23},
+        "gre_required": False,
+        "deadline": "2027-01-22",
+        "tier_bracket": "Reach",
+        "mission_ethos": "Pioneered by Yann LeCun's Center for Data Science; focuses on rigorous statistical foundation and cutting-edge deep learning representations.",
+        "distinctive_courses": [
+            {"code": "DS-GA 1001", "title": "Introduction to Data Science", "focus": "Exploratory statistics, causality, reproducible data pipelines"},
+            {"code": "DS-GA 1008", "title": "Deep Learning", "focus": "Attention mechanisms, diffusion generative models, self-supervised representation"}
+        ],
+        "capstone_nature": "Year-long corporate data science capstone with premier NYC financial and technology partners.",
+        "faculty_leads": ["Prof. Yann LeCun", "Prof. Julia Kempe"],
+        "nuance": "极其看重数学先修课成绩（多元微积分、线代、高阶概率论建议90+），文书中对因果推断与机器学习理论有深度思考者优先。"
+    },
+    {
+        "id": "ic_computing_msc",
+        "university_id": "ic",
+        "name_cn": "帝国理工学院 - 计算机理学硕士 (计算科学与工程方向)",
+        "name_en": "Imperial College London - MSc Computing Science (Specialist)",
+        "region": "UK",
+        "major_category": "CS",
+        "duration": "1 年",
+        "tuition_gbp": 39400,
+        "stem": False,
+        "gpa_min_4_0": 3.6,
+        "gpa_min_100": 85.0,
+        "min_undergrad_tier": ["985", "211"],
+        "min_ielts": {"total": 7.0, "subscore": 6.5, "speaking": 6.5},
+        "min_toefl": {"total": 100, "subscore": 22},
+        "gre_required": False,
+        "deadline": "2027-03-01 (Rolling)",
+        "tier_bracket": "Reach",
+        "mission_ethos": "Rigorous European engineering foundation emphasizing mathematical correctness, machine intelligence, and systems verification.",
+        "distinctive_courses": [
+            {"code": "COMP70015", "title": "Mathematics for Machine Learning", "focus": "Matrix calculus, convex optimization, kernel methods"},
+            {"code": "COMP70016", "title": "Scalable Systems and Data", "focus": "Stream processing, memory hierarchy caching, distributed schedulers"}
+        ],
+        "capstone_nature": "Individual research thesis defended before a faculty tribunal in September.",
+        "faculty_leads": ["Prof. William Knottenbelt", "Prof. Stefanos Zafeiriou"],
+        "nuance": "严卡 211/985 院校名单，均分建议 88+，对纯双非直接系统秒拒，强烈看重数学推导能力与第一作者论文。"
+    },
+    {
+        "id": "ucl_cs_msc",
+        "university_id": "ucl",
+        "name_cn": "伦敦大学学院 - 计算机科学理学硕士",
+        "name_en": "UCL - MSc Computer Science",
+        "region": "UK",
+        "major_category": "CS",
+        "duration": "1 年",
+        "tuition_gbp": 35000,
+        "stem": False,
+        "gpa_min_4_0": 3.5,
+        "gpa_min_100": 85.0,
+        "min_undergrad_tier": ["985", "211", "双非一本", "海本"],
+        "min_ielts": {"total": 7.0, "subscore": 6.5, "speaking": 6.5},
+        "min_toefl": {"total": 100, "subscore": 24},
+        "gre_required": False,
+        "deadline": "2027-03-31",
+        "tier_bracket": "Match",
+        "mission_ethos": "Bridging foundations of algorithms, databases, and network architectures with London's booming AI industry.",
+        "distinctive_courses": [
+            {"code": "COMP0005", "title": "Algorithms", "focus": "Complexity bounds, graph algorithms, amortized analysis"},
+            {"code": "COMP0010", "title": "Software Engineering", "focus": "Extreme programming, domain-driven design, integration testing"}
+        ],
+        "capstone_nature": "Three-month client-facing industry or academic research dissertation.",
+        "faculty_leads": ["Prof. Mark Handley", "Prof. Brad Karp"],
+        "nuance": "UCL Group A List 要求 85+，Group B 要求 90+。文书重合度检测严格，看重跨学科创新应用。"
+    },
+    {
+        "id": "edinburgh_cs_msc",
+        "university_id": "edinburgh",
+        "name_cn": "爱丁堡大学 - 计算机科学硕士",
+        "name_en": "University of Edinburgh - MSc Computer Science",
+        "region": "UK",
+        "major_category": "CS",
+        "duration": "1 年",
+        "tuition_gbp": 38500,
+        "stem": False,
+        "gpa_min_4_0": 3.4,
+        "gpa_min_100": 82.0,
+        "min_undergrad_tier": ["985", "211", "海本"],
+        "min_ielts": {"total": 7.0, "subscore": 6.5, "speaking": 6.5},
+        "min_toefl": {"total": 100, "subscore": 23},
+        "gre_required": False,
+        "deadline": "2026-12-10 (Round 1)",
+        "tier_bracket": "Match",
+        "mission_ethos": "Renowned Informatics department with Europe's largest AI and systems research cluster.",
+        "distinctive_courses": [
+            {"code": "INFR11020", "title": "Parallel Programming Languages and Systems", "focus": "OpenMP, MPI, GPU CUDA kernel synchronization"},
+            {"code": "INFR11130", "title": "Extreme Computing", "focus": "Hadoop, Spark, cloud cost models, petabyte indexing"}
+        ],
+        "capstone_nature": "Independent Informatics Master's Research Dissertation.",
+        "faculty_leads": ["Prof. Nigel Goddard", "Prof. Sharon Goldwater"],
+        "nuance": "List 内 Band A/B 严格卡均分，且雅思口语单项严卡 6.5，小分不达标系统自动阻断。"
+    },
+    {
+        "id": "oxford_msc_cs",
+        "university_id": "oxford",
+        "name_cn": "牛津大学 - 高级计算机科学理学硕士",
+        "name_en": "University of Oxford - MSc in Advanced Computer Science",
+        "region": "UK",
+        "major_category": "CS",
+        "duration": "1 年",
+        "tuition_gbp": 41000,
+        "stem": False,
+        "gpa_min_4_0": 3.8,
+        "gpa_min_100": 88.0,
+        "min_undergrad_tier": ["985", "211", "海本"],
+        "min_ielts": {"total": 7.5, "subscore": 7.0, "speaking": 7.0},
+        "min_toefl": {"total": 110, "subscore": 25},
+        "gre_required": False,
+        "deadline": "2027-01-08",
+        "tier_bracket": "Reach",
+        "mission_ethos": "Premier global center for formal verification, quantum computing, and computational complexity; deeply academic.",
+        "distinctive_courses": [
+            {"code": "CS-ACS-1", "title": "Categories, Proofs and Processes", "focus": "Monoidal categories, quantum logic, lambda calculus"},
+            {"code": "CS-ACS-2", "title": "Probabilistic Model Checking", "focus": "Markov chains, temporal logic, PRISM model checker"}
+        ],
+        "capstone_nature": "Rigorous theoretical dissertation written under world-leading tutorial supervision.",
+        "faculty_leads": ["Prof. Marta Kwiatkowska", "Prof. Michael Wooldridge"],
+        "nuance": "全球神级项目，内地几乎只录清北华五及顶尖985第一名（均分90+），文书必须展现极为深邃的数学或理论计算机美感。"
+    },
+    {
+        "id": "lse_msc_ds",
+        "university_id": "lse",
+        "name_cn": "伦敦政治经济学院 - 数据科学理学硕士",
+        "name_en": "London School of Economics - MSc Data Science",
+        "region": "UK",
+        "major_category": "DS",
+        "duration": "1 年",
+        "tuition_gbp": 36500,
+        "stem": False,
+        "gpa_min_4_0": 3.6,
+        "gpa_min_100": 85.0,
+        "min_undergrad_tier": ["985", "211", "双非一本", "海本"],
+        "min_ielts": {"total": 7.0, "subscore": 6.5, "speaking": 6.5},
+        "min_toefl": {"total": 100, "subscore": 23},
+        "gre_required": False,
+        "deadline": "2027-04-15 (Rolling)",
+        "tier_bracket": "Reach",
+        "mission_ethos": "Combining robust statistical learning with socio-economic data science and quantitative policy modeling.",
+        "distinctive_courses": [
+            {"code": "ST455", "title": "Deep Learning for High-Dimensional Data", "focus": "Graph neural networks, attention models for time-series"},
+            {"code": "ST446", "title": "Distributed Computing for Big Data", "focus": "PySpark, streaming analytics, parallel gradient descent"}
+        ],
+        "capstone_nature": "Applied data science capstone project in collaboration with financial/consulting institutions.",
+        "faculty_leads": ["Prof. Milan Vojnovic", "Prof. Chengchun Shi"],
+        "nuance": "LSE List严卡中国大学，极度注重高等数学与概率统计高分（90+），双非需前瞻性科研或量化金融实习佐证。"
+    },
+    {
+        "id": "nus_mcomp",
+        "university_id": "nus",
+        "name_cn": "新加坡国立大学 - 计算硕士 (MComp 计算机科学方向)",
+        "name_en": "National University of Singapore - Master of Computing (Computer Science)",
+        "region": "SG",
+        "major_category": "CS",
+        "duration": "1.5 年",
+        "tuition_sgd": 56000,
+        "stem": False,
+        "gpa_min_4_0": 3.5,
+        "gpa_min_100": 85.0,
+        "min_undergrad_tier": ["985", "211", "双非一本", "海本"],
+        "min_ielts": {"total": 6.5, "subscore": 6.0, "speaking": 6.0},
+        "min_toefl": {"total": 90, "subscore": 22},
+        "gre_required": False,
+        "deadline": "2027-02-28",
+        "tier_bracket": "Reach",
+        "mission_ethos": "Asia's leading computer science program providing comprehensive masteries in distributed systems, security, and computational intelligence.",
+        "distinctive_courses": [
+            {"code": "CS5223", "title": "Distributed Systems", "focus": "Byzantine fault tolerance, distributed ledger consensus, consistency models"},
+            {"code": "CS5242", "title": "Neural Networks & Deep Learning", "focus": "Backprop calculus, transformer architectures, diffusion"}
+        ],
+        "capstone_nature": "Optional graduate research project or industry software development practicum.",
+        "faculty_leads": ["Prof. Ooi Beng Chin", "Prof. Mohan Kankanhalli"],
+        "nuance": "亚洲顶级计算机殿堂，优先录取 985/211 顶尖梯队（87+）或海本一等学位，转专业需具备极强代码作品集。"
+    },
+    {
+        "id": "nus_ms_ba",
+        "university_id": "nus",
+        "name_cn": "新加坡国立大学 - 商业分析理学硕士 (MSBA)",
+        "name_en": "National University of Singapore - Master of Science in Business Analytics",
+        "region": "SG",
+        "major_category": "BA",
+        "duration": "1 年",
+        "tuition_sgd": 62000,
+        "stem": False,
+        "gpa_min_4_0": 3.5,
+        "gpa_min_100": 85.0,
+        "min_undergrad_tier": ["985", "211", "双非一本", "海本"],
+        "min_ielts": {"total": 7.0, "subscore": 6.5, "speaking": 6.5},
+        "min_toefl": {"total": 100, "subscore": 24},
+        "gre_required": False,
+        "deadline": "2027-01-31",
+        "tier_bracket": "Reach",
+        "mission_ethos": "Jointly offered by NUS Business School and NUS Computing; globally ranked top 10 for business analytics and algorithmic decision making.",
+        "distinctive_courses": [
+            {"code": "BMA5111", "title": "Analytics for Predictive & Prescriptive Insights", "focus": "Linear programming, integer optimization, supply chain forecasting"},
+            {"code": "DSC5101", "title": "Machine Learning for Business Applications", "focus": "Customer lifetime value, NLP sentiment, churn prediction"}
+        ],
+        "capstone_nature": "NUS MSBA Capstone project with real company datasets (Grab, Shopee, DBS Bank).",
+        "faculty_leads": ["Prof. James Pang", "Prof. Hahn Jungpil"],
+        "nuance": "商学院与计算学院联合授课，录取极具挑剔度，要求数学/编程与商业感知兼备，面试淘汰率超40%。"
+    },
+    {
+        "id": "ntu_ms_ai",
+        "university_id": "ntu",
+        "name_cn": "南洋理工大学 - 人工智能理学硕士 (MSAI)",
+        "name_en": "Nanyang Technological University - MSc in Artificial Intelligence",
+        "region": "SG",
+        "major_category": "CS",
+        "duration": "1.5 年",
+        "tuition_sgd": 58000,
+        "stem": False,
+        "gpa_min_4_0": 3.4,
+        "gpa_min_100": 83.0,
+        "min_undergrad_tier": ["985", "211", "双非一本", "海本"],
+        "min_ielts": {"total": 6.5, "subscore": 6.0, "speaking": 6.0},
+        "min_toefl": {"total": 92, "subscore": 21},
+        "gre_required": False,
+        "deadline": "2027-02-15",
+        "tier_bracket": "Match",
+        "mission_ethos": "Specialized curriculum engineered around generative AI, reinforcement learning, autonomous agents, and computer vision systems.",
+        "distinctive_courses": [
+            {"code": "AI6101", "title": "Foundations of AI & Machine Learning", "focus": "Convex optimization, Bayesian networks, decision trees"},
+            {"code": "AI6103", "title": "Deep Learning & Applications", "focus": "Self-attention, multi-modal alignment, model quantization"}
+        ],
+        "capstone_nature": "Comprehensive AI project or research paper preparation.",
+        "faculty_leads": ["Prof. Dusit Niyato", "Prof. Miao Chunyan"],
+        "nuance": "对算法与数学背景要求硬核，双非若有高均分（88+）且附带 Kaggle/开源 AI 代码仓库录取概率可观。"
+    },
+    {
+        "id": "hku_msc_cs",
+        "university_id": "hku",
+        "name_cn": "香港大学 - 计算机科学理学硕士",
+        "name_en": "The University of Hong Kong - MSc in Computer Science",
+        "region": "HK",
+        "major_category": "CS",
+        "duration": "1 年",
+        "tuition_hkd": 288000,
+        "stem": False,
+        "gpa_min_4_0": 3.3,
+        "gpa_min_100": 83.0,
+        "min_undergrad_tier": ["985", "211", "双非一本", "海本"],
+        "min_ielts": {"total": 6.0, "subscore": 5.5, "speaking": 5.5},
+        "min_toefl": {"total": 80, "subscore": 18},
+        "gre_required": False,
+        "deadline": "2027-01-31",
+        "tier_bracket": "Match",
+        "mission_ethos": "Hong Kong's longest-standing graduate CS program with streams in Financial Computing, AI, and Cybersecurity.",
+        "distinctive_courses": [
+            {"code": "COMP7103", "title": "Data Mining", "focus": "Graph mining, frequent itemsets, clustering algorithms"},
+            {"code": "COMP7404", "title": "Computational Intelligence and Machine Learning", "focus": "SVMs, deep reinforcement learning, ensemble trees"}
+        ],
+        "capstone_nature": "MSc dissertation project supervised by HKU CS faculty.",
+        "faculty_leads": ["Prof. Reynold Cheng", "Prof. T-W Lam"],
+        "nuance": "语言门槛较低，但实际录取池水涨船高，对大厂实习与技术岗经历权重极高。"
+    },
+    {
+        "id": "hku_msc_fin",
+        "university_id": "hku",
+        "name_cn": "香港大学 - 金融学硕士 (Master of Finance)",
+        "name_en": "The University of Hong Kong - Master of Finance",
+        "region": "HK",
+        "major_category": "FIN",
+        "duration": "1 年",
+        "tuition_hkd": 462000,
+        "stem": False,
+        "gpa_min_4_0": 3.5,
+        "gpa_min_100": 85.0,
+        "min_undergrad_tier": ["985", "211", "双非一本", "海本"],
+        "min_ielts": {"total": 7.0, "subscore": 6.5, "speaking": 6.5},
+        "min_toefl": {"total": 90, "subscore": 22},
+        "gre_required": False,
+        "deadline": "2027-02-05",
+        "tier_bracket": "Reach",
+        "mission_ethos": "Asia's premier finance degree balancing asset pricing, corporate finance, and cutting-edge FinTech computational modeling.",
+        "distinctive_courses": [
+            {"code": "MFIN7001", "title": "Financial Economics", "focus": "Asset pricing models, CAPM, arbitrage pricing theory, utility functions"},
+            {"code": "MFIN7005", "title": "Corporate Finance and Asset Valuation", "focus": "M&A valuation, DCF modelling, capital structure optimization"}
+        ],
+        "capstone_nature": "Applied Financial Analysis Project / Investment Portfolio Defense.",
+        "faculty_leads": ["Prof. Chen Lin", "Prof. Frank Song"],
+        "nuance": "港中科顶流金融项目，学费高昂，面试采用严格群面+单面，偏爱头部券商投行实习与扎实量化背景。"
+    },
+    {
+        "id": "cuhk_msc_cs",
+        "university_id": "cuhk",
+        "name_cn": "香港中文大学 - 计算机科学理学硕士",
+        "name_en": "The Chinese University of Hong Kong - MSc in Computer Science",
+        "region": "HK",
+        "major_category": "CS",
+        "duration": "1 年",
+        "tuition_hkd": 270000,
+        "stem": False,
+        "gpa_min_4_0": 3.3,
+        "gpa_min_100": 82.0,
+        "min_undergrad_tier": ["985", "211", "双非一本", "海本"],
+        "min_ielts": {"total": 6.5, "subscore": 6.0, "speaking": 6.0},
+        "min_toefl": {"total": 88, "subscore": 20},
+        "gre_required": False,
+        "deadline": "2027-02-28",
+        "tier_bracket": "Match",
+        "mission_ethos": "World-class pedigree in computer vision (MMLab birthplace) and distributed systems networking.",
+        "distinctive_courses": [
+            {"code": "CSCI 5030", "title": "Advanced Multiprocessor Systems", "focus": "Cache coherence, shared-memory synchronization, NUMA topologies"},
+            {"code": "CSCI 5180", "title": "Advanced Database Systems", "focus": "Query optimization, distributed transactions, column store engines"}
+        ],
+        "capstone_nature": "Faculty-guided software project or research thesis.",
+        "faculty_leads": ["Prof. John C.S. Lui", "Prof. Irwin King"],
+        "nuance": "中大计算机学科积淀极深，优先招收 985/211 计科科班（83+），双非高均分（87+）兼大厂核心研发经历亦可顺利突围。"
+    },
+    {
+        "id": "cuhk_msc_ba",
+        "university_id": "cuhk",
+        "name_cn": "香港中文大学 - 商业分析理学硕士",
+        "name_en": "The Chinese University of Hong Kong - MSc in Business Analytics",
+        "region": "HK",
+        "major_category": "BA",
+        "duration": "1 年",
+        "tuition_hkd": 350000,
+        "stem": False,
+        "gpa_min_4_0": 3.4,
+        "gpa_min_100": 83.0,
+        "min_undergrad_tier": ["985", "211", "双非一本", "海本"],
+        "min_ielts": {"total": 6.5, "subscore": 6.0, "speaking": 6.0},
+        "min_toefl": {"total": 88, "subscore": 20},
+        "gre_required": False,
+        "deadline": "2027-01-20",
+        "tier_bracket": "Match",
+        "mission_ethos": "Focusing on data-driven managerial decision analytics, operations research, and supply chain telemetry.",
+        "distinctive_courses": [
+            {"code": "DSOM 5010", "title": "Statistical Analysis for Managers", "focus": "Multiple regression, ANOVA, non-parametric tests"},
+            {"code": "DSOM 5110", "title": "Business Optimization & Simulation", "focus": "Simplex algorithm, Monte Carlo simulations, risk modeling"}
+        ],
+        "capstone_nature": "Corporate sponsored business analytics consulting project.",
+        "faculty_leads": ["Prof. Sean Zhou", "Prof. Vernon Hsu"],
+        "nuance": "重视数学建模与商业实习，偏好具备 Python/R 编程能力的理工或经管背景学生。"
+    },
+    {
+        "id": "hkust_msc_it",
+        "university_id": "hkust",
+        "name_cn": "香港科技大学 - 信息技术理学硕士 (MSc IT)",
+        "name_en": "The Hong Kong University of Science and Technology - MSc in Information Technology",
+        "region": "HK",
+        "major_category": "CS",
+        "duration": "1 年",
+        "tuition_hkd": 290000,
+        "stem": False,
+        "gpa_min_4_0": 3.3,
+        "gpa_min_100": 82.0,
+        "min_undergrad_tier": ["985", "211", "双非一本", "海本"],
+        "min_ielts": {"total": 6.5, "subscore": 5.5, "speaking": 5.5},
+        "min_toefl": {"total": 80, "subscore": 18},
+        "gre_required": False,
+        "deadline": "2027-02-01",
+        "tier_bracket": "Match",
+        "mission_ethos": "Engineered for technical agility, covering web applications, mobile architectures, database engineering, and cybersecurity.",
+        "distinctive_courses": [
+            {"code": "MSBD 5002", "title": "Data Mining and Knowledge Discovery", "focus": "Association rules, clustering, stream summarization"},
+            {"code": "COMP 5211", "title": "Advanced Artificial Intelligence", "focus": "Probabilistic graphical models, multi-agent games"}
+        ],
+        "capstone_nature": "Hands-on engineering application development project.",
+        "faculty_leads": ["Prof. Lei Chen", "Prof. Gary Chan"],
+        "nuance": "科大计算机王牌院系背书，硬核课程繁重，对GPA有坚实要求（985/211 82+，双非85+），就业认可度高。"
+    }
+]
+
+# Generate Edges
+edges = []
+
+# 1. (Program)-[:OFFERED_BY]->(University)
+for p in programs:
+    edges.append({
+        "source": p["id"],
+        "target": p["university_id"],
+        "type": "OFFERED_BY",
+        "properties": {}
+    })
+
+# 2. (Program)-[:ACCEPTS_LIST {min_gpa_score: float}]->(ChineseUniTier)
+list_acceptances = {
+    "cmu_msit_se": [("985", 86.0), ("211", 88.0), ("海本", 85.0)],
+    "uiuc_mcs": [("985", 83.0), ("211", 85.0), ("双非一本", 88.0), ("海本", 82.0)],
+    "usc_cs37": [("985", 78.0), ("211", 80.0), ("双非一本", 84.0), ("海本", 78.0)],
+    "columbia_ms_cs": [("985", 85.0), ("211", 87.0), ("海本", 85.0)],
+    "nyu_ms_ds": [("985", 84.0), ("211", 86.0), ("双非一本", 89.0), ("海本", 83.0)],
+    "ic_computing_msc": [("985", 85.0), ("211", 88.0)], # Strict list: pure double-non NOT accepted
+    "ucl_cs_msc": [("985", 85.0), ("211", 85.0), ("双非一本", 90.0), ("海本", 85.0)],
+    "edinburgh_cs_msc": [("985", 80.0), ("211", 82.0), ("海本", 80.0)], # Strict list: double-non not accepted
+    "oxford_msc_cs": [("985", 88.0), ("211", 90.0), ("海本", 88.0)],
+    "lse_msc_ds": [("985", 85.0), ("211", 88.0), ("双非一本", 90.0), ("海本", 85.0)],
+    "nus_mcomp": [("985", 85.0), ("211", 87.0), ("双非一本", 89.0), ("海本", 83.0)],
+    "nus_ms_ba": [("985", 84.0), ("211", 87.0), ("双非一本", 89.0), ("海本", 84.0)],
+    "ntu_ms_ai": [("985", 82.0), ("211", 85.0), ("双非一本", 88.0), ("海本", 82.0)],
+    "hku_msc_cs": [("985", 80.0), ("211", 82.0), ("双非一本", 86.0), ("海本", 80.0)],
+    "hku_msc_fin": [("985", 83.0), ("211", 86.0), ("双非一本", 89.0), ("海本", 83.0)],
+    "cuhk_msc_cs": [("985", 80.0), ("211", 82.0), ("双非一本", 85.0), ("海本", 80.0)],
+    "cuhk_msc_ba": [("985", 81.0), ("211", 84.0), ("双非一本", 87.0), ("海本", 81.0)],
+    "hkust_msc_it": [("985", 80.0), ("211", 82.0), ("双非一本", 85.0), ("海本", 80.0)]
+}
+
+for prog_id, rules in list_acceptances.items():
+    for tier_id, min_score in rules:
+        edges.append({
+            "source": prog_id,
+            "target": tier_id,
+            "type": "ACCEPTS_LIST",
+            "properties": {
+                "min_gpa_score": float(min_score),
+                "scale": "100"
+            }
+        })
+
+# 3. (Program)-[:REQUIRES_PREREQ {level: "mandatory"|"recommended"}]->(Course)
+prereq_mappings = {
+    # CS programs
+    "CS": [
+        ("course_dsa", "mandatory"),
+        ("course_discrete_math", "mandatory"),
+        ("course_systems_arch", "mandatory"),
+        ("course_calculus_linalg", "mandatory"),
+        ("course_prob_stats", "recommended"),
+        ("course_programming_advanced", "mandatory")
+    ],
+    # DS programs
+    "DS": [
+        ("course_programming_advanced", "mandatory"),
+        ("course_calculus_linalg", "mandatory"),
+        ("course_prob_stats", "mandatory"),
+        ("course_dsa", "mandatory"),
+        ("course_databases", "recommended")
+    ],
+    # BA programs
+    "BA": [
+        ("course_calculus_linalg", "mandatory"),
+        ("course_econometrics", "mandatory"),
+        ("course_programming_advanced", "mandatory"),
+        ("course_databases", "recommended")
+    ],
+    # FIN programs
+    "FIN": [
+        ("course_micro_macro_econ", "mandatory"),
+        ("course_financial_accounting", "mandatory"),
+        ("course_calculus_linalg", "mandatory"),
+        ("course_econometrics", "mandatory"),
+        ("course_programming_advanced", "recommended")
+    ]
+}
+
+for p in programs:
+    cat = p["major_category"]
+    prereqs = prereq_mappings.get(cat, prereq_mappings["CS"])
+    for course_id, lvl in prereqs:
+        edges.append({
+            "source": p["id"],
+            "target": course_id,
+            "type": "REQUIRES_PREREQ",
+            "properties": {
+                "level": lvl
+            }
+        })
+
+# 4. (Professor)-[:AFFILIATED_WITH]->(Program)
+affiliations = [
+    ("indranil_gupta", "uiuc_mcs", "Professor & Core Faculty"),
+    ("david_garlan", "cmu_msit_se", "Professor of Computer Science"),
+    ("william_knottenbelt", "ic_computing_msc", "Professor of Applied Quantitative Analysis"),
+    ("stefanos_zafeiriou", "ic_computing_msc", "Professor in Machine Learning & Computer Vision"),
+    ("ooi_beng_chin", "nus_mcomp", "Distinguished Professor of Computer Science"),
+    ("reynold_cheng", "hku_msc_cs", "Professor & Department Associate Head"),
+    ("jason_nieh", "columbia_ms_cs", "Professor of Computer Science"),
+    ("marta_kwiatkowska", "oxford_msc_cs", "Professor of Computing Systems")
+]
+
+for prof_id, prog_id, title in affiliations:
+    edges.append({
+        "source": prof_id,
+        "target": prog_id,
+        "type": "AFFILIATED_WITH",
+        "properties": {
+            "title": title
+        }
+    })
+
+# Representative Admission Cases (for VectorStore RAG)
+admission_cases = [
+    # CMU MSIT-SE
+    {
+        "id": "case_cmu_01",
+        "target_program_id": "cmu_msit_se",
+        "undergrad_name": "浙江大学",
+        "undergrad_tier": "985",
+        "gpa": 3.78,
+        "gpa_scale": "4.0",
+        "major": "软件工程",
+        "language": "托福 106",
+        "gre": "GRE 326",
+        "background_summary": "微软STCA实习，一段国家重点实验室分布式缓存科研，两篇二作论文在投",
+        "outcome": "ADMIT (Offer)",
+        "outcome_type": "admit",
+        "year": 2025,
+        "profile_text": "985浙江大学 软件工程 GPA 3.78 (约88.5分), 托福 106, GRE 326. 经历: 微软STCA后端工程实习, 分布式缓存科研. 录CMU MSIT-SE"
+    },
+    {
+        "id": "case_cmu_02",
+        "target_program_id": "cmu_msit_se",
+        "undergrad_name": "华盛顿大学",
+        "undergrad_tier": "海本",
+        "gpa": 3.72,
+        "gpa_scale": "4.0",
+        "major": "Computer Science",
+        "language": "英语免考",
+        "gre": "GRE 328",
+        "background_summary": "顶级开源分布式协议库贡献者，亚马逊SDE实习4个月",
+        "outcome": "ADMIT (Offer)",
+        "outcome_type": "admit",
+        "year": 2025,
+        "profile_text": "海本Top40 CS GPA 3.72, GRE 328. 经历: 顶级开源项目贡献者, Amazon SDE实习. 录CMU MSIT-SE"
+    },
+    {
+        "id": "case_cmu_03",
+        "target_program_id": "cmu_msit_se",
+        "undergrad_name": "北京邮电大学",
+        "undergrad_tier": "211",
+        "gpa": 3.65,
+        "gpa_scale": "4.0",
+        "major": "计算机科学与技术",
+        "language": "托福 101",
+        "gre": "GRE 320",
+        "background_summary": "某中型互联网实习，课设项目较多但无高信噪比生产环境工程产出",
+        "outcome": "REJECT",
+        "outcome_type": "reject",
+        "year": 2024,
+        "profile_text": "211高校北京邮电大学 计科 GPA 3.65, 托福 101, 无高含金量工程产出. 拒信CMU MSIT-SE"
+    },
+    {
+        "id": "case_cmu_04",
+        "target_program_id": "cmu_msit_se",
+        "undergrad_name": "华中科技大学",
+        "undergrad_tier": "985",
+        "gpa": 3.52,
+        "gpa_scale": "4.0",
+        "major": "自动化跨申",
+        "language": "托福 98",
+        "gre": "GRE 318",
+        "background_summary": "自动化工科背景，缺少体系结构与高级软件设计核心课，无大厂实习",
+        "outcome": "REJECT",
+        "outcome_type": "reject",
+        "year": 2024,
+        "profile_text": "985高校 自动化跨申 GPA 3.52, 托福 98, 缺少系统核心课. 拒信CMU MSIT-SE"
+    },
+
+    # UIUC MCS
+    {
+        "id": "case_uiuc_01",
+        "target_program_id": "uiuc_mcs",
+        "undergrad_name": "杭州电子科技大学",
+        "undergrad_tier": "双非一本",
+        "gpa": 89.2,
+        "gpa_scale": "100",
+        "major": "软件工程",
+        "language": "托福 102",
+        "gre": "GRE 324",
+        "background_summary": "双非顶尖学霸，年级第2，字节跳动基础架构实习6个月，算法课满分",
+        "outcome": "ADMIT (Offer)",
+        "outcome_type": "admit",
+        "year": 2025,
+        "profile_text": "双非一本Top软件工程 GPA 89.2, 托福 102, 字节跳动后端实习. 录UIUC MCS"
+    },
+    {
+        "id": "case_uiuc_02",
+        "target_program_id": "uiuc_mcs",
+        "undergrad_name": "西安电子科技大学",
+        "undergrad_tier": "211",
+        "gpa": 3.61,
+        "gpa_scale": "4.0",
+        "major": "计算机科学",
+        "language": "托福 104",
+        "gre": "GRE 322",
+        "background_summary": "ACM-ICPC区域赛银牌，美团后端开发实习",
+        "outcome": "ADMIT (Offer)",
+        "outcome_type": "admit",
+        "year": 2025,
+        "profile_text": "211西电 计科 GPA 3.61, 托福 104, 区域程序设计竞赛一等奖/银牌. 录UIUC MCS"
+    },
+    {
+        "id": "case_uiuc_03",
+        "target_program_id": "uiuc_mcs",
+        "undergrad_name": "广东工业大学",
+        "undergrad_tier": "双非一本",
+        "gpa": 84.0,
+        "gpa_scale": "100",
+        "major": "计算机科学",
+        "language": "托福 96",
+        "gre": None,
+        "background_summary": "普通双非本科，均分刚过84，无知名实习，无学科竞赛",
+        "outcome": "REJECT",
+        "outcome_type": "reject",
+        "year": 2024,
+        "profile_text": "双非一本 GPA 84.0, 托福 96, 无实习无竞赛. 拒信UIUC MCS"
+    },
+    {
+        "id": "case_uiuc_04",
+        "target_program_id": "uiuc_mcs",
+        "undergrad_name": "吉林大学",
+        "undergrad_tier": "985",
+        "gpa": 3.42,
+        "gpa_scale": "4.0",
+        "major": "计算机科学",
+        "language": "托福 100",
+        "gre": "GRE 320",
+        "background_summary": "985本，均分一般但系统核心课均分88，有校级科研项目",
+        "outcome": "ADMIT (Offer)",
+        "outcome_type": "admit",
+        "year": 2025,
+        "profile_text": "985吉林大学 计科 GPA 3.42, 托福 100, 系统课程硬核. 录UIUC MCS"
+    },
+
+    # Imperial College London MSc Computing
+    {
+        "id": "case_ic_01",
+        "target_program_id": "ic_computing_msc",
+        "undergrad_name": "清华大学",
+        "undergrad_tier": "985",
+        "gpa": 88.5,
+        "gpa_scale": "100",
+        "major": "软件工程",
+        "language": "雅思 7.5 (6.5)",
+        "gre": None,
+        "background_summary": "C9顶尖背景，帝国理工暑校一等成绩，一作顶会Workshop在投",
+        "outcome": "ADMIT (Offer)",
+        "outcome_type": "admit",
+        "year": 2025,
+        "profile_text": "C9/985清华 软件工程 GPA 88.5, 雅思 7.5 (6.5), 顶级学术夏校. 录IC Computing MSc"
+    },
+    {
+        "id": "case_ic_02",
+        "target_program_id": "ic_computing_msc",
+        "undergrad_name": "北京航空航天大学",
+        "undergrad_tier": "985",
+        "gpa": 89.1,
+        "gpa_scale": "100",
+        "major": "计算机科学与技术",
+        "language": "雅思 7.0 (6.5)",
+        "gre": None,
+        "background_summary": "中流985硬核计科，均分高，一作CCF-C在投，微软研究院联培实习",
+        "outcome": "ADMIT (Offer)",
+        "outcome_type": "admit",
+        "year": 2025,
+        "profile_text": "中流985北航 计科 GPA 89.1, 雅思 7.0 (6.5), 一作CCF-C在投. 录IC Computing MSc"
+    },
+    {
+        "id": "case_ic_03",
+        "target_program_id": "ic_computing_msc",
+        "undergrad_name": "深圳大学",
+        "undergrad_tier": "双非一本",
+        "gpa": 91.0,
+        "gpa_scale": "100",
+        "major": "计算机科学与技术",
+        "language": "雅思 7.5 (6.5)",
+        "gre": None,
+        "background_summary": "头部双非深大计科第一名，均分超高，但因不在IC中国内地院校认可名单直接秒拒",
+        "outcome": "REJECT (Out of List)",
+        "outcome_type": "reject",
+        "year": 2025,
+        "profile_text": "头部双非 计科 GPA 91.0, 雅思 7.5 (不在List内). 拒信IC Computing MSc (秒拒Out of List)"
+    },
+    {
+        "id": "case_ic_04",
+        "target_program_id": "ic_computing_msc",
+        "undergrad_name": "南京航空航天大学",
+        "undergrad_tier": "211",
+        "gpa": 83.5,
+        "gpa_scale": "100",
+        "major": "软件工程",
+        "language": "雅思 7.0 (6.5)",
+        "gre": None,
+        "background_summary": "211院校均分83.5，未达到帝国理工针对211高校88分门槛要求",
+        "outcome": "REJECT",
+        "outcome_type": "reject",
+        "year": 2024,
+        "profile_text": "211 软件工程 GPA 83.5, 雅思 7.0 (未达到88分门槛). 拒信IC Computing MSc"
+    },
+    {
+        "id": "case_ic_05",
+        "target_program_id": "ic_computing_msc",
+        "undergrad_name": "同济大学",
+        "undergrad_tier": "985",
+        "gpa": 87.0,
+        "gpa_scale": "100",
+        "major": "计算机科学",
+        "language": "雅思 6.5 (口语5.5)",
+        "gre": None,
+        "background_summary": "985同济计科，均分达标，但雅思口语单项仅5.5，未达到6.5单项底线被阻断",
+        "outcome": "REJECT",
+        "outcome_type": "reject",
+        "year": 2025,
+        "profile_text": "985同济 计科 GPA 87.0, 雅思 6.5 (口语5.5未达标). 拒信IC Computing MSc"
+    },
+
+    # Edinburgh MSc CS
+    {
+        "id": "case_edin_01",
+        "target_program_id": "edinburgh_cs_msc",
+        "undergrad_name": "山东大学",
+        "undergrad_tier": "985",
+        "gpa": 84.5,
+        "gpa_scale": "100",
+        "major": "计算机科学",
+        "language": "雅思 7.0 (6.5)",
+        "gre": None,
+        "background_summary": "985山大，均分满足Band A要求，语言全部小分达标",
+        "outcome": "ADMIT (Offer)",
+        "outcome_type": "admit",
+        "year": 2025,
+        "profile_text": "985山东大学 计科 GPA 84.5, 雅思 7.0 (6.5). 录Edinburgh MSc CS"
+    },
+    {
+        "id": "case_edin_02",
+        "target_program_id": "edinburgh_cs_msc",
+        "undergrad_name": "大连海事大学",
+        "undergrad_tier": "211",
+        "gpa": 85.0,
+        "gpa_scale": "100",
+        "major": "计算机科学",
+        "language": "雅思 7.0 (6.5)",
+        "gre": None,
+        "background_summary": "211高校均分85，口语小分6.5，顺利获得录取",
+        "outcome": "ADMIT (Offer)",
+        "outcome_type": "admit",
+        "year": 2025,
+        "profile_text": "211大连海事 计科 GPA 85.0, 雅思 7.0 (6.5). 录Edinburgh MSc CS"
+    },
+    {
+        "id": "case_edin_03",
+        "target_program_id": "edinburgh_cs_msc",
+        "undergrad_name": "北京邮电大学",
+        "undergrad_tier": "211",
+        "gpa": 86.0,
+        "gpa_scale": "100",
+        "major": "软件工程",
+        "language": "雅思 7.0 (口语5.5)",
+        "gre": None,
+        "background_summary": "211均分极高，但雅思口语5.5低于爱丁堡6.5小分硬指标，系统拒信",
+        "outcome": "REJECT (Language Subscore)",
+        "outcome_type": "reject",
+        "year": 2025,
+        "profile_text": "211北邮 软件工程 GPA 86.0, 雅思 7.0 (口语5.5小分被阻断). 拒信Edinburgh MSc CS"
+    },
+
+    # NUS MComp
+    {
+        "id": "case_nus_01",
+        "target_program_id": "nus_mcomp",
+        "undergrad_name": "复旦大学",
+        "undergrad_tier": "985",
+        "gpa": 87.5,
+        "gpa_scale": "100",
+        "major": "软件工程",
+        "language": "托福 104",
+        "gre": "GRE 325",
+        "background_summary": "985复旦，高均分，腾讯IEG游戏引擎实习",
+        "outcome": "ADMIT (Offer)",
+        "outcome_type": "admit",
+        "year": 2025,
+        "profile_text": "985复旦 软件工程 GPA 87.5, 托福 104, 腾讯IEG实习. 录NUS MComp"
+    },
+    {
+        "id": "case_nus_02",
+        "target_program_id": "nus_mcomp",
+        "undergrad_name": "北京工业大学",
+        "undergrad_tier": "211",
+        "gpa": 88.0,
+        "gpa_scale": "100",
+        "major": "计算机科学与技术",
+        "language": "雅思 7.0 (6.5)",
+        "gre": None,
+        "background_summary": "211北工大专业前3%，阿里巴巴高德地图后端实习",
+        "outcome": "ADMIT (Offer)",
+        "outcome_type": "admit",
+        "year": 2025,
+        "profile_text": "211北工大 计科 GPA 88.0, 雅思 7.0 (6.5), 阿里实习. 录NUS MComp"
+    },
+    {
+        "id": "case_nus_03",
+        "target_program_id": "nus_mcomp",
+        "undergrad_name": "江苏大学",
+        "undergrad_tier": "双非一本",
+        "gpa": 86.0,
+        "gpa_scale": "100",
+        "major": "软件工程",
+        "language": "雅思 6.5",
+        "gre": None,
+        "background_summary": "普通双非本科，均分86，面对NUS神级项目竞争池被刷",
+        "outcome": "REJECT",
+        "outcome_type": "reject",
+        "year": 2024,
+        "profile_text": "双非一本 GPA 86.0, 雅思 6.5. 拒信NUS MComp"
+    },
+
+    # HKU MSc CS
+    {
+        "id": "case_hku_01",
+        "target_program_id": "hku_msc_cs",
+        "undergrad_name": "中山大学",
+        "undergrad_tier": "985",
+        "gpa": 82.5,
+        "gpa_scale": "100",
+        "major": "电子信息",
+        "language": "雅思 6.5",
+        "gre": None,
+        "background_summary": "985中大，跨考专业，有华为暑期实习",
+        "outcome": "ADMIT (Offer)",
+        "outcome_type": "admit",
+        "year": 2025,
+        "profile_text": "985中山大学 电子信息 GPA 82.5, 雅思 6.5, 华为实习. 录HKU MSc CS"
+    },
+    {
+        "id": "case_hku_02",
+        "target_program_id": "hku_msc_cs",
+        "undergrad_name": "华南师范大学",
+        "undergrad_tier": "211",
+        "gpa": 84.0,
+        "gpa_scale": "100",
+        "major": "计算机科学",
+        "language": "雅思 6.5",
+        "gre": None,
+        "background_summary": "211计科，网易互娱QA实习，标化过线",
+        "outcome": "ADMIT (Offer)",
+        "outcome_type": "admit",
+        "year": 2025,
+        "profile_text": "211华南师大 计科 GPA 84.0, 雅思 6.5. 录HKU MSc CS"
+    },
+    {
+        "id": "case_hku_03",
+        "target_program_id": "hku_msc_cs",
+        "undergrad_name": "广东外语外贸大学",
+        "undergrad_tier": "双非一本",
+        "gpa": 87.5,
+        "gpa_scale": "100",
+        "major": "软件工程",
+        "language": "雅思 7.0",
+        "gre": None,
+        "background_summary": "双非高均分，两段互联网研发实习，港大顺利录取",
+        "outcome": "ADMIT (Offer)",
+        "outcome_type": "admit",
+        "year": 2025,
+        "profile_text": "双非一本 软件工程 GPA 87.5, 雅思 7.0, 两段研发实习. 录HKU MSc CS"
+    },
+    {
+        "id": "case_hku_04",
+        "target_program_id": "hku_msc_cs",
+        "undergrad_name": "广东工业大学",
+        "undergrad_tier": "双非一本",
+        "gpa": 81.0,
+        "gpa_scale": "100",
+        "major": "计算机科学",
+        "language": "雅思 6.0",
+        "gre": None,
+        "background_summary": "双非均分刚过81，港大CS双非底线一般在85分以上，竞争不足被拒",
+        "outcome": "REJECT",
+        "outcome_type": "reject",
+        "year": 2024,
+        "profile_text": "双非一本 计科 GPA 81.0, 雅思 6.0 (未达到双非均分隐形门槛). 拒信HKU MSc CS"
+    },
+
+    # USC CS37
+    {
+        "id": "case_usc_01",
+        "target_program_id": "usc_cs37",
+        "undergrad_name": "北京科技大学",
+        "undergrad_tier": "211",
+        "gpa": 3.45,
+        "gpa_scale": "4.0",
+        "major": "机械工程 (转码)",
+        "language": "托福 98",
+        "gre": "GRE 320",
+        "background_summary": "传统工科跨考转码，修过微积分和C++，顺利录取USC CS37",
+        "outcome": "ADMIT (Offer)",
+        "outcome_type": "admit",
+        "year": 2025,
+        "profile_text": "211北科大 机械跨考 GPA 3.45, 托福 98, 转码友好. 录USC CS37"
+    },
+    {
+        "id": "case_usc_02",
+        "target_program_id": "usc_cs37",
+        "undergrad_name": "南京理工大学",
+        "undergrad_tier": "211",
+        "gpa": 3.05,
+        "gpa_scale": "4.0",
+        "major": "自动化",
+        "language": "托福 88",
+        "gre": None,
+        "background_summary": "GPA刚好达到3.0门槛，托福未满90，被拒",
+        "outcome": "REJECT",
+        "outcome_type": "reject",
+        "year": 2024,
+        "profile_text": "211南理工 GPA 3.05, 托福 88 (未过语言线). 拒信USC CS37"
+    },
+
+    # Columbia MS CS
+    {
+        "id": "case_cu_01",
+        "target_program_id": "columbia_ms_cs",
+        "undergrad_name": "上海交通大学",
+        "undergrad_tier": "985",
+        "gpa": 3.75,
+        "gpa_scale": "4.0",
+        "major": "信息工程",
+        "language": "托福 108",
+        "gre": "GRE 330",
+        "background_summary": "985上交高标化，外资大厂实习，哥大直录",
+        "outcome": "ADMIT (Offer)",
+        "outcome_type": "admit",
+        "year": 2025,
+        "profile_text": "985上交 电子信息 GPA 3.75, 托福 108, GRE 330. 录Columbia MS CS"
+    },
+    {
+        "id": "case_cu_02",
+        "target_program_id": "columbia_ms_cs",
+        "undergrad_name": "重庆大学",
+        "undergrad_tier": "985",
+        "gpa": 3.48,
+        "gpa_scale": "4.0",
+        "major": "软件工程",
+        "language": "托福 99",
+        "gre": "GRE 315",
+        "background_summary": "985均分偏低，托福未达到100，文书无特殊亮点，被拒",
+        "outcome": "REJECT",
+        "outcome_type": "reject",
+        "year": 2024,
+        "profile_text": "985重大 软件工程 GPA 3.48, 托福 99. 拒信Columbia MS CS"
+    },
+
+    # Oxford MSc ACS
+    {
+        "id": "case_ox_01",
+        "target_program_id": "oxford_msc_cs",
+        "undergrad_name": "清华大学",
+        "undergrad_tier": "985",
+        "gpa": 91.2,
+        "gpa_scale": "100",
+        "major": "计算机科学与技术",
+        "language": "雅思 8.0 (7.5)",
+        "gre": None,
+        "background_summary": "清华年级前5，一作ICLR在投，牛津高等计算科学录取",
+        "outcome": "ADMIT (Offer)",
+        "outcome_type": "admit",
+        "year": 2025,
+        "profile_text": "985清华 计科 GPA 91.2, 雅思 8.0 (7.5), 顶会一作在投. 录Oxford MSc ACS"
+    },
+    {
+        "id": "case_ox_02",
+        "target_program_id": "oxford_msc_cs",
+        "undergrad_name": "东南大学",
+        "undergrad_tier": "985",
+        "gpa": 86.5,
+        "gpa_scale": "100",
+        "major": "计算机科学",
+        "language": "雅思 7.5 (6.5)",
+        "gre": None,
+        "background_summary": "985东南大学均分86.5，未达牛津88分学术门槛且小分未满7.0被拒",
+        "outcome": "REJECT",
+        "outcome_type": "reject",
+        "year": 2024,
+        "profile_text": "985东南 计科 GPA 86.5, 雅思 7.5 (小分未达7.0). 拒信Oxford MSc ACS"
+    },
+
+    # HKU MFin
+    {
+        "id": "case_hku_fin_01",
+        "target_program_id": "hku_msc_fin",
+        "undergrad_name": "中国人民大学",
+        "undergrad_tier": "985",
+        "gpa": 87.2,
+        "gpa_scale": "100",
+        "major": "金融学",
+        "language": "雅思 7.5 (6.5)",
+        "gre": "GMAT 710",
+        "background_summary": "人大金融，中信证券投行部实习，港大金融直录",
+        "outcome": "ADMIT (Offer)",
+        "outcome_type": "admit",
+        "year": 2025,
+        "profile_text": "985人大 金融 GPA 87.2, 雅思 7.5, GMAT 710, 头部券商实习. 录HKU MFin"
+    },
+    {
+        "id": "case_hku_fin_02",
+        "target_program_id": "hku_msc_fin",
+        "undergrad_name": "江西财经大学",
+        "undergrad_tier": "双非一本",
+        "gpa": 84.5,
+        "gpa_scale": "100",
+        "major": "金融工程",
+        "language": "雅思 6.5",
+        "gre": None,
+        "background_summary": "双非江财，均分84.5未达到港大金融针对双非89分隐形线，群面后被拒",
+        "outcome": "REJECT",
+        "outcome_type": "reject",
+        "year": 2024,
+        "profile_text": "双非江财 金融工程 GPA 84.5, 雅思 6.5 (双非均分不足). 拒信HKU MFin"
+    },
+
+    # NYU MS DS
+    {
+        "id": "case_nyu_ds_01",
+        "target_program_id": "nyu_ms_ds",
+        "undergrad_name": "北京大学",
+        "undergrad_tier": "985",
+        "gpa": 3.76,
+        "gpa_scale": "4.0",
+        "major": "应用数学与数据科学",
+        "language": "托福 108",
+        "gre": "GRE 332",
+        "background_summary": "北大数学，高数与数理统计满分，一段量化私募实习，一段NLP实验室科研",
+        "outcome": "ADMIT (Offer)",
+        "outcome_type": "admit",
+        "year": 2025,
+        "profile_text": "985北大 统计/应用数学 GPA 3.76, 托福 108, GRE 332, 量化与NLP科研. 录NYU MS DS"
+    },
+    {
+        "id": "case_nyu_ds_02",
+        "target_program_id": "nyu_ms_ds",
+        "undergrad_name": "北京邮电大学",
+        "undergrad_tier": "211",
+        "gpa": 3.68,
+        "gpa_scale": "4.0",
+        "major": "计算机科学与技术",
+        "language": "托福 103",
+        "gre": "GRE 325",
+        "background_summary": "211北邮计科，数学分析88分，一段自动驾驶感知算法实习，顺利录取",
+        "outcome": "ADMIT (Offer)",
+        "outcome_type": "admit",
+        "year": 2025,
+        "profile_text": "211北邮 计科 GPA 3.68, 托福 103, GRE 325, 自动驾驶实习. 录NYU MS DS"
+    },
+    {
+        "id": "case_nyu_ds_03",
+        "target_program_id": "nyu_ms_ds",
+        "undergrad_name": "杭州电子科技大学",
+        "undergrad_tier": "双非一本",
+        "gpa": 89.5,
+        "gpa_scale": "100",
+        "major": "数据科学与大数据技术",
+        "language": "托福 105",
+        "gre": "GRE 328",
+        "background_summary": "双非一本高均分，Kaggle竞赛Master，线代微积分全满分，逆袭录取",
+        "outcome": "ADMIT (Offer)",
+        "outcome_type": "admit",
+        "year": 2025,
+        "profile_text": "双非一本杭电 数据科学 GPA 89.5, 托福 105, GRE 328, Kaggle Master. 录NYU MS DS"
+    },
+    {
+        "id": "case_nyu_ds_04",
+        "target_program_id": "nyu_ms_ds",
+        "undergrad_name": "武汉理工大学",
+        "undergrad_tier": "211",
+        "gpa": 3.35,
+        "gpa_scale": "4.0",
+        "major": "软件工程",
+        "language": "托福 98",
+        "gre": None,
+        "background_summary": "211软件工程，数学课程仅75分，托福未满100，CDS硬核初筛被拒",
+        "outcome": "REJECT",
+        "outcome_type": "reject",
+        "year": 2024,
+        "profile_text": "211武理工 软件工程 GPA 3.35, 托福 98, 数学基础薄弱. 拒信NYU MS DS"
+    },
+
+    # UCL CS MSc
+    {
+        "id": "case_ucl_01",
+        "target_program_id": "ucl_cs_msc",
+        "undergrad_name": "南开大学",
+        "undergrad_tier": "985",
+        "gpa": 86.8,
+        "gpa_scale": "100",
+        "major": "软件工程",
+        "language": "雅思 7.5 (6.5)",
+        "gre": None,
+        "background_summary": "985南开，均分满足Group A 85+要求，两段互联网研发实习",
+        "outcome": "ADMIT (Offer)",
+        "outcome_type": "admit",
+        "year": 2025,
+        "profile_text": "985南开 软件工程 GPA 86.8, 雅思 7.5 (6.5), 研发实习. 录UCL CS MSc"
+    },
+    {
+        "id": "case_ucl_02",
+        "target_program_id": "ucl_cs_msc",
+        "undergrad_name": "深圳大学",
+        "undergrad_tier": "双非一本",
+        "gpa": 90.8,
+        "gpa_scale": "100",
+        "major": "计算机科学与技术",
+        "language": "雅思 7.0 (6.5)",
+        "gre": None,
+        "background_summary": "双非深大计科前2名，均分突破Group B 90分红线，腾讯实习，顺利下Offer",
+        "outcome": "ADMIT (Offer)",
+        "outcome_type": "admit",
+        "year": 2025,
+        "profile_text": "双非深大 计科 GPA 90.8, 雅思 7.0 (6.5), 达到Group B 90分线. 录UCL CS MSc"
+    },
+    {
+        "id": "case_ucl_03",
+        "target_program_id": "ucl_cs_msc",
+        "undergrad_name": "上海大学",
+        "undergrad_tier": "211",
+        "gpa": 82.5,
+        "gpa_scale": "100",
+        "major": "计算机工程",
+        "language": "雅思 6.5",
+        "gre": None,
+        "background_summary": "211上大，均分未满85分Group A及格线，被拒",
+        "outcome": "REJECT",
+        "outcome_type": "reject",
+        "year": 2024,
+        "profile_text": "211上海大学 计算机 GPA 82.5, 雅思 6.5 (未达85门槛). 拒信UCL CS MSc"
+    },
+
+    # LSE MSc DS
+    {
+        "id": "case_lse_ds_01",
+        "target_program_id": "lse_msc_ds",
+        "undergrad_name": "中国人民大学",
+        "undergrad_tier": "985",
+        "gpa": 88.0,
+        "gpa_scale": "100",
+        "major": "统计学",
+        "language": "雅思 7.5 (7.0)",
+        "gre": "GRE 328",
+        "background_summary": "人大统计学，数理基础雄厚，中金公司量化实习",
+        "outcome": "ADMIT (Offer)",
+        "outcome_type": "admit",
+        "year": 2025,
+        "profile_text": "985人大 统计学 GPA 88.0, 雅思 7.5 (7.0), 中金量化实习. 录LSE MSc DS"
+    },
+    {
+        "id": "case_lse_ds_02",
+        "target_program_id": "lse_msc_ds",
+        "undergrad_name": "中央财经大学",
+        "undergrad_tier": "211",
+        "gpa": 89.2,
+        "gpa_scale": "100",
+        "major": "应用统计",
+        "language": "雅思 7.0 (6.5)",
+        "gre": "GMAT 720",
+        "background_summary": "两财一贸211，均分接近90，高数与概率论93+，录取",
+        "outcome": "ADMIT (Offer)",
+        "outcome_type": "admit",
+        "year": 2025,
+        "profile_text": "211央财 应用统计 GPA 89.2, 雅思 7.0, 数学高分. 录LSE MSc DS"
+    },
+    {
+        "id": "case_lse_ds_03",
+        "target_program_id": "lse_msc_ds",
+        "undergrad_name": "南京财经大学",
+        "undergrad_tier": "双非一本",
+        "gpa": 86.5,
+        "gpa_scale": "100",
+        "major": "金融工程",
+        "language": "雅思 7.0 (6.5)",
+        "gre": None,
+        "background_summary": "双非院校均分86.5，未达LSE对双非90分的硬门槛，拒信",
+        "outcome": "REJECT",
+        "outcome_type": "reject",
+        "year": 2024,
+        "profile_text": "双非南财 金工 GPA 86.5, 雅思 7.0 (未达到双非90分门槛). 拒信LSE MSc DS"
+    },
+
+    # NUS MSBA
+    {
+        "id": "case_nus_ba_01",
+        "target_program_id": "nus_ms_ba",
+        "undergrad_name": "上海交通大学",
+        "undergrad_tier": "985",
+        "gpa": 87.0,
+        "gpa_scale": "100",
+        "major": "工业工程与管理",
+        "language": "托福 106",
+        "gre": "GRE 330",
+        "background_summary": "上交大，运筹优化与Python编程扎实，麦肯锡暑期PTA与贝恩项目经历",
+        "outcome": "ADMIT (Offer)",
+        "outcome_type": "admit",
+        "year": 2025,
+        "profile_text": "985上交 工业工程 GPA 87.0, 托福 106, GRE 330, 顶级咨询实习. 录NUS MSBA"
+    },
+    {
+        "id": "case_nus_ba_02",
+        "target_program_id": "nus_ms_ba",
+        "undergrad_name": "对外经济贸易大学",
+        "undergrad_tier": "211",
+        "gpa": 88.5,
+        "gpa_scale": "100",
+        "major": "信息管理与信息系统",
+        "language": "雅思 7.5 (6.5)",
+        "gre": "GMAT 730",
+        "background_summary": "211贸大，信管专业兼备商业与SQL/Python，美团商业分析实习",
+        "outcome": "ADMIT (Offer)",
+        "outcome_type": "admit",
+        "year": 2025,
+        "profile_text": "211对外经贸 信管 GPA 88.5, 雅思 7.5, GMAT 730, 美团BA实习. 录NUS MSBA"
+    },
+    {
+        "id": "case_nus_ba_03",
+        "target_program_id": "nus_ms_ba",
+        "undergrad_name": "首都经济贸易大学",
+        "undergrad_tier": "双非一本",
+        "gpa": 85.0,
+        "gpa_scale": "100",
+        "major": "统计学",
+        "language": "雅思 6.5",
+        "gre": None,
+        "background_summary": "双非一本，均分85，无突出GRE/GMAT加持，初审未能入围面试",
+        "outcome": "REJECT",
+        "outcome_type": "reject",
+        "year": 2024,
+        "profile_text": "双非首经贸 统计学 GPA 85.0, 雅思 6.5 (无面试邀请). 拒信NUS MSBA"
+    },
+
+    # NTU MS AI
+    {
+        "id": "case_ntu_ai_01",
+        "target_program_id": "ntu_ms_ai",
+        "undergrad_name": "哈尔滨工业大学",
+        "undergrad_tier": "985",
+        "gpa": 85.5,
+        "gpa_scale": "100",
+        "major": "人工智能",
+        "language": "雅思 6.5 (6.0)",
+        "gre": None,
+        "background_summary": "C9哈工大AI直系，机器人与大模型科研经历丰富",
+        "outcome": "ADMIT (Offer)",
+        "outcome_type": "admit",
+        "year": 2025,
+        "profile_text": "985/C9哈工大 人工智能 GPA 85.5, 雅思 6.5, AI科研丰富. 录NTU MS AI"
+    },
+    {
+        "id": "case_ntu_ai_02",
+        "target_program_id": "ntu_ms_ai",
+        "undergrad_name": "广东工业大学",
+        "undergrad_tier": "双非一本",
+        "gpa": 88.8,
+        "gpa_scale": "100",
+        "major": "自动化与机器视觉",
+        "language": "托福 95",
+        "gre": None,
+        "background_summary": "双非高绩点，多项智能车竞赛全国一等奖，有清华自动化联合实验室访问经历",
+        "outcome": "ADMIT (Offer)",
+        "outcome_type": "admit",
+        "year": 2025,
+        "profile_text": "双非一本广工 自动化 GPA 88.8, 托福 95, 国家级竞赛一等奖. 录NTU MS AI"
+    },
+    {
+        "id": "case_ntu_ai_03",
+        "target_program_id": "ntu_ms_ai",
+        "undergrad_name": "武汉理工大学",
+        "undergrad_tier": "211",
+        "gpa": 80.5,
+        "gpa_scale": "100",
+        "major": "计算机科学",
+        "language": "雅思 6.0",
+        "gre": None,
+        "background_summary": "211均分刚过80分线，语言小分较弱，竞争NTU热门AI被拒",
+        "outcome": "REJECT",
+        "outcome_type": "reject",
+        "year": 2024,
+        "profile_text": "211武理工 计科 GPA 80.5, 雅思 6.0 (均分及语言弱势). 拒信NTU MS AI"
+    },
+
+    # CUHK MSc CS & BA
+    {
+        "id": "case_cuhk_cs_01",
+        "target_program_id": "cuhk_msc_cs",
+        "undergrad_name": "四川大学",
+        "undergrad_tier": "985",
+        "gpa": 84.5,
+        "gpa_scale": "100",
+        "major": "计算机科学与技术",
+        "language": "雅思 6.5",
+        "gre": None,
+        "background_summary": "985川大计科，均分84.5，快手推荐算法实习，直录",
+        "outcome": "ADMIT (Offer)",
+        "outcome_type": "admit",
+        "year": 2025,
+        "profile_text": "985川大 计科 GPA 84.5, 雅思 6.5, 大厂推荐算法实习. 录CUHK MSc CS"
+    },
+    {
+        "id": "case_cuhk_cs_02",
+        "target_program_id": "cuhk_msc_cs",
+        "undergrad_name": "华南农业大学",
+        "undergrad_tier": "双非一本",
+        "gpa": 88.0,
+        "gpa_scale": "100",
+        "major": "软件工程",
+        "language": "雅思 7.0",
+        "gre": None,
+        "background_summary": "双非一本高均分，两项软件著作权，有腾讯云开发实战，顺利录取",
+        "outcome": "ADMIT (Offer)",
+        "outcome_type": "admit",
+        "year": 2025,
+        "profile_text": "双非华农 软件工程 GPA 88.0, 雅思 7.0, 研发经历硬核. 录CUHK MSc CS"
+    },
+    {
+        "id": "case_cuhk_ba_01",
+        "target_program_id": "cuhk_msc_ba",
+        "undergrad_name": "厦门大学",
+        "undergrad_tier": "985",
+        "gpa": 85.5,
+        "gpa_scale": "100",
+        "major": "信息管理",
+        "language": "雅思 7.0",
+        "gre": "GMAT 690",
+        "background_summary": "985厦大，经管交叉学科，四大咨询实习，港中文BA录取",
+        "outcome": "ADMIT (Offer)",
+        "outcome_type": "admit",
+        "year": 2025,
+        "profile_text": "985厦大 信管 GPA 85.5, 雅思 7.0, GMAT 690, 咨询实习. 录CUHK MSc BA"
+    },
+
+    # HKUST MSc IT
+    {
+        "id": "case_hkust_it_01",
+        "target_program_id": "hkust_msc_it",
+        "undergrad_name": "华南理工大学",
+        "undergrad_tier": "985",
+        "gpa": 83.0,
+        "gpa_scale": "100",
+        "major": "网络工程",
+        "language": "雅思 6.5",
+        "gre": None,
+        "background_summary": "985华工大湾区本地优势，网络编程课优异，顺利下Offer",
+        "outcome": "ADMIT (Offer)",
+        "outcome_type": "admit",
+        "year": 2025,
+        "profile_text": "985华南理工 网络工程 GPA 83.0, 雅思 6.5. 录HKUST MSc IT"
+    },
+    {
+        "id": "case_hkust_it_02",
+        "target_program_id": "hkust_msc_it",
+        "undergrad_name": "东莞理工学院",
+        "undergrad_tier": "双非一本",
+        "gpa": 82.0,
+        "gpa_scale": "100",
+        "major": "软件工程",
+        "language": "雅思 6.0",
+        "gre": None,
+        "background_summary": "双非本科均分82分，科大IT针对双非一般建议85+，背景较弱被拒",
+        "outcome": "REJECT",
+        "outcome_type": "reject",
+        "year": 2024,
+        "profile_text": "双非一本 软件工程 GPA 82.0, 雅思 6.0 (双非均分未达85). 拒信HKUST MSc IT"
+    }
+
+]
+
+# Program Nuances
+program_nuances = [
+    {
+        "program_id": "cmu_msit_se",
+        "name": "卡耐基梅隆大学 - 软件工程硕士 (MSIT-SE)",
+        "nuance_summary": "极其看重系统级编程经历与高信噪比开源代码，偏好有一年左右高含金量工程实习的学生。",
+        "deadline": "2027-01-15 (Final Round)",
+        "gre_policy": "Optional / Not Required",
+        "stem_status": "STEM-Designated (Eligible for 3-Year OPT)",
+        "detailed_text": "CMU MSIT-SE隶属于计算机学院(SCS)旗下的软件与社会系统系(S3D)。项目以极端严苛的团队工程实践和高负荷代码量著称。招生委员会对泛泛的算法题刷题经历并不感冒，反而高度青睐：1) 深入Linux底层或分布式系统框架的源码贡献；2) 面对高并发、网络延迟、故障自愈等复杂工程问题时的折衷思考(Trade-offs)；3) 一年以上工业界顶尖技术大厂真实后端架构实习经历。"
+    },
+    {
+        "program_id": "uiuc_mcs",
+        "name": "伊利诺伊大学香槟分校 - 计算机科学硕士 (MCS)",
+        "nuance_summary": "对双非顶尖学霸友好（GPA>=88），核心看算法与硬核专业课均分，就业导向明显。",
+        "deadline": "2027-01-30",
+        "gre_policy": "Optional / Not Required",
+        "stem_status": "STEM-Designated (Eligible for 3-Year OPT)",
+        "detailed_text": "UIUC MCS是全美声誉卓越的高投资回报率授课型CS硕士。与很多只青睐名校标签的项目不同，UIUC极度重视专业课硬指标：无论本科院校是985、211还是高水平双非，只要高等数学、离散数学、数据结构、计算机体系结构与操作系统全满分或90+，录取概率即大幅攀升。该项目不要求GRE，但文书若展现强烈的分布式系统或云计算实操沉淀，能极大拉开身位差距。"
+    },
+    {
+        "program_id": "usc_cs37",
+        "name": "南加州大学 - 计算机科学（37学分转专业）",
+        "nuance_summary": "跨专业/转码第一神项目，招生规模大，标化控（GPA和语言过线即大概率录取），容错率高。",
+        "deadline": "2027-02-15",
+        "gre_policy": "Optional / Not Required",
+        "stem_status": "STEM-Designated (Eligible for 3-Year OPT)",
+        "detailed_text": "USC CS37（Scientists & Engineers）专门为本科为非计算机专业（如机械、土木、电子、数学、商科）的转码学子设计。项目设置2年，前两个学期补足面向对象系统与算法基础。USC是典型的'标化与绩点控'，极其尊重本科GPA（建议3.2+ / 82+），只要语言成绩达标（托福90/雅思6.5）且本科数理课良好，对实习和科研容错率极高，是转码申请者的第一基光保底神校。"
+    },
+    {
+        "program_id": "columbia_ms_cs",
+        "name": "哥伦比亚大学 - 计算机科学理学硕士",
+        "nuance_summary": "偏好高标化背景（托福105+/GRE325+加分明显）及知名科技大厂工程经历，对985/海本认可度极高。",
+        "deadline": "2027-01-15",
+        "gre_policy": "Optional / Highly Recommended",
+        "stem_status": "STEM-Designated (Eligible for 3-Year OPT)",
+        "detailed_text": "哥伦比亚大学CS硕士位于纽约曼哈顿，坐拥华尔街金融科技与东海岸科技巨头的区位优势。招生委员会较为看重本科声誉（偏好985院校与海本），文书若能精准对准其Machine Learning、Systems或Network Security的细分Track，并结合相关大厂工程落地经验，将显著提升录取几率。"
+    },
+    {
+        "program_id": "nyu_ms_ds",
+        "name": "纽约大学 - 数据科学理学硕士",
+        "nuance_summary": "极其看重数学先修课成绩（多元微积分、线代、高阶概率论建议90+），文书中对因果推断与机器学习理论有深度思考者优先。",
+        "deadline": "2027-01-22",
+        "gre_policy": "Optional / Not Required",
+        "stem_status": "STEM-Designated (Eligible for 3-Year OPT)",
+        "detailed_text": "NYU CDS由图灵奖得主Yann LeCun领衔创立，堪称全球数据科学项目的标杆。与很多水课DS不同，NYU CDS极度硬核，第一学期即要求掌握深度概率图模型与凸优化理论。招生官对数学成绩单（Calculus, Linear Algebra, Probability）逐门细审，任何一门数学课低于80分都会成为致命硬伤。"
+    },
+    {
+        "program_id": "ic_computing_msc",
+        "name": "帝国理工学院 - 计算机理学硕士",
+        "nuance_summary": "严卡 211/985 院校名单，均分建议 88+，对纯双非直接系统秒拒，强烈看重数学推导能力与第一作者论文。",
+        "deadline": "2027-03-01 (Rolling)",
+        "gre_policy": "Not Required",
+        "stem_status": "N/A (UK 2-Year Graduate Route Visa)",
+        "detailed_text": "帝国理工计算系是全英乃至欧洲技术门槛最高的学府之一。其录取系统严格配置了中国内地大学List，非211/985院校学生在网申提交后通常因院校不在池内而被自动阻断；对于211院校，均分88分只是起步门槛，985院校建议85+。同时，文书必须展现高水准的数学证明功底与学术严肃性，泛泛的商业实践通常不被计分。"
+    },
+    {
+        "program_id": "ucl_cs_msc",
+        "name": "伦敦大学学院 - 计算机科学理学硕士",
+        "nuance_summary": "UCL Group A List 要求 85+，Group B 要求 90+。文书重合度检测严格，看重跨学科创新应用。",
+        "deadline": "2027-03-31",
+        "gre_policy": "Not Required",
+        "stem_status": "N/A (UK 2-Year Graduate Route Visa)",
+        "detailed_text": "UCL计算机硕士拥有庞大的招生池，将中国大学分为Group A（重点985/211）与Group B（其他院校及双非）。对于双非一本学霸，只要均分达到90分以上且课程匹配度高，依然存在强劲的突围空间。需要格外注意的是，UCL文书严禁套用模板，任何高相似度的套话都会触发学术查重。"
+    },
+    {
+        "program_id": "edinburgh_cs_msc",
+        "name": "爱丁堡大学 - 计算机科学硕士",
+        "nuance_summary": "List 内 Band A/B 严格卡均分，且雅思口语单项严卡 6.5，小分不达标系统自动阻断。",
+        "deadline": "2026-12-10 (Round 1)",
+        "gre_policy": "Not Required",
+        "stem_status": "N/A (UK 2-Year Graduate Route Visa)",
+        "detailed_text": "爱丁堡大学信息学院(Informatics)在欧洲享有盛誉。爱大执行极其清晰透明的Band分级清单（Band A均分85+，Band B均分80+）。尤其致命的是其语言要求：雅思总分7.0且各项小分不得低于6.5（特别是口语和写作）。若学生口语仅有5.5或6.0，系统将无情发放拒信，不提供任何语言班豁免机会。"
+    },
+    {
+        "program_id": "oxford_msc_cs",
+        "name": "牛津大学 - 高级计算机科学理学硕士",
+        "nuance_summary": "全球神级项目，内地几乎只录清北华五及顶尖985第一名（均分90+），文书必须展现极为深邃的数学或理论计算机美感。",
+        "deadline": "2027-01-08",
+        "gre_policy": "Not Required",
+        "stem_status": "N/A (UK 2-Year Graduate Route Visa)",
+        "detailed_text": "牛津大学MSc ACS每年全球招生仅数十人。内地生源集中于清华、北大、上交、浙大等前几名学神，或海本一等荣誉学士。文书绝不能写成流水账，必须围绕某一具体的理论命题（如形式化验证、量子算法、范畴论等）展开深入思辨，附带的研究计划或写作样本(Writing Sample)决定最终成败。"
+    },
+    {
+        "program_id": "lse_msc_ds",
+        "name": "伦敦政治经济学院 - 数据科学理学硕士",
+        "nuance_summary": "LSE List严卡中国大学，极度注重高等数学与概率统计高分（90+），双非需前瞻性科研或量化金融实习佐证。",
+        "deadline": "2027-04-15 (Rolling)",
+        "gre_policy": "Not Required",
+        "stem_status": "N/A (UK 2-Year Graduate Route Visa)",
+        "detailed_text": "LSE统计学系设立的数据科学理学硕士，将统计推断理论与大规模并行计算结合。LSE招生严谨，要求中国Top院校85+、其他认可院校90+。文书中应重点阐释数据科学在金融市场高频数据分析、宏观经济预测或社会网络计量中的方法论突破。"
+    },
+    {
+        "program_id": "nus_mcomp",
+        "name": "新加坡国立大学 - 计算硕士 (MComp)",
+        "nuance_summary": "亚洲顶级计算机殿堂，优先录取 985/211 顶尖梯队（87+）或海本一等学位，转专业需具备极强代码作品集。",
+        "deadline": "2027-02-28",
+        "gre_policy": "Optional / Not Required",
+        "stem_status": "N/A (Singapore Post-Study Employment Pass)",
+        "detailed_text": "NUS计算学院位列全球前列。近年来申请人数爆发，录取门槛水涨船高。除严格审查本科院校档次与均分外，极度青睐具有大厂核心架构实习（阿里、腾讯、字节、Google）或高水平竞赛成果（ACM/Kaggle）的申请人。转专业学生若无扎实先修课和GitHub开源仓库佐证，极易沦为分母。"
+    },
+    {
+        "program_id": "nus_ms_ba",
+        "name": "新加坡国立大学 - 商业分析理学硕士",
+        "nuance_summary": "商学院与计算学院联合授课，录取极具挑剔度，要求数学/编程与商业感知兼备，面试淘汰率超40%。",
+        "deadline": "2027-01-31",
+        "gre_policy": "Strongly Recommended (GMAT/GRE 325+)",
+        "stem_status": "N/A (Singapore Post-Study Employment Pass)",
+        "detailed_text": "NUS MSBA被公认为亚洲第一商业分析硕士。项目兼具高强度Python机器学习建模与管理咨询演练。所有通过初审的申请人必须参加包含现场编程与商业案例剖析的真人面试，淘汰率极高。文书必须展现将复杂的预测模型转化为商业价值(ROI)的落地方案。"
+    },
+    {
+        "program_id": "ntu_ms_ai",
+        "name": "南洋理工大学 - 人工智能理学硕士",
+        "nuance_summary": "对算法与数学背景要求硬核，双非若有高均分（88+）且附带 Kaggle/开源 AI 代码仓库录取概率可观。",
+        "deadline": "2027-02-15",
+        "gre_policy": "Optional / Not Required",
+        "stem_status": "N/A (Singapore Post-Study Employment Pass)",
+        "detailed_text": "NTU人工智能硕士专注于机器学习、生成式模型与自主智能体系统。NTU对双非高均分选手相对友好，只要线性代数、微积分、概率论和数据结构成绩突出，并能提供清晰的代码成果演示，极有希望在激烈角逐中拿到Offer。"
+    },
+    {
+        "program_id": "hku_msc_cs",
+        "name": "香港大学 - 计算机科学理学硕士",
+        "nuance_summary": "语言门槛较低，但实际录取池水涨船高，对大厂实习与技术岗经历权重极高。",
+        "deadline": "2027-01-31",
+        "gre_policy": "Not Required",
+        "stem_status": "N/A (HK IANG Visa 2-Year Stay)",
+        "detailed_text": "港大CS官方雅思要求仅需6.0（单项不低于5.5），托福80，给很多语言受限的工科学霸提供了极佳通路。但近年来生源质量持续攀升，985/211学生平均录取绩点在83-86之间，双非一本学生通常需达到86-88分以上并附带过硬实习方有胜算。"
+    },
+    {
+        "program_id": "hku_msc_fin",
+        "name": "香港大学 - 金融学硕士",
+        "nuance_summary": "港中科顶流金融项目，学费高昂，面试采用严格群面+单面，偏爱头部券商投行实习与扎实量化背景。",
+        "deadline": "2027-02-05",
+        "gre_policy": "Strongly Recommended (GMAT 700+)",
+        "stem_status": "N/A (HK IANG Visa 2-Year Stay)",
+        "detailed_text": "香港大学金融学硕士是亚洲经管申请者的梦校之一。学费高达46万港币，竞争惨烈。招生偏好两类人：1) 纯正金融科班背景，具备CICC、中信、外资投行前台暑期实习经历者；2) 数学/计科/物理背景，立志转向量化投资(Quant)的高数理人才。面试含金量极高，直接决定录取走向。"
+    },
+    {
+        "program_id": "cuhk_msc_cs",
+        "name": "香港中文大学 - 计算机科学理学硕士",
+        "nuance_summary": "中大计算机学科积淀极深，优先招收 985/211 计科科班（83+），双非高均分（87+）兼大厂核心研发经历亦可顺利突围。",
+        "deadline": "2027-02-28",
+        "gre_policy": "Not Required",
+        "stem_status": "N/A (HK IANG Visa 2-Year Stay)",
+        "detailed_text": "中大作为深度学习MMLab的发源地，在学术界地位尊崇。其CS硕士重视学生的基本功扎实度，专业课成绩单要求无明显短板，且看重毕业设计与独立项目能力。文书中突出对底层代码逻辑与架构设计的理解，可获得评审教授青睐。"
+    },
+    {
+        "program_id": "cuhk_msc_ba",
+        "name": "香港中文大学 - 商业分析理学硕士",
+        "nuance_summary": "重视数学建模与商业实习，偏好具备 Python/R 编程能力的理工或经管背景学生。",
+        "deadline": "2027-01-20",
+        "gre_policy": "Strongly Recommended",
+        "stem_status": "N/A (HK IANG Visa 2-Year Stay)",
+        "detailed_text": "港中文商学院BA项目培养兼备定量分析与管理决断能力的复合人才。课程紧凑，涉及运筹优化与数据挖掘。偏好本科学过微积分、统计学且有良好英文表达能力的候选人。"
+    },
+    {
+        "program_id": "hkust_msc_it",
+        "name": "香港科技大学 - 信息技术理学硕士",
+        "nuance_summary": "科大计算机王牌院系背书，硬核课程繁重，对GPA有坚实要求（985/211 82+，双非85+），就业认可度高。",
+        "deadline": "2027-02-01",
+        "gre_policy": "Not Required",
+        "stem_status": "N/A (HK IANG Visa 2-Year Stay)",
+        "detailed_text": "港科大IT硕士由计算机系倾力打造，注重工业界高可用系统架构与现代互联网技术栈。课程虽然紧凑，但给学生提供了大量参与前沿科研或企业项目的机会，在大湾区科技企业中认可度极高。"
+    }
+]
+
+seed_data = {
+    "schema_version": "1.0",
+    "universities": universities,
+    "chinese_uni_tiers": chinese_uni_tiers,
+    "courses": courses,
+    "professors": professors,
+    "programs": programs,
+    "edges": edges,
+    "admission_cases": admission_cases,
+    "program_nuances": program_nuances
+}
+
+def build_seed_json():
+    SEED_DATA_PATH.parent.mkdir(parents=True, exist_ok=True)
+    with open(SEED_DATA_PATH, "w", encoding="utf-8") as f:
+        json.dump(seed_data, f, ensure_ascii=False, indent=2)
+    print(f"Successfully generated seed data at {SEED_DATA_PATH}")
+    print(f"- Universities: {len(universities)}")
+    print(f"- Programs: {len(programs)}")
+    print(f"- Chinese Uni Tiers: {len(chinese_uni_tiers)}")
+    print(f"- Courses: {len(courses)}")
+    print(f"- Professors: {len(professors)}")
+    print(f"- Edges: {len(edges)}")
+    print(f"- Admission Cases: {len(admission_cases)}")
+    print(f"- Program Nuances: {len(program_nuances)}")
+
+if __name__ == "__main__":
+    build_seed_json()

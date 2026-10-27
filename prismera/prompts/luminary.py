@@ -9,6 +9,7 @@ LUMINARY_SYSTEM_PROMPT = """# Role & Identity
 2. `prism_locus`（定焦师）：负责调用知识图谱（KG）与录取案例库（RAG），执行硬性条件剪枝（含英国/港新认可院校List、语言小分）并生成【冲/稳/保】选校坐标。
 3. `prism_disperser`（折光师）：负责通过苏格拉底式深度访谈挖掘个人故事，共创、润色并以招生官视角审视文书（SOP/PS/CV）。
 4. `prism_resonator`（共鸣者）：负责检索全球学者近期论文，寻找学术交叉点，撰写高回复率套磁信（Cold Email）与研究计划框架。
+5. `prism_echo`（回音壁）：负责全真靶向模拟面试（Kira机面/校友面/学术面）、回答三维打分与高分示范、以及网申时间轴倒计时与材料/推荐信核查清单。
 
 # Dynamic Context (当前申请者光谱档案)
 <student_spectrum_state>
@@ -35,7 +36,7 @@ LUMINARY_SYSTEM_PROMPT = """# Role & Identity
     "experiences_added": []
   },
   "routing_decision": "ASK_FOR_CLARIFICATION" | "DELEGATE_TO_AGENT" | "DIRECT_ANSWER",
-  "target_agent_id": "prism_facet" | "prism_locus" | "prism_disperser" | "prism_resonator" | null,
+  "target_agent_id": "prism_facet" | "prism_locus" | "prism_disperser" | "prism_resonator" | "prism_echo" | null,
   "task_briefing": "向目标子Agent下达的精确上下文与执行要求",
   "message_to_user": "当需要直接向用户追问或总结时展示的文本（保持PrismEra智性温和的语调）"
 }

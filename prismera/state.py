@@ -30,6 +30,22 @@ class StudentSpectrumProfile(TypedDict):
     mined_story_fragments: List[str]               # 折光师采访挖掘出的独家故事细节碎片
     target_professors: List[Dict[str, Any]]        # 共鸣者锁定的套磁导师与论文匹配点
 
+    # 文档解析与经历拓扑（由 document_parser 提取维护）
+    prerequisite_grades: Optional[Dict[str, Any]]  # 核心先修课与成绩映射
+    experiences: Optional[List[Dict[str, Any]]]    # 科研/实习经历列表 (含 needs_mining 标记)
+    parsed_documents: Optional[List[str]]          # 已解析导入的文档记录
+
+    # Milestone 4: HITL 断点共创与双向画布状态
+    sop_outline: Optional[List[Dict[str, Any]]]    # Stage 2 结构化大纲 [{section, title, points}]
+    sop_draft: Optional[str]                       # Stage 3/4 当前正文草稿
+    sop_critique: Optional[Dict[str, Any]]         # Stage 4 审片对比与诊断
+    sop_versions: List[Dict[str, Any]]             # SOP 历次大纲/初稿/局部折射版本快照
+    locked_target_program: Optional[Dict[str, Any]]# 用户精修池中锁定的文书目标校项目
+
+    # Milestone 5: 回音壁 (prism_echo) 面试与网申护航状态
+    interview_records: List[Dict[str, Any]]        # 题库、学生作答、打分与优化建议
+    application_timeline: List[Dict[str, Any]]     # 网申时间轴看板与材料核查清单
+
 
 def create_initial_spectrum_profile() -> StudentSpectrumProfile:
     """Creates a blank StudentSpectrumProfile."""
@@ -47,6 +63,16 @@ def create_initial_spectrum_profile() -> StudentSpectrumProfile:
         "sop_stage": 1,
         "mined_story_fragments": [],
         "target_professors": [],
+        "prerequisite_grades": {},
+        "experiences": [],
+        "parsed_documents": [],
+        "sop_outline": [],
+        "sop_draft": "",
+        "sop_critique": {},
+        "sop_versions": [],
+        "locked_target_program": None,
+        "interview_records": [],
+        "application_timeline": [],
     }
 
 
@@ -62,7 +88,7 @@ class LuminaryDecision(BaseModel):
     routing_decision: Literal["ASK_FOR_CLARIFICATION", "DELEGATE_TO_AGENT", "DIRECT_ANSWER"] = Field(
         description="路由决断：追问缺失信息、委派专职智能体、或直接回答"
     )
-    target_agent_id: Optional[Literal["prism_facet", "prism_locus", "prism_disperser", "prism_resonator"]] = Field(
+    target_agent_id: Optional[Literal["prism_facet", "prism_locus", "prism_disperser", "prism_resonator", "prism_echo"]] = Field(
         default=None,
         description="目标子智能体组件 ID"
     )
@@ -85,4 +111,5 @@ class PrismEraState(TypedDict):
     luminary_thought: Optional[str]            # 司光者推理过程
     task_briefing: Optional[str]               # 司光者派发给子 Agent 的任务简报
     latest_response: Optional[str]             # 最新返回给用户的文本
+    pending_human_review: Optional[Literal["locus_matrix", "disperser_outline", None]] # HITL 挂起断点标记
     metadata: Dict[str, Any]                   # 调试或追踪上下文

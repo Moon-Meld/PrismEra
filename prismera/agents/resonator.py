@@ -6,6 +6,7 @@ from typing import Dict, Any, List
 
 from prismera.state import PrismEraState
 from prismera.tools.scholar_tools import fetch_scholar_recent_papers, inspect_lab_openings
+from prismera.db.graph_store import get_graph_store
 
 
 def resonator_node(state: PrismEraState) -> Dict[str, Any]:
@@ -21,23 +22,50 @@ def resonator_node(state: PrismEraState) -> Dict[str, Any]:
             last_user_msg = msg.get("content", "")
             break
 
-    # Heuristically detect requested professor name or default to Indranil Gupta / David Garlan
-    scholar_name = "Indranil Gupta"
-    if "garlan" in last_user_msg.lower() or "david" in last_user_msg.lower():
-        scholar_name = "David Garlan"
-    elif "gupta" in last_user_msg.lower() or "indranil" in last_user_msg.lower():
-        scholar_name = "Indranil Gupta"
-    else:
-        # Check if user mentioned another name
-        custom_match = re.search(r"教授(?:叫|是)?\s*([A-Za-z\s]+)", last_user_msg)
-        if custom_match:
-            scholar_name = custom_match.group(1).strip()
+    # 1. 智能抽取学者姓名（优先匹配知识图谱中的真实教授，支持中英文各种提问句式）
+    scholar_name = ""
+    gs = get_graph_store()
+    all_profs = gs.get_nodes_by_label("Professor")
+    user_lower = last_user_msg.lower()
 
-    # 1. 优先调用确定性文献与招生工具
+    # 先检查知识图谱中的学者
+    for prof in all_profs:
+        p_name = prof.get("name", "")
+        # 匹配全名或姓氏（如 Zafeiriou, Garlan, Gupta, Nieh, Kwiatkowska, Knottenbelt）
+        tokens = [t.lower() for t in p_name.split() if len(t) > 2]
+        if p_name.lower() in user_lower or any(t in user_lower for t in tokens):
+            scholar_name = p_name
+            break
+
+    # 若知识图谱中无直接匹配，提取用户 query 中提及的学者姓名（用于红线压测拦截）
+    if not scholar_name:
+        # Pattern 1: Professor/Prof./Dr. Emily Thorne
+        m1 = re.search(r"(?:Professor|Prof\.|Dr\.)\s+([A-Z][a-z]+(?:\s+[A-Z][a-z]+)*)", last_user_msg, re.IGNORECASE)
+        # Pattern 2: Emily Thorne 教授 / 老师 / 导师
+        m2 = re.search(r"([A-Za-z\s]+?)\s*(?:教授|老师|导师)", last_user_msg)
+        # Pattern 3: 教授叫/是 Emily Thorne
+        m3 = re.search(r"(?:教授|导师|老师)(?:叫|是)?\s*([A-Za-z\s]+)", last_user_msg)
+        # Pattern 4: 给/向 Emily Thorne 写/发/套磁
+        m4 = re.search(r"(?:向|给|联系)\s*(?:[A-Za-z0-9_\u4e00-\u9fa5\s]+?的\s*)?([A-Za-z\s]+?)\s*(?:写|套磁|发|申请|开展)", last_user_msg)
+
+        for candidate in [m1, m2, m3, m4]:
+            if candidate:
+                raw_extracted = candidate.group(1).strip()
+                # 剔除中文干扰词
+                cleaned_name = re.sub(r"^(?:的|一位|某个)\s*", "", raw_extracted).strip()
+                if len(cleaned_name) >= 3 and any(c.isalpha() for c in cleaned_name):
+                    scholar_name = cleaned_name
+                    break
+
+    # 兜底默认学者（仅在完全没有任何姓名指示时）
+    if not scholar_name:
+        scholar_name = "Indranil Gupta"
+
+    # 2. 调用确定性文献与招生工具
     papers = fetch_scholar_recent_papers(scholar_name)
     openings = inspect_lab_openings(scholar_name)
 
-    # 2. 检查学术诚信红线：若工具未能检索到真实文献，严禁捏造
+    # 3. 检查学术诚信红线：若工具未能检索到真实文献，严禁捏造
     if not papers:
         response_markdown = f"""### 【共鸣者 · 学术诚信警示与信息校准】
 
@@ -56,21 +84,27 @@ def resonator_node(state: PrismEraState) -> Dict[str, Any]:
             "active_agent": None,
         }
 
-    # 3. 提取真实论文并进行学术共振匹配
+    # 4. 提取真实论文并进行学术共振匹配
     target_paper = papers[0]
     paper_title = target_paper["title"]
     paper_year = target_paper["year"]
     paper_venue = target_paper["venue"]
-    future_work = target_paper["future_work_bottleneck"]
+    future_work = target_paper.get("future_work_bottleneck", "System scalability under real-world contention")
+    
+    prof_node = gs.find_professor_by_name(scholar_name) or {}
+    research_areas = prof_node.get("research_areas", ["Systems Engineering"])
+    primary_area = research_areas[0] if research_areas else "Systems Engineering"
+    lab_name = openings.get("lab_name", "Research Laboratory")
+    scholar_last_name = openings['scholar_name'].split()[-1]
 
-    # 4. 撰写严格符合 180 - 240 词的 220 词黄金标准套磁信
-    cold_email_body = f"""Dear Professor {openings['scholar_name'].split()[-1]},
+    # 5. 撰写严格符合 180 - 240 词的 220 词黄金标准套磁信
+    cold_email_body = f"""Dear Professor {scholar_last_name},
 
-I am an incoming applicant for Fall 2027 graduate research, with a background in systems engineering and distributed protocols. I recently read your {paper_venue} paper, "{paper_title}," with keen interest. Your exploration of gossip convergence under asymmetric latency was illuminating, particularly your note regarding {future_work.lower()}
+I am an incoming applicant for Fall 2027 graduate research, with a background in {primary_area.lower()} and distributed systems. I recently read your {paper_venue} ({paper_year}) publication, "{paper_title}," with keen interest. Your empirical analysis and theoretical framing were illuminating, particularly your note regarding {future_work.lower()}
 
-In my recent undergraduate research, I focused on high-throughput asynchronous messaging pipelines. Specifically, I engineered an eBPF-monitored scheduler that mitigates network jitter under synthetic 15% packet drops, achieving a 28% reduction in failover recovery latency. Given your laboratory’s recent focus on partitioned edge meshes at the {openings['lab_name']}, I believe my hands-on systems debugging and kernel benchmarking background align closely with your current technical agenda.
+In my recent undergraduate research and engineering practicum, I focused on runtime performance bottlenecks closely related to {primary_area.lower()}. Specifically, I profiled concurrency bottlenecks under stress conditions and developed kernel-level monitoring hooks that cut synchronization latency under bursty loads. Given your laboratory’s recent initiatives at the {lab_name}, I believe my hands-on benchmarking background aligns closely with your technical agenda.
 
-I noticed that your group is actively recruiting doctoral researchers for Fall 2027. I would welcome the opportunity to contribute to your lab's next-generation systems initiatives. I have attached my CV and transcript for your review. Would you be open to a brief 15-minute introductory call in the coming weeks to discuss prospective synergy?
+I noticed that your group is actively reviewing doctoral applications for Fall 2027. I would welcome the opportunity to contribute to your laboratory's ongoing research initiatives. I have attached my CV and transcript for your review. Would you be open to a brief 15-minute introductory call in the coming weeks to discuss prospective synergy?
 
 Thank you for your time and guidance.
 
@@ -91,7 +125,7 @@ Sincerely,
   - 论文：*“{paper_title}”* ({paper_venue}, {paper_year})
   - 导师面临的瓶颈/展望：*{future_work}*
 - **共鸣切入点**：
-  将导师在非对称网络下的 Gossip 收敛挑战，无缝对接你在异步调度管道与 eBPF 网络容错上的工程产出，展现“进组即可推进代码”的极高信噪比。
+  将导师在 {primary_area} 领域的最新前沿挑战，无缝对接你在系统评测与高并发容错上的工程实践，展现“进组即可推进代码”的极高信噪比。
 
 ---
 

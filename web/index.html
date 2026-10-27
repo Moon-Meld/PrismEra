@@ -1,0 +1,2376 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PrismEra · 棱镜纪 | 暗黑光学美学工作台</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💎</text></svg>">
+</head>
+<body>
+  <div class="optic-grid-bg"></div>
+  <div class="optic-radial-glow"></div>
+
+  <!-- Top Prism Header -->
+  <header class="prism-header">
+    <div class="header-left">
+      <div class="brand-logo">
+        <span class="logo-prism">✦</span>
+        <span class="brand-text">Prism<span class="brand-accent">Era</span></span>
+        <span class="brand-sub">棱镜纪 · 暗黑光学工作台</span>
+      </div>
+      <div class="agent-live-pill" id="agent-indicator">
+        <span class="pulse-orb orb-luminary"></span>
+        <span class="agent-title-text" id="active-agent-label">【司光者 · The Luminary】中枢光轴</span>
+      </div>
+    </div>
+
+    <div class="header-right">
+      <!-- Multi-student Profile Switcher -->
+      <div class="profile-switcher-wrapper" id="profile-switcher-wrapper">
+        <button class="btn-profile-switcher" id="profile-switcher-btn" title="点击切换或管理学生档案">
+          <span class="profile-avatar">👤</span>
+          <div class="profile-info-compact">
+            <span class="profile-name" id="current-profile-name">学员档案</span>
+            <span class="profile-session-id" id="session-id-display">prism_default</span>
+          </div>
+          <span class="switcher-arrow">▾</span>
+        </button>
+        <div class="profile-dropdown hidden" id="profile-dropdown">
+          <div class="dropdown-header">
+            <span class="dropdown-title">✦ 棱镜学生档案矩阵</span>
+            <button class="btn-dropdown-action" id="dropdown-new-profile-btn">+ 新建档案</button>
+          </div>
+          <div class="profile-list-scroll" id="profile-dropdown-list">
+            <!-- Dynamically populated via JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Export Dossier Button -->
+      <button class="btn-export-dossier" id="btn-export-dossier" title="一键编译导出《PrismEra 个人升学光谱全案报告》">
+        <span class="export-icon">💎</span>
+        <span class="export-text">导出全案报告</span>
+        <span class="export-pill">交付中枢</span>
+      </button>
+
+      <!-- Prism System & Graph Console Button -->
+      <button class="btn-console-trigger" id="btn-open-console" title="打开棱镜控制台 · 系统与图谱管理中心">
+        <span class="console-icon">⚙️</span>
+        <span class="console-text">系统控制台</span>
+        <span class="console-pill">Admin</span>
+      </button>
+
+      <button class="btn-ghost" id="new-session-btn" title="重置并开启新会话">
+        <span class="btn-icon">↺</span> 新会话
+      </button>
+      <div class="status-indicator">
+        <span class="status-dot"></span>
+        <span class="status-text" id="gateway-status">网关在线</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Dual Column Main Layout -->
+  <main class="workbench-container">
+    <!-- LEFT PANE: 40% Optical Chat Stream -->
+    <section class="left-pane-chat">
+      <div class="chat-header">
+        <div class="chat-header-title">
+          <span class="optic-symbol">◈</span> 光学多智能体对话流 (Optical Stream)
+        </div>
+        <div class="chat-header-actions">
+          <span class="agent-legend">
+            <span class="agent-dot dot-luminary" title="司光者 Luminary"></span>
+            <span class="agent-dot dot-facet" title="切面师 Facet"></span>
+            <span class="agent-dot dot-locus" title="定焦师 Locus"></span>
+            <span class="agent-dot dot-disperser" title="折光师 Disperser"></span>
+            <span class="agent-dot dot-resonator" title="共鸣者 Resonator"></span>
+            <span class="agent-dot dot-echo" title="回音壁 Echo"></span>
+          </span>
+        </div>
+      </div>
+
+      <!-- Messages Stream Scroll Area -->
+      <div class="chat-messages" id="chat-messages">
+        <!-- Initial Welcome Message from Luminary -->
+        <div class="message-wrapper assistant agent-luminary">
+          <div class="agent-badge">
+            <span class="agent-badge-icon">✦</span>
+            <span class="agent-badge-name">司光者 · The Luminary</span>
+            <span class="agent-badge-role">中枢光轴 · 意图解析</span>
+          </div>
+          <div class="message-bubble">
+            <div class="bubble-content">
+              <p>你好，我是 <strong>PrismEra（棱镜纪）</strong> 的中枢主控——<strong>【司光者 · The Luminary】</strong>。</p>
+              <p>整座暗黑光学阵列已为你校准就绪：</p>
+              <ul>
+                <li>🔬 <strong>【切面师】</strong>：成绩单切面诊断、WES GPA 算法折算与先修课图谱核对；</li>
+                <li>🎯 <strong>【定焦师】</strong>：前置参数硬核剪枝、三级三维选校矩阵与零幻觉定校；</li>
+                <li>✍️ <strong>【折光师】</strong>：四阶状态机苏格拉底访谈、独家叙事大纲与去 AI 化文书淬炼；</li>
+                <li>📧 <strong>【共鸣者】</strong>：学术诚信红线验证、教授文献学术共振与 220 词黄金套磁信。</li>
+              </ul>
+              <p>轻点下方快捷意图胶囊，或直接向我陈述你的学术背景与规划诉求，我们即刻汇聚原光。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Action Chips -->
+      <div class="quick-chips-bar" id="quick-chips">
+        <button class="chip-btn" data-prompt="你好，我是大三学生，想了解一下留学规划。">
+          🌟 1. 首次咨询触达
+        </button>
+        <button class="chip-btn" data-prompt="我想直接做选校定位，帮我看看能申哪些好学校？">
+          ⚠️ 2. 选校拦截测试
+        </button>
+        <button class="chip-btn" data-prompt="我是浙江大学软件工程本科，目前均分88.5分，雅思总分7.5、口语7.0，目标是美研和英研CS项目！">
+          🎯 3. 补齐四维指标定焦
+        </button>
+        <button class="chip-btn" data-prompt="定校很有底了！请切面师帮我深度诊断一下成绩单和先修课，看看是否有结构性暗区？">
+          🔬 4. 切面师先修课诊断
+        </button>
+        <button class="chip-btn" data-prompt="选校和背景都清晰了，我想开始准备 CMU 软件工程项目的 SOP 文书，怎么写比较出彩？">
+          ✍️ 5. 折光师文书追问
+        </button>
+        <button class="chip-btn" data-prompt="我们在做分布式消息队列时，遇到网络分区下传统心跳算法导致雪崩的问题。我亲自编写了基于异步环形缓冲区的自适应调度器，调整了超时重试窗口，使系统在15%网络丢包下延迟降低了32ms。">
+          🧩 6. 回复工程细节生成大纲
+        </button>
+        <button class="chip-btn" data-prompt="我还想申请 UIUC 的分布式系统博士，想联系 Indranil Gupta 教授，请检索他的最新论文并帮我写一封高信噪比套磁信。">
+          📧 7. 共鸣者文献套磁信
+        </button>
+        <button class="chip-btn" data-prompt="请回音壁为我发起卡耐基梅隆 MSIT-SE 项目的 Kira 模拟面试第一题，并对我作答进行评分。">
+          ⚡ 8. 回音壁 Kira 模拟面
+        </button>
+        <button class="chip-btn" data-prompt="请帮我梳理当前锁定项目的网申时间轴、倒计时及推荐信催交节点。">
+          📅 9. 网申时间轴与推荐信催交
+        </button>
+      </div>
+
+      <!-- Input Bar -->
+      <div class="chat-input-wrapper">
+        <textarea
+          id="chat-input"
+          class="chat-input-box"
+          rows="1"
+          placeholder="向 PrismEra 光学阵列提问（Enter 发送，Shift+Enter 换行）..."
+        ></textarea>
+        <button class="btn-send" id="send-btn" title="发送 (Enter)">
+          <span class="send-beam">✦</span> 发送
+        </button>
+      </div>
+    </section>
+
+    <!-- RIGHT PANE: 60% Dynamic Spectrum Canvas -->
+    <section class="right-pane-canvas">
+      <!-- Dynamic Canvas Top Tabs -->
+      <div class="canvas-tabs-bar">
+        <button class="canvas-tab active" data-tab="profile" id="tab-btn-profile">
+          <span class="tab-icon">◈</span>
+          <span class="tab-title">原石光谱档案</span>
+          <span class="tab-badge" id="profile-status-badge">未完备</span>
+        </button>
+        <button class="canvas-tab" data-tab="matrix" id="tab-btn-matrix">
+          <span class="tab-icon">✦</span>
+          <span class="tab-title">三维选校坐标矩阵</span>
+          <span class="tab-badge" id="matrix-count-badge">0 项</span>
+        </button>
+        <button class="canvas-tab" data-tab="sop" id="tab-btn-sop">
+          <span class="tab-icon">✧</span>
+          <span class="tab-title">暗室文书画布</span>
+          <span class="tab-badge" id="sop-stage-badge">Stage 1</span>
+        </button>
+        <button class="canvas-tab" data-tab="echo" id="tab-btn-echo">
+          <span class="tab-icon">⚡</span>
+          <span class="tab-title">回音面试与网申日程</span>
+          <span class="tab-badge" id="echo-status-badge">0 记录</span>
+        </button>
+      </div>
+
+      <!-- TAB 1: 原石光谱档案 -->
+      <div class="canvas-view-content active" id="view-profile">
+        <!-- Completeness Meter -->
+        <div class="canvas-card meter-card">
+          <div class="meter-header">
+            <div class="meter-title">
+              <span class="optic-indicator"></span> 四维基准指标完备度标尺 (Baseline Completeness)
+            </div>
+            <div class="meter-score" id="completeness-percentage">0%</div>
+          </div>
+          <div class="meter-bar-container">
+            <div class="meter-bar-fill" id="completeness-bar-fill" style="width: 0%;"></div>
+          </div>
+          <div class="meter-checkpoints" id="meter-checkpoints">
+            <div class="checkpoint" id="chk-tier">院校层级 <span class="chk-status">✕</span></div>
+            <div class="checkpoint" id="chk-gpa">GPA标尺 <span class="chk-status">✕</span></div>
+            <div class="checkpoint" id="chk-major">专业学科 <span class="chk-status">✕</span></div>
+            <div class="checkpoint" id="chk-target">目标与语言 <span class="chk-status">✕</span></div>
+          </div>
+        </div>
+
+        <!-- 4 Core Hard Metric Cards Grid -->
+        <div class="metrics-grid">
+          <div class="metric-glass-card" id="card-undergrad">
+            <div class="metric-card-header">
+              <span class="metric-card-icon">🏛️</span>
+              <span class="metric-card-title">本科院校 & 梯队</span>
+            </div>
+            <div class="metric-card-value" id="val-undergrad">尚未提供</div>
+            <div class="metric-card-sub" id="val-undergrad-sub">英国/港新名单准入：待校准</div>
+          </div>
+
+          <div class="metric-glass-card" id="card-gpa">
+            <div class="metric-card-header">
+              <span class="metric-card-icon">📊</span>
+              <span class="metric-card-title">GPA 均分与标尺</span>
+            </div>
+            <div class="metric-card-value" id="val-gpa">尚未提供</div>
+            <div class="metric-card-sub" id="val-gpa-sub">折算 4.0 / WES 算法：待测定</div>
+          </div>
+
+          <div class="metric-glass-card" id="card-language">
+            <div class="metric-card-header">
+              <span class="metric-card-icon">🗣️</span>
+              <span class="metric-card-title">语言与标化水位</span>
+            </div>
+            <div class="metric-card-value" id="val-language">尚未提供</div>
+            <div class="metric-card-sub" id="val-language-sub">口语小分阻断检测：待检测</div>
+          </div>
+
+          <div class="metric-glass-card" id="card-target">
+            <div class="metric-card-header">
+              <span class="metric-card-icon">🎯</span>
+              <span class="metric-card-title">申请靶向与方向</span>
+            </div>
+            <div class="metric-card-value" id="val-target">尚未设定</div>
+            <div class="metric-card-sub" id="val-target-sub">目标地区 & 专业方向</div>
+          </div>
+        </div>
+
+        <!-- Mined Story Fragments -->
+        <div class="canvas-card">
+          <div class="card-title-row">
+            <div class="card-title">
+              <span class="optic-indicator purple"></span> 折光师已采集故事碎片标签 (Mined Story Fragments)
+            </div>
+            <span class="card-counter" id="fragment-counter">0 碎片</span>
+          </div>
+          <div class="fragment-tags-container" id="fragment-tags-container">
+            <div class="empty-state-notice">暂无已采集碎片，向【折光师】回复真实科研与工程挑战后将自动提炼收录。</div>
+          </div>
+        </div>
+
+        <!-- Quick Profile Editor / Manual Upload Form -->
+        <div class="canvas-card editor-card">
+          <div class="card-title-row">
+            <div class="card-title">
+              <span class="optic-indicator cyan"></span> 手动校准学生硬指标 / 上传 JSON (Sync Profile)
+            </div>
+          </div>
+          <div class="profile-form-grid">
+            <div class="form-group">
+              <label>本科院校 (Undergrad Name)</label>
+              <input type="text" id="input-prof-school" placeholder="例如: 浙江大学">
+            </div>
+            <div class="form-group">
+              <label>院校层级 (Tier)</label>
+              <select id="input-prof-tier">
+                <option value="">-- 请选择 --</option>
+                <option value="985">985 院校</option>
+                <option value="211">211 院校</option>
+                <option value="双非一本">双非一本</option>
+                <option value="海本">海本 (Overseas)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>当前专业 (Major)</label>
+              <input type="text" id="input-prof-major" placeholder="例如: 软件工程">
+            </div>
+            <div class="form-group">
+              <label>原始均分 / GPA</label>
+              <input type="text" id="input-prof-gpa" placeholder="例如: 88.5/100 或 3.8/4.0">
+            </div>
+            <div class="form-group">
+              <label>雅思总分与小分</label>
+              <input type="text" id="input-prof-ielts" placeholder="例如: 7.5 (口语 7.0)">
+            </div>
+            <div class="form-group">
+              <label>目标国家与专业</label>
+              <input type="text" id="input-prof-targets" placeholder="例如: US, UK / CS">
+            </div>
+          </div>
+          <div class="form-actions-row">
+            <button class="btn-primary" id="save-profile-btn">
+              <span class="btn-icon">✓</span> 保存并同步到光谱中枢
+            </button>
+            <button class="btn-ghost" id="json-paste-toggle-btn">
+              <span class="btn-icon">{}</span> 粘贴 JSON 格式
+            </button>
+          </div>
+          <div class="json-paste-area hidden" id="json-paste-area">
+            <textarea id="json-input" rows="4" placeholder='{"undergrad_name": "清华大学", "gpa_raw": "89/100", "target_regions": ["US"], "target_majors": ["CS"]}'></textarea>
+            <button class="btn-primary-sm" id="apply-json-btn">应用 JSON</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 2: 三维选校坐标矩阵 -->
+      <div class="canvas-view-content" id="view-matrix">
+        <!-- HITL School Matrix Status Banner -->
+        <div class="hitl-banner hidden" id="locus-hitl-banner">
+          <div class="hitl-banner-left">
+            <span class="pulse-orb orb-amber"></span>
+            <div class="hitl-text-wrap">
+              <span class="hitl-badge-label">【定焦师 · 人工确认挂起】</span>
+              <span class="hitl-desc">知识图谱初始定档矩阵已生成。你可在下方自由拖拽/调整档次、剔除不感兴趣项目或锁定文书目标校。</span>
+            </div>
+          </div>
+          <button class="btn-primary-glow-sm" id="confirm-matrix-btn">
+            ✓ 确认选校矩阵并锁定
+          </button>
+        </div>
+
+        <div class="matrix-overview-banner" id="matrix-banner">
+          <div class="banner-badge">✦ GRAPH RAG 定焦坐标系</div>
+          <div class="banner-text" id="matrix-overview-text">
+            尚未执行三步定焦。提供【院校层级、均分、专业、地区】四维基准指标后，定焦师将基于知识图谱输出冲刺/核心/稳妥三维矩阵。
+          </div>
+        </div>
+
+        <div class="school-matrix-columns">
+          <!-- Column 1: 远光·冲刺 -->
+          <div class="matrix-column reach-col">
+            <div class="col-header">
+              <div class="col-title-wrap">
+                <span class="col-dot reach-dot"></span>
+                <span class="col-title">【远光 · 冲刺档】</span>
+              </div>
+              <span class="col-tag">Reach (20%-30%)</span>
+            </div>
+            <div class="col-cards-container" id="reach-cards-container">
+              <div class="empty-column-placeholder">暂无冲刺档项目</div>
+            </div>
+          </div>
+
+          <!-- Column 2: 聚光·核心 -->
+          <div class="matrix-column match-col">
+            <div class="col-header">
+              <div class="col-title-wrap">
+                <span class="col-dot match-dot"></span>
+                <span class="col-title">【聚光 · 核心档】</span>
+              </div>
+              <span class="col-tag">Match (40%-70%)</span>
+            </div>
+            <div class="col-cards-container" id="match-cards-container">
+              <div class="empty-column-placeholder">暂无核心匹配项目</div>
+            </div>
+          </div>
+
+          <!-- Column 3: 基光·稳妥 -->
+          <div class="matrix-column safety-col">
+            <div class="col-header">
+              <div class="col-title-wrap">
+                <span class="col-dot safety-dot"></span>
+                <span class="col-title">【基光 · 稳妥档】</span>
+              </div>
+              <span class="col-tag">Safety (>75%)</span>
+            </div>
+            <div class="col-cards-container" id="safety-cards-container">
+              <div class="empty-column-placeholder">暂无稳妥保底项目</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 3: 暗室文书画布 -->
+      <div class="canvas-view-content" id="view-sop">
+        <!-- 4-Stage Stepper -->
+        <div class="sop-stepper-card">
+          <div class="stepper-title">
+            <span class="optic-indicator purple"></span> 【折光师】四阶状态机流水线 (SOP 4-Stage Engine)
+          </div>
+          <div class="stepper-track">
+            <div class="step-node active" id="step-node-1">
+              <div class="node-circle">1</div>
+              <div class="node-label">原光采集与追问</div>
+              <div class="node-sub">苏格拉底访谈</div>
+            </div>
+            <div class="step-line" id="line-1-2"></div>
+            <div class="step-node" id="step-node-2">
+              <div class="node-circle">2</div>
+              <div class="node-label">光谱大纲构建</div>
+              <div class="node-sub">Narrative Blueprint</div>
+            </div>
+            <div class="step-line" id="line-2-3"></div>
+            <div class="step-node" id="step-node-3">
+              <div class="node-circle">3</div>
+              <div class="node-label">执笔成文淬炼</div>
+              <div class="node-sub">去 AI 化工程质感</div>
+            </div>
+            <div class="step-line" id="line-3-4"></div>
+            <div class="step-node" id="step-node-4">
+              <div class="node-circle">4</div>
+              <div class="node-label">暗室审片对比</div>
+              <div class="node-sub">招生官视角 Critique</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SOP Content Sections -->
+        <div class="sop-content-panels">
+          <!-- Stage 2: Narrative Blueprint -->
+          <div class="canvas-card sop-panel" id="sop-blueprint-panel">
+            <div class="card-title-row">
+              <div class="card-title">
+                <span class="optic-indicator amber"></span> 独家折光叙事大纲 (Narrative Blueprint)
+              </div>
+              <div class="blueprint-controls">
+                <span class="blueprint-badge" id="blueprint-status">待提炼</span>
+              </div>
+            </div>
+
+            <!-- HITL Outline Confirmation Action Bar -->
+            <div class="outline-hitl-banner hidden" id="outline-hitl-banner">
+              <div class="outline-hitl-text">
+                <span class="pulse-orb orb-purple"></span>
+                <span><strong>【折光师 · HITL断点】</strong> 光谱大纲已提炼就绪。可在下方直接增删改段落要点，确认满意后点击右侧按钮推进执笔。</span>
+              </div>
+              <button class="btn-primary-glow" id="confirm-outline-btn">
+                ✦ 确认大纲并执笔成文 (Stage 3)
+              </button>
+            </div>
+
+            <div class="blueprint-boxes" id="blueprint-boxes">
+              <div class="blueprint-box" data-section="The Hook">
+                <div class="bp-box-header">
+                  <span>1. 入射角 (The Hook)</span>
+                  <button class="btn-add-point" data-section="The Hook" title="添加要点">+ 要点</button>
+                </div>
+                <div class="bp-points-list" id="bp-points-hook">
+                  <div class="bp-point-item">
+                    <span class="bp-bullet">▸</span>
+                    <input type="text" class="bp-point-input" value="切入真实系统并发痛点，抛弃平庸动机，呈现工程现场第一反应。">
+                    <button class="btn-del-point" title="删除要点">✕</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="blueprint-box" data-section="Progressive Body">
+                <div class="bp-box-header">
+                  <span>2. 折射链条 (Progressive Body)</span>
+                  <button class="btn-add-point" data-section="Progressive Body" title="添加要点">+ 要点</button>
+                </div>
+                <div class="bp-points-list" id="bp-points-body">
+                  <div class="bp-point-item">
+                    <span class="bp-bullet">▸</span>
+                    <input type="text" class="bp-point-input" value="核心模块参数权衡 ➔ 理论与现实断层 ➔ 倒逼自研算法或课程求索。">
+                    <button class="btn-del-point" title="删除要点">✕</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="blueprint-box" data-section="Why School">
+                <div class="bp-box-header">
+                  <span>3. 汇聚焦点 (Why School)</span>
+                  <button class="btn-add-point" data-section="Why School" title="添加要点">+ 要点</button>
+                </div>
+                <div class="bp-points-list" id="bp-points-why">
+                  <div class="bp-point-item">
+                    <span class="bp-bullet">▸</span>
+                    <input type="text" class="bp-point-input" value="严丝合缝衔接目标项目特定课程与 Capstone，提出带入课堂的真实工程疑问。">
+                    <button class="btn-del-point" title="删除要点">✕</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Stage 3 & 4: Draft & Admissions Critique Comparison -->
+          <div class="canvas-card sop-panel" id="sop-draft-panel">
+            <div class="card-title-row">
+              <div class="card-title">
+                <span class="optic-indicator purple"></span> 去 AI 化成文与招生官暗室审片 (Draft & Admissions Critique)
+              </div>
+              <div class="anti-ai-shield" title="全篇禁用塑料空泛词汇">
+                <span class="shield-icon">🛡️</span> 去 AI 塑料词汇认证通过
+              </div>
+            </div>
+
+            <!-- Version Switcher & Rollback Toolbar -->
+            <div class="version-control-toolbar" id="version-control-toolbar">
+              <div class="version-select-box">
+                <span class="v-icon">⎇</span>
+                <span class="v-label">文书版本快照:</span>
+                <select id="sop-version-select" class="version-dropdown">
+                  <option value="">暂无已记录快照</option>
+                </select>
+              </div>
+              <div class="version-actions">
+                <button class="btn-ghost-sm" id="rollback-version-btn" title="回滚到选中的历史版本快照">
+                  ↺ 回滚至此版本
+                </button>
+                <span class="version-tag" id="current-version-tag">最新初稿</span>
+              </div>
+            </div>
+
+            <!-- Inline Selection Floating Action Pill -->
+            <button class="floating-refract-pill hidden" id="floating-refract-pill">
+              ✦ 局部折射 (Inline Refraction)
+            </button>
+
+            <!-- Inline Refraction Workbench -->
+            <div class="refraction-workbench hidden" id="refraction-workbench">
+              <div class="refract-header">
+                <div class="refract-title-wrap">
+                  <span class="optic-symbol cyan">✦</span>
+                  <span class="refract-title">暗室局部折射 (Inline Refraction Workbench)</span>
+                </div>
+                <button class="btn-close-sm" id="close-refract-btn">✕</button>
+              </div>
+              <div class="refract-source-preview">
+                <span class="preview-label">选中片段 (Selection)：</span>
+                <blockquote class="preview-quote" id="refract-selected-preview"></blockquote>
+              </div>
+              <div class="refract-chips-container">
+                <span class="chips-hint">快捷精修意图：</span>
+                <button class="refract-chip" data-inst="结合我刚补充的腾讯实习指标强化这一句">💡 强化腾讯实习指标</button>
+                <button class="refract-chip" data-inst="精简字数并增强动作感">✂️ 精简字数</button>
+                <button class="refract-chip" data-inst="去AI塑料味，增强现场技术感">🛡️ 去AI塑料感</button>
+                <button class="refract-chip" data-inst="强调系统并发与高可用权衡">⚙️ 突出并发容错</button>
+              </div>
+              <div class="refract-input-bar">
+                <input
+                  type="text"
+                  id="refract-instruction-input"
+                  class="refract-input"
+                  placeholder="输入针对选中句子的精修指令（如：结合我刚补充的腾讯实习指标强化这一句）..."
+                />
+                <button class="btn-primary-glow-sm" id="execute-refract-btn">
+                  ⚡ 执行折射
+                </button>
+              </div>
+
+              <!-- High Contrast Diff View -->
+              <div class="diff-view-panel hidden" id="diff-view-panel">
+                <div class="diff-header-bar">
+                  <span class="diff-badge">✦ 局部折射 Diff 词级对比 (High-Contrast Diff)</span>
+                  <div class="diff-actions-wrap">
+                    <button class="btn-accept-diff" id="accept-diff-btn">
+                      ✓ 采纳修改 (Accept)
+                    </button>
+                    <button class="btn-reject-diff" id="reject-diff-btn">
+                      ✕ 驳回 (Reject)
+                    </button>
+                  </div>
+                </div>
+                <div class="diff-render-box" id="diff-render-box"></div>
+              </div>
+            </div>
+
+            <div class="critique-comparison-container" id="critique-container">
+              <div class="draft-pane">
+                <div class="pane-header">
+                  <span>✦ 淬炼成文正文 (选中文本可发起局部折射)</span>
+                  <button class="btn-ghost-sm" id="copy-draft-btn">复制文本</button>
+                </div>
+                <div class="draft-text-box selectable-text" id="draft-text-box">
+                  When our distributed message queue dropped 14% of heartbeats under simulated cross-rack latency, I realized that textbook consensus models rarely anticipate real-world network partitioning...
+                </div>
+              </div>
+
+              <div class="critique-pane">
+                <div class="pane-header">
+                  <span>🔴 招生官暗室审片弱点定位</span>
+                </div>
+                <div class="critique-content" id="critique-content">
+                  <div class="critique-diagnosis">
+                    <strong>弱点诊断</strong>：部分过渡句仍略带概括腔调，需补足具体系统度量指标（如 P99 延迟与吞吐量）。
+                  </div>
+                  <div class="critique-comparison">
+                    <div class="comp-box original">
+                      <span class="comp-label">原文</span>
+                      <em>“This challenge crystallized my pursuit: resilient distributed architecture demands more than localized performance patches...”</em>
+                    </div>
+                    <div class="comp-box revised">
+                      <span class="comp-label">重构方案</span>
+                      <em>“Observing our telemetry logs under simulated stress exposed a fundamental principle: isolated patches cannot substitute for invariant-driven concurrency guarantees...”</em>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 4: 回音面试与网申日程 -->
+      <div class="canvas-view-content" id="view-echo">
+        <!-- Echo Header Banner -->
+        <div class="canvas-card banner-card echo-banner" id="echo-banner">
+          <div class="banner-badge-row">
+            <span class="banner-pill pill-echo">⚡ 回音壁 · The Echo</span>
+            <span class="banner-sub">电光蓝 #38BDF8 · 全真靶向模拟面试与网申护航官</span>
+          </div>
+          <p class="banner-desc" id="echo-overview-text">
+            声学与光学的交汇聚焦，消除表达杂音，校准作答振幅。提供 Kira 录像机面、校友行为面与导师学术面限时实训，依托【内容相关性】、【STAR结构完整度】与【语言地道度】三维雷达打分并输出高分示范；自动编排全球学府各轮次 Deadline 倒计时看板、推荐信（RL）阶梯式催交表与材料核查清单。
+          </p>
+          <div class="echo-action-toolbar">
+            <button class="btn-echo-action" id="btn-trigger-kira">
+              🎙️ 发起 Kira 模拟面 (45s/90s)
+            </button>
+            <button class="btn-echo-action" id="btn-trigger-alumni">
+              🤝 发起校友行为面 (STAR)
+            </button>
+            <button class="btn-echo-action" id="btn-trigger-tech">
+              🔬 发起导师学术面
+            </button>
+            <button class="btn-echo-action btn-accent-echo" id="btn-trigger-timeline">
+              📅 一键测算网申时间轴
+            </button>
+          </div>
+        </div>
+
+        <!-- SECTION 1: 网申截止日期时间轴与材料核验 -->
+        <div class="canvas-card">
+          <div class="card-title-row">
+            <div class="card-title">
+              <span class="optic-indicator sky"></span> 1. 项目截止日期（Deadline）矩阵与倒计时看板
+            </div>
+            <span class="card-counter" id="timeline-program-counter">3 项目待办</span>
+          </div>
+          <div class="echo-timeline-grid" id="echo-timeline-cards">
+            <!-- Program 1 -->
+            <div class="timeline-program-card border-reach">
+              <div class="tl-card-header">
+                <span class="badge-tag reach">远光·冲刺 Reach</span>
+                <span class="countdown-badge urgent">剩余 78 天</span>
+              </div>
+              <h4 class="tl-prog-title">卡耐基梅隆大学 - 软件工程硕士 (MSIT-SE)</h4>
+              <div class="tl-prog-en">Carnegie Mellon University · School of Computer Science</div>
+              <div class="tl-meta-row">
+                <span class="tl-meta-item">📅 官方截点: <strong>2027-01-15 (Final Round)</strong></span>
+                <span class="tl-meta-item">📮 推荐信目标: <strong>距截点前10天 (2027-01-05)</strong></span>
+              </div>
+              <div class="tl-req-pills">
+                <span class="req-pill">网申填报与缴费</span>
+                <span class="req-pill">中英文盖章成绩单</span>
+                <span class="req-pill">3封推荐信 Submitted</span>
+                <span class="req-pill">SOP定稿上传</span>
+              </div>
+            </div>
+
+            <!-- Program 2 -->
+            <div class="timeline-program-card border-match">
+              <div class="tl-card-header">
+                <span class="badge-tag match">聚光·核心 Match</span>
+                <span class="countdown-badge approaching">剩余 47 天</span>
+              </div>
+              <h4 class="tl-prog-title">伊利诺伊大学香槟分校 - 计算机科学硕士 (MCS)</h4>
+              <div class="tl-prog-en">University of Illinois Urbana-Champaign · CS Dept</div>
+              <div class="tl-meta-row">
+                <span class="tl-meta-item">📅 官方截点: <strong>2026-12-15 (Priority Round)</strong></span>
+                <span class="tl-meta-item">📮 推荐信目标: <strong>距截点前10天 (2026-12-05)</strong></span>
+              </div>
+              <div class="tl-req-pills">
+                <span class="req-pill">托福送分 (ETS Code 1836)</span>
+                <span class="req-pill">先修课成绩单</span>
+                <span class="req-pill">推荐人系统确认</span>
+              </div>
+            </div>
+
+            <!-- Program 3 -->
+            <div class="timeline-program-card border-reach">
+              <div class="tl-card-header">
+                <span class="badge-tag reach">远光·冲刺 Reach</span>
+                <span class="countdown-badge normal">剩余 124 天</span>
+              </div>
+              <h4 class="tl-prog-title">帝国理工学院 - 计算机理学硕士 (MSc Computing)</h4>
+              <div class="tl-prog-en">Imperial College London · Department of Computing</div>
+              <div class="tl-meta-row">
+                <span class="tl-meta-item">📅 官方截点: <strong>2027-03-01 (Rolling Round)</strong></span>
+                <span class="tl-meta-item">📮 推荐信目标: <strong>滚动录取建议尽早递交</strong></span>
+              </div>
+              <div class="tl-req-pills">
+                <span class="req-pill">英国 List 院校核验</span>
+                <span class="req-pill">雅思 7.5 小分核对</span>
+                <span class="req-pill">2封学术推荐信</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 2: 推荐信催交节律与材料清单 -->
+        <div class="echo-dual-grid">
+          <!-- RL Chasing Stepper Card -->
+          <div class="canvas-card">
+            <div class="card-title-row">
+              <div class="card-title">
+                <span class="optic-indicator sky"></span> 2. 推荐信 (RL) 四阶催交节律图
+              </div>
+            </div>
+            <div class="rl-stepper-container" id="rl-stepper-container">
+              <div class="stepper-item completed">
+                <div class="stepper-marker">✓</div>
+                <div class="stepper-body">
+                  <div class="stepper-title">T-60d · 推荐人意向确认与素材速记卡</div>
+                  <div class="stepper-desc">锁定学术导师与实习主管，提供已修课程、成绩单与科研高光速记卡。</div>
+                </div>
+              </div>
+              <div class="stepper-item in-progress">
+                <div class="stepper-marker">⚡</div>
+                <div class="stepper-body">
+                  <div class="stepper-title">T-30d · 网申系统触发邀请与首发知会</div>
+                  <div class="stepper-desc">填写推荐人官方教育邮箱，发送链接并知会老师查收邮件。</div>
+                </div>
+              </div>
+              <div class="stepper-item pending">
+                <div class="stepper-marker">3</div>
+                <div class="stepper-body">
+                  <div class="stepper-title">T-14d · 第一次温和巡检与补遗 (Gentle Check-in)</div>
+                  <div class="stepper-desc">核查系统状态，对 Pending 状态的推荐人发送温和简短提醒邮件。</div>
+                </div>
+              </div>
+              <div class="stepper-item pending">
+                <div class="stepper-marker">4</div>
+                <div class="stepper-body">
+                  <div class="stepper-title">T-3d · 终极冲刺确认与系统状态闭环</div>
+                  <div class="stepper-desc">截止日前最后确认系统显示 Submitted，确保审核批次不被顺延。</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Materials Checklist Card -->
+          <div class="canvas-card">
+            <div class="card-title-row">
+              <div class="card-title">
+                <span class="optic-indicator sky"></span> 3. 网申必备材料核验清单
+              </div>
+            </div>
+            <div class="materials-checklist-box" id="materials-checklist-box">
+              <div class="checklist-category-group">
+                <div class="cat-title">🏛️ 学术硬件材料</div>
+                <label class="check-item"><input type="checkbox" checked disabled> <span>本科中英文官方成绩单盖章件 (PDF)</span> <span class="tag-ready">已就绪</span></label>
+                <label class="check-item"><input type="checkbox" checked disabled> <span>中英文在读证明 / 毕业证学位证</span> <span class="tag-ready">已就绪</span></label>
+                <label class="check-item"><input type="checkbox"> <span>WES 机构成绩单认证报告 (若需)</span> <span class="tag-pending">待核验</span></label>
+              </div>
+              <div class="checklist-category-group">
+                <div class="cat-title">🗣️ 语言与标化送分</div>
+                <label class="check-item"><input type="checkbox" checked disabled> <span>托福 / 雅思官方送分 (ETS/BC Code)</span> <span class="tag-ready">已就绪</span></label>
+                <label class="check-item"><input type="checkbox"> <span>GRE 官方送分 (针对要求院校)</span> <span class="tag-pending">按需送分</span></label>
+              </div>
+              <div class="checklist-category-group">
+                <div class="cat-title">✍️ 主观文书与财务</div>
+                <label class="check-item"><input type="checkbox" checked disabled> <span>学术工程简历 (Resume / CV 1-2页)</span> <span class="tag-ready">已定稿</span></label>
+                <label class="check-item"><input type="checkbox" checked disabled> <span>项目定制 SOP / PS 终稿</span> <span class="tag-ready">已定稿</span></label>
+                <label class="check-item"><input type="checkbox"> <span>银行存款证明 (Bank Statement 40-50W)</span> <span class="tag-pending">进行中</span></label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 3: 全真靶向模拟面试与三维评分雷达 -->
+        <div class="canvas-card interview-workbench-card">
+          <div class="card-title-row">
+            <div class="card-title">
+              <span class="optic-indicator sky"></span> 4. 全真靶向模拟面试复盘与评分雷达 (Mock Interview & Radar)
+            </div>
+            <span class="card-counter" id="interview-count-badge">1 场实训记录</span>
+          </div>
+
+          <!-- Interview Interactive Container -->
+          <div class="interview-active-container" id="interview-active-container">
+            <!-- Active Question Header Box -->
+            <div class="question-header-box">
+              <div class="q-badges">
+                <span class="q-type-badge" id="eval-q-type">Kira Talent 机面 / 录像面试</span>
+                <span class="q-prog-badge" id="eval-q-prog">CMU MSIT-SE</span>
+                <span class="q-time-badge" id="eval-q-timer">⏱️ 准备 45s / 作答 90s</span>
+              </div>
+              <div class="q-text-body" id="eval-q-text">
+                “Tell us about a time you had to deal with an ambiguous software specification or unexpected production bug. How did you decide your immediate course of action and communicate the trade-offs?”
+              </div>
+              <div class="q-text-cn" id="eval-q-cn">
+                请描述一次你面对模糊软件需求或生产环境突发异常的经历。你是如何做出即时决断并与团队沟通技术取舍的？
+              </div>
+            </div>
+
+            <!-- Student Answer Box -->
+            <div class="student-answer-display">
+              <div class="ans-header">
+                <span>👤 申请者真实实战应答 (Transcript / Input)：</span>
+                <span class="ans-words-tag" id="eval-ans-wordcount">78 词</span>
+              </div>
+              <blockquote class="ans-quote" id="eval-ans-text">
+                When our distributed message queue dropped 14% of heartbeats under simulated network partition, our pipeline lagged. I worked with the team to identify the bottleneck. I implemented an adaptive scheduler using an asynchronous ring buffer to dynamically regulate backoff intervals, which stabilized latency and lowered recovery time by 28%.
+              </blockquote>
+            </div>
+
+            <!-- 3-Dimensional Radar / Score Meters Grid -->
+            <div class="scoring-radar-grid">
+              <!-- Dimension 1: Content Relevance -->
+              <div class="score-dimension-card">
+                <div class="dim-header">
+                  <span class="dim-title">🎯 内容相关性 (Relevance)</span>
+                  <span class="dim-score text-sky" id="score-val-relevance">92 / 100</span>
+                </div>
+                <div class="dim-progress-track">
+                  <div class="dim-progress-fill fill-sky" id="bar-fill-relevance" style="width: 92%;"></div>
+                </div>
+                <div class="dim-notes" id="notes-relevance">
+                  精准扣合了分布式心跳、丢包与异步环形缓冲区底层技术点，与软件工程 Practicum 强调的生产环境攻坚能力高度共振。
+                </div>
+              </div>
+
+              <!-- Dimension 2: STAR Structure -->
+              <div class="score-dimension-card">
+                <div class="dim-header">
+                  <span class="dim-title">🏛️ STAR 结构完整度 (STAR)</span>
+                  <span class="dim-score text-purple" id="score-val-star">88 / 100</span>
+                </div>
+                <div class="dim-progress-track">
+                  <div class="dim-progress-fill fill-purple" id="bar-fill-star" style="width: 88%;"></div>
+                </div>
+                <div class="star-pill-row">
+                  <span class="star-badge present" id="star-pill-s">S: 丢包险情 ✓</span>
+                  <span class="star-badge present" id="star-pill-t">T: 管道阻塞 ✓</span>
+                  <span class="star-badge present" id="star-pill-a">A: 环形缓冲区 ✓</span>
+                  <span class="star-badge present" id="star-pill-r">R: 延时降低28% ✓</span>
+                </div>
+                <div class="dim-notes" id="notes-star">
+                  STAR 骨架完整紧凑，Action 与 Result 之间具有明确的因果推导，建议进一步加深前期矛盾铺垫。
+                </div>
+              </div>
+
+              <!-- Dimension 3: Linguistic Authenticity -->
+              <div class="score-dimension-card">
+                <div class="dim-header">
+                  <span class="dim-title">🗣️ 语言地道度 (Authenticity)</span>
+                  <span class="dim-score text-emerald" id="score-val-lang">94 / 100</span>
+                </div>
+                <div class="dim-progress-track">
+                  <div class="dim-progress-fill fill-emerald" id="bar-fill-lang" style="width: 94%;"></div>
+                </div>
+                <div class="dim-shield-row">
+                  <span class="shield-badge">🛡️ 去 AI 塑料词认证通过</span>
+                  <span class="shield-badge">⚡ 强动词引导 (engineered, stabilized)</span>
+                </div>
+                <div class="dim-notes" id="notes-lang">
+                  主动语态强动词开篇，无虚浮陈词滥调（未出现 delve / pivotal），符合北美工程学府干练语感。
+                </div>
+              </div>
+            </div>
+
+            <!-- Composite Score Ribbon -->
+            <div class="composite-score-ribbon">
+              <div class="ribbon-left">
+                <span class="ribbon-icon">🏆</span>
+                <span class="ribbon-title">回音壁多维综合判定指数 (Composite Score)：</span>
+              </div>
+              <div class="ribbon-right">
+                <span class="ribbon-val text-sky" id="score-val-composite">91.4 / 100</span>
+                <span class="ribbon-tag tag-strong-admit">Strong Admit 梯队</span>
+              </div>
+            </div>
+
+            <!-- High-Score Refined Sample Answer Card -->
+            <div class="refined-sample-card">
+              <div class="refined-header">
+                <div class="rf-title-wrap">
+                  <span class="optic-symbol gold">✦</span>
+                  <span class="rf-title">高分示范回答 (Refined Sample Answer)</span>
+                  <span class="rf-badge">90s 限时黄金范本</span>
+                </div>
+                <div class="rf-meta" id="refined-sample-meta">约 128 词 · 语速适中朗读约 68 秒</div>
+              </div>
+              <div class="refined-body selectable-text" id="refined-sample-body">
+                In our distributed message queue project, we encountered severe cascading timeouts when cross-rack latency caused the cluster to drop 14% of heartbeat packets. As the lead systems contributor, I chose not to rely on brute-force retry loops, which would only induce network congestion. Instead, I engineered an adaptive scheduler utilizing an asynchronous ring buffer in kernel space. By dynamically adjusting the exponential backoff window based on live RTT variance, we reduced failover recovery latency by 28% and maintained 15,000 QPS under simulated packet drops. This experience reinforced my conviction that true fault-tolerance requires invariant-driven architectural boundaries rather than localized patches.
+              </div>
+              <div class="refined-footer">
+                <button class="btn-ghost-sm" id="btn-copy-sample">📋 复制示范回答</button>
+                <button class="btn-primary-glow-sm" id="btn-next-question">🎙️ 推进下一道面试真题</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Dossier Export & Preview Modal -->
+  <div class="optic-modal-backdrop hidden" id="export-dossier-modal">
+    <div class="optic-modal-dialog">
+      <div class="optic-modal-header">
+        <div class="modal-title-wrap">
+          <span class="modal-prism-icon">💎</span>
+          <div>
+            <h3 class="modal-title">《PrismEra 个人升学光谱全案报告》编译交付中枢</h3>
+            <p class="modal-subtitle">原石切面诊断 · 知识图谱三维定焦 · 去 AI 化暗室文书 · 学术图谱文献共振</p>
+          </div>
+        </div>
+        <button class="modal-close-btn" id="close-export-modal-btn">✕</button>
+      </div>
+
+      <!-- Quick Action Toolbar -->
+      <div class="modal-toolbar-bar">
+        <div class="modal-toolbar-left">
+          <div class="preview-tab-pills">
+            <button class="preview-tab-pill active" id="tab-preview-html">🌐 HTML 交互单页</button>
+            <button class="preview-tab-pill" id="tab-preview-md">📄 Markdown 交付源码</button>
+          </div>
+        </div>
+        <div class="modal-toolbar-right">
+          <button class="btn-modal-action" id="btn-modal-copy-md" title="复制完整 Markdown 报告">📋 复制 Markdown</button>
+          <button class="btn-modal-action" id="btn-modal-dl-md" title="下载 .md 文件">📥 下载 Markdown</button>
+          <button class="btn-modal-action" id="btn-modal-dl-html" title="下载独立 .html 单页报告">📥 下载 HTML</button>
+          <button class="btn-modal-action btn-modal-primary" id="btn-modal-open-new" title="在新窗口中全屏打开报告">👁️ 全屏预览 / 打印</button>
+        </div>
+      </div>
+
+      <!-- Modal Body Preview Area -->
+      <div class="optic-modal-body">
+        <div class="modal-preview-pane active" id="pane-preview-html">
+          <iframe id="export-preview-iframe" class="export-preview-iframe" title="全案报告 HTML 预览"></iframe>
+        </div>
+        <div class="modal-preview-pane" id="pane-preview-md">
+          <pre class="export-markdown-view" id="export-markdown-view"><code>正在编译 Markdown 报告...</code></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Prism System & Graph Console Modal (Milestone 8) -->
+  <div class="optic-modal-backdrop hidden" id="prism-console-modal">
+    <div class="optic-modal-dialog modal-dialog-admin">
+      <div class="optic-modal-header">
+        <div class="modal-title-wrap">
+          <span class="modal-prism-icon">⚙️</span>
+          <div>
+            <h3 class="modal-title">棱镜控制台 · 系统与图谱管理中心</h3>
+            <p class="modal-subtitle">模型与引擎热切换 · 知识图谱与案例库在线摄取 · Benchmark 在线巡检仪表盘</p>
+          </div>
+        </div>
+        <button class="modal-close-btn" id="close-console-modal-btn">✕</button>
+      </div>
+
+      <!-- Console Navigation Tabs -->
+      <div class="modal-toolbar-bar">
+        <div class="modal-toolbar-left">
+          <div class="preview-tab-pills">
+            <button class="preview-tab-pill active" id="tab-console-engine">⚙️ 模型与引擎热切换</button>
+            <button class="preview-tab-pill" id="tab-console-graph">🌌 知识图谱与案例库在线摄取</button>
+            <button class="preview-tab-pill" id="tab-console-benchmark">🔬 Benchmark 在线巡检</button>
+          </div>
+        </div>
+        <div class="modal-toolbar-right">
+          <span class="console-mode-badge" id="console-header-mode-tag">引擎状态: 加载中...</span>
+        </div>
+      </div>
+
+      <!-- Console Body Panes -->
+      <div class="optic-modal-body console-modal-body">
+        <!-- PANE A: Model & Engine Hot-Switching -->
+        <div class="console-pane active" id="pane-console-engine">
+          <div class="console-engine-container">
+            <!-- Mode Banner -->
+            <div class="engine-mode-banner" id="engine-mode-banner">
+              <div class="mode-banner-info">
+                <span class="mode-pulse-indicator" id="mode-pulse-dot"></span>
+                <div class="mode-text-wrap">
+                  <div class="mode-title-row">
+                    <span class="mode-main-label" id="current-engine-mode-title">Deterministic 离线引擎模式</span>
+                    <span class="mode-sub-tag" id="current-engine-sub-tag">100% 确定性 · 零网络依赖</span>
+                  </div>
+                  <p class="mode-desc" id="current-engine-mode-desc">
+                    当前运行于本地离线模拟与图谱规则引擎，无需网络与 API Key，确保开发自测与离线评审 100% 稳定可复现。
+                  </p>
+                </div>
+              </div>
+              <div class="mode-banner-actions">
+                <button class="btn-optic-toggle" id="btn-toggle-engine-mode" title="一键在离线模式与在线大模型之间切换">
+                  <span class="toggle-icon">⇄</span>
+                  <span class="toggle-text" id="toggle-engine-btn-text">切换至 Live LLM 模式</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Parameters Grid Form -->
+            <div class="console-form-card">
+              <h4 class="card-section-title">✦ 引擎运行时推理参数 (Runtime Inference Settings)</h4>
+              <div class="form-grid-2col">
+                <div class="form-group">
+                  <label for="console-provider-select">LLM Provider (推理服务提供商)</label>
+                  <select id="console-provider-select" class="modal-input modal-select">
+                    <option value="auto">Auto (自动探测可用渠道)</option>
+                    <option value="mock">Mock (确定性离线模拟引擎)</option>
+                    <option value="openai">OpenAI / OpenAI-Compatible (GPT-4o / Qwen / etc.)</option>
+                    <option value="deepseek">DeepSeek (官方直连 API)</option>
+                    <option value="claude">Anthropic Claude (官方 API)</option>
+                    <option value="ollama">Ollama (本地私有化开源大模型)</option>
+                  </select>
+                  <span class="field-hint">支持任何兼容 OpenAI 规范的中转网关与自建 vLLM / Ollama 节点。</span>
+                </div>
+
+                <div class="form-group">
+                  <label for="console-model-input">Model Name (模型标识码)</label>
+                  <input type="text" id="console-model-input" class="modal-input" placeholder="例如: gpt-4o, deepseek-chat, claude-3-5-sonnet-20241022">
+                  <span class="field-hint">当前各智能体调用的统一底层大语言模型。</span>
+                </div>
+
+                <div class="form-group">
+                  <label for="console-base-url-input">Base URL (接口基础地址)</label>
+                  <input type="text" id="console-base-url-input" class="modal-input" placeholder="例如: https://api.openai.com/v1 或 https://api.deepseek.com/v1">
+                  <span class="field-hint">自定义中转网关或本地服务地址（末尾请勿带斜杠）。</span>
+                </div>
+
+                <div class="form-group">
+                  <label for="console-api-key-input">API Key (密钥口令)</label>
+                  <div class="input-with-action">
+                    <input type="password" id="console-api-key-input" class="modal-input" placeholder="留空则保持现有或使用离线 Mock">
+                    <button class="btn-input-icon" id="btn-toggle-key-view" type="button" title="显示/隐藏密钥">👁️</button>
+                  </div>
+                  <span class="field-hint" id="console-key-masked-hint">当前状态: 未配置或已加密保护</span>
+                </div>
+
+                <div class="form-group full-width">
+                  <div class="slider-label-row">
+                    <label for="console-temp-slider">Temperature (温度值 / 随机度)</label>
+                    <span class="slider-val-badge" id="console-temp-badge">0.20</span>
+                  </div>
+                  <input type="range" id="console-temp-slider" min="0" max="1" step="0.05" value="0.2" class="optic-slider">
+                  <span class="field-hint">留学申请决策推荐建议保持 0.1 ~ 0.3 严谨低温；文书创意生成可调至 0.4 ~ 0.6。</span>
+                </div>
+              </div>
+
+              <!-- Form Action Bar -->
+              <div class="card-action-bar">
+                <button class="btn-optic-action btn-test-conn" id="btn-test-conn">
+                  <span class="btn-icon">⚡</span> 测试连接 (Test Connection)
+                </button>
+                <button class="btn-optic-action btn-save-cfg" id="btn-save-cfg">
+                  <span class="btn-icon">💾</span> 保存并热生效 (Save & Apply)
+                </button>
+              </div>
+
+              <!-- Test Feedback Banner -->
+              <div class="console-feedback-box hidden" id="console-engine-feedback"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PANE B: Knowledge Graph & Case Ingestion -->
+        <div class="console-pane" id="pane-console-graph">
+          <div class="console-graph-container">
+            <!-- Top Metric Stats Cards -->
+            <div class="graph-stats-dashboard">
+              <div class="stat-card">
+                <div class="stat-icon-wrap">🏛️</div>
+                <div class="stat-info">
+                  <span class="stat-num" id="stat-unis">0</span>
+                  <span class="stat-label">University 院校节点</span>
+                </div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-icon-wrap">🎓</div>
+                <div class="stat-info">
+                  <span class="stat-num" id="stat-programs">0</span>
+                  <span class="stat-label">Program 硕士/博士项目</span>
+                </div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-icon-wrap">📚</div>
+                <div class="stat-info">
+                  <span class="stat-num" id="stat-courses">0</span>
+                  <span class="stat-label">Course 核心先修课</span>
+                </div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-icon-wrap">🔬</div>
+                <div class="stat-info">
+                  <span class="stat-num" id="stat-profs">0</span>
+                  <span class="stat-label">Professor 学者导师</span>
+                </div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-icon-wrap">🔗</div>
+                <div class="stat-info">
+                  <span class="stat-num" id="stat-edges">0</span>
+                  <span class="stat-label">拓扑带权关系边 (Edges)</span>
+                </div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-icon-wrap">📑</div>
+                <div class="stat-info">
+                  <span class="stat-num" id="stat-cases">0</span>
+                  <span class="stat-label">同辈录取/被拒案例库</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="graph-refresh-row">
+              <span class="graph-storage-hint" id="graph-storage-path">底座存储: SQLite 本地持久化</span>
+              <button class="btn-optic-sm" id="btn-refresh-stats">🔄 刷新数据统计</button>
+            </div>
+
+            <!-- Ingestion Forms Grid -->
+            <div class="ingestion-split-grid">
+              <!-- Form 1: Add Graph Node -->
+              <div class="console-form-card">
+                <div class="card-header-badge">
+                  <span class="card-badge-icon">🌐</span>
+                  <span class="card-badge-title">新增院校与项目节点 (GraphStore)</span>
+                </div>
+                <p class="card-desc">自动建立拓扑关系并持久化至 NetworkX + SQLite，供定焦师与切面师动态剪枝。</p>
+
+                <div class="form-stack">
+                  <div class="form-row-2col">
+                    <div class="form-group">
+                      <label>节点类型 (Node Label)</label>
+                      <select id="node-type-input" class="modal-input modal-select">
+                        <option value="Program">Program (研究生专业项目)</option>
+                        <option value="University">University (全球院校)</option>
+                        <option value="Course">Course (先修课程)</option>
+                        <option value="Professor">Professor (科研学者导师)</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label>节点唯一标识码 (ID)</label>
+                      <input type="text" id="node-id-input" class="modal-input" placeholder="例如: ucl_cs_msc, ucl">
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label>节点名称 (Display Title)</label>
+                    <input type="text" id="node-name-input" class="modal-input" placeholder="例如: MSc Computer Science 或 伦敦大学学院">
+                  </div>
+
+                  <div class="form-row-2col" id="program-specific-row-1">
+                    <div class="form-group">
+                      <label>所属大学 ID (University ID)</label>
+                      <input type="text" id="node-uni-id-input" class="modal-input" placeholder="例如: ucl, cmu, ic">
+                    </div>
+                    <div class="form-group">
+                      <label>地区 (Region)</label>
+                      <select id="node-region-input" class="modal-input modal-select">
+                        <option value="UK">英国 (UK)</option>
+                        <option value="US">美国 (US)</option>
+                        <option value="HK">中国香港 (HK)</option>
+                        <option value="SG">新加坡 (SG)</option>
+                        <option value="EU">欧洲大陆 (EU)</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="form-row-2col" id="program-specific-row-2">
+                    <div class="form-group">
+                      <label>专业方向 (Major Category)</label>
+                      <select id="node-major-input" class="modal-input modal-select">
+                        <option value="CS">计算机科学与工程 (CS)</option>
+                        <option value="DS">数据科学 (DS)</option>
+                        <option value="BA">商业分析 (BA)</option>
+                        <option value="EE">电子与计算机工程 (ECE)</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label>最低均分要求 (Min GPA)</label>
+                      <input type="number" id="node-gpa-input" class="modal-input" placeholder="例如: 85.0" step="0.5">
+                    </div>
+                  </div>
+
+                  <div class="form-group" id="program-specific-row-3">
+                    <label>语言要求与 List 隐形限制 (JSON 或描述)</label>
+                    <input type="text" id="node-extra-input" class="modal-input" placeholder='例如: 雅思7.0小分6.5 | 仅限 [985, 211, 海本]'>
+                  </div>
+
+                  <button class="btn-optic-action btn-submit-ingest" id="btn-submit-node">
+                    ➕ 校验并写入知识图谱
+                  </button>
+                </div>
+              </div>
+
+              <!-- Form 2: Add Admission Case -->
+              <div class="console-form-card">
+                <div class="card-header-badge">
+                  <span class="card-badge-icon">📑</span>
+                  <span class="card-badge-title">补充同辈录取/被拒案例 (VectorStore)</span>
+                </div>
+                <p class="card-desc">自动计算局部密集嵌入向量并写入向量库，供定焦师测算动态同辈中位线与录取率。</p>
+
+                <div class="form-stack">
+                  <div class="form-row-2col">
+                    <div class="form-group">
+                      <label>目标项目 ID (Target Program ID)</label>
+                      <input type="text" id="case-program-input" class="modal-input" placeholder="例如: cmu_msit_se, ic_computing_msc">
+                    </div>
+                    <div class="form-group">
+                      <label>录取结果 (Outcome)</label>
+                      <select id="case-outcome-input" class="modal-input modal-select">
+                        <option value="ADMIT">录取 (ADMIT)</option>
+                        <option value="REJECT">被拒 (REJECT)</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="form-row-2col">
+                    <div class="form-group">
+                      <label>本科院校 (Undergraduate University)</label>
+                      <input type="text" id="case-school-input" class="modal-input" placeholder="例如: 浙江大学">
+                    </div>
+                    <div class="form-group">
+                      <label>院校档次 (Tier)</label>
+                      <select id="case-tier-input" class="modal-input modal-select">
+                        <option value="985">985 高校</option>
+                        <option value="211">211 高校</option>
+                        <option value="双非一本">双非一本</option>
+                        <option value="双非">双非其他</option>
+                        <option value="海本">海外本科 (US/UK/HK/CAN)</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="form-row-3col">
+                    <div class="form-group">
+                      <label>专业 (Major)</label>
+                      <input type="text" id="case-major-input" class="modal-input" placeholder="例如: 软件工程">
+                    </div>
+                    <div class="form-group">
+                      <label>均分/GPA</label>
+                      <input type="number" id="case-gpa-input" class="modal-input" placeholder="例如: 88.5" step="0.1">
+                    </div>
+                    <div class="form-group">
+                      <label>分制 (Scale)</label>
+                      <select id="case-scale-input" class="modal-input modal-select">
+                        <option value="100">100分制</option>
+                        <option value="4.0">4.0分制</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="form-row-2col">
+                    <div class="form-group">
+                      <label>语言成绩 (Language)</label>
+                      <input type="text" id="case-lang-input" class="modal-input" placeholder="例如: 雅思 7.5 (口语 7.0)">
+                    </div>
+                    <div class="form-group">
+                      <label>录取申请年份 (Year)</label>
+                      <input type="number" id="case-year-input" class="modal-input" value="2025">
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label>软性背景概述 (科研、实习、竞赛、奖项)</label>
+                    <textarea id="case-summary-input" class="modal-input modal-textarea" rows="2" placeholder="例如: 腾讯微服务后端实习，国家级大创自适应网络调度器项目，两篇顶会Workshop。"></textarea>
+                  </div>
+
+                  <button class="btn-optic-action btn-submit-ingest" id="btn-submit-case">
+                    ➕ 向量化写入同辈案例库
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Ingestion Feedback Box -->
+            <div class="console-feedback-box hidden" id="console-graph-feedback"></div>
+          </div>
+        </div>
+
+        <!-- PANE C: Benchmark Online Inspection -->
+        <div class="console-pane" id="pane-console-benchmark">
+          <div class="console-eval-container">
+            <!-- Action Toolbar Header -->
+            <div class="eval-top-toolbar">
+              <div class="eval-status-info">
+                <span class="eval-pulse-dot"></span>
+                <div>
+                  <h4 class="eval-title">GraphRAG 量化评测基准套件 (28 个高危陷阱题压测)</h4>
+                  <p class="eval-subtext" id="eval-last-run-timestamp">尚未加载评测数据</p>
+                </div>
+              </div>
+              <div class="eval-actions">
+                <button class="btn-optic-primary btn-run-benchmark" id="btn-run-benchmark">
+                  <span class="btn-icon">🚀</span> 启动全量 Benchmark 巡检
+                </button>
+              </div>
+            </div>
+
+            <!-- 4 Metric Cards Dashboard -->
+            <div class="eval-metrics-grid">
+              <!-- Metric 1: Hard Constraint Precision -->
+              <div class="eval-gauge-card">
+                <div class="gauge-card-header">
+                  <div class="gauge-title-wrap">
+                    <span class="gauge-symbol">🎯</span>
+                    <span class="gauge-name">硬性门槛拦截精准率</span>
+                  </div>
+                  <span class="gauge-delta-tag" id="gauge-delta-hard">+100.0%</span>
+                </div>
+                <div class="gauge-value-row">
+                  <span class="gauge-main-val" id="gauge-val-hard">100.0%</span>
+                  <span class="gauge-baseline-val" id="gauge-base-hard">Baseline: 0.0%</span>
+                </div>
+                <div class="gauge-bar-track">
+                  <div class="gauge-bar-fill fill-cyan" id="gauge-bar-hard" style="width: 100%;"></div>
+                </div>
+                <p class="gauge-desc">严卡英国/港新院校隐形 List、雅思托福单项与跨专业核心先修课，零误判漏判。</p>
+              </div>
+
+              <!-- Metric 2: Stage Gate Compliance -->
+              <div class="eval-gauge-card">
+                <div class="gauge-card-header">
+                  <div class="gauge-title-wrap">
+                    <span class="gauge-symbol">🛡️</span>
+                    <span class="gauge-name">苏格拉底状态机守门率</span>
+                  </div>
+                  <span class="gauge-delta-tag" id="gauge-delta-gate">+62.5%</span>
+                </div>
+                <div class="gauge-value-row">
+                  <span class="gauge-main-val" id="gauge-val-gate">100.0%</span>
+                  <span class="gauge-baseline-val" id="gauge-base-gate">Baseline: 37.5%</span>
+                </div>
+                <div class="gauge-bar-track">
+                  <div class="gauge-bar-fill fill-purple" id="gauge-bar-gate" style="width: 100%;"></div>
+                </div>
+                <p class="gauge-desc">坚守“原石未剖，绝不落笔”，用户强行催稿或跳步时 100% 触发阶段守门拦截。</p>
+              </div>
+
+              <!-- Metric 3: Anti-AI Lexicon Cleanliness -->
+              <div class="eval-gauge-card">
+                <div class="gauge-card-header">
+                  <div class="gauge-title-wrap">
+                    <span class="gauge-symbol">✨</span>
+                    <span class="gauge-name">文书禁用词纯净度</span>
+                  </div>
+                  <span class="gauge-delta-tag" id="gauge-delta-ai">+87.5%</span>
+                </div>
+                <div class="gauge-value-row">
+                  <span class="gauge-main-val" id="gauge-val-ai">100.0%</span>
+                  <span class="gauge-baseline-val" id="gauge-base-ai">Baseline: 12.5%</span>
+                </div>
+                <div class="gauge-bar-track">
+                  <div class="gauge-bar-fill fill-emerald" id="gauge-bar-ai" style="width: 100%;"></div>
+                </div>
+                <p class="gauge-desc">后置 AntiAIGuardrail 规则净化，对 40+ 典型陈词滥调禁用词词族绝对 0% 命中。</p>
+              </div>
+
+              <!-- Metric 4: Citation Faithfulness -->
+              <div class="eval-gauge-card">
+                <div class="gauge-card-header">
+                  <div class="gauge-title-wrap">
+                    <span class="gauge-symbol">📜</span>
+                    <span class="gauge-name">学术套磁论文忠实度</span>
+                  </div>
+                  <span class="gauge-delta-tag" id="gauge-delta-cite">+75.0%</span>
+                </div>
+                <div class="gauge-value-row">
+                  <span class="gauge-main-val" id="gauge-val-cite">100.0%</span>
+                  <span class="gauge-baseline-val" id="gauge-base-cite">Baseline: 25.0%</span>
+                </div>
+                <div class="gauge-bar-track">
+                  <div class="gauge-bar-fill fill-amber" id="gauge-bar-cite" style="width: 100%;"></div>
+                </div>
+                <p class="gauge-desc">基于图谱真实论文索引开展学术共振，面对未知学者 100% 触发学术诚信红线。</p>
+              </div>
+            </div>
+
+            <!-- Test Cases Breakdown Scrollable Area -->
+            <div class="eval-cases-table-wrap">
+              <div class="cases-table-header">
+                <span class="cases-table-title">✦ 28 个高危陷阱题在线巡检明细清单</span>
+                <span class="cases-table-meta" id="cases-table-count">共 28 项用例</span>
+              </div>
+              <div class="cases-table-scroll" id="eval-cases-list">
+                <!-- Dynamically rendered via JS -->
+                <div class="cases-loading-hint">正在加载最近一次评测详情...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Create Profile Modal -->
+  <div class="optic-modal-backdrop hidden" id="create-profile-modal">
+    <div class="optic-modal-dialog modal-dialog-sm">
+      <div class="optic-modal-header">
+        <div class="modal-title-wrap">
+          <span class="modal-prism-icon">👤</span>
+          <div>
+            <h3 class="modal-title">新建学生档案</h3>
+            <p class="modal-subtitle">创建独立的 SQLite 持久化学生档案，随时切换恢复进度</p>
+          </div>
+        </div>
+        <button class="modal-close-btn" id="close-create-modal-btn">✕</button>
+      </div>
+      <div class="modal-form-body">
+        <div class="form-group">
+          <label>档案名称 (例如: 张同学 · 浙大软件工程)</label>
+          <input type="text" id="new-profile-name-input" class="modal-input" placeholder="输入档案名称或学员姓名...">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>本科院校</label>
+            <input type="text" id="new-profile-school-input" class="modal-input" placeholder="例如: 浙江大学">
+          </div>
+          <div class="form-group">
+            <label>院校层级</label>
+            <select id="new-profile-tier-input" class="modal-input">
+              <option value="985">985 院校</option>
+              <option value="211">211 院校</option>
+              <option value="双非一本">双非一本</option>
+              <option value="海本">海本 (Overseas)</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>本科专业</label>
+            <input type="text" id="new-profile-major-input" class="modal-input" placeholder="例如: 计算机科学与技术">
+          </div>
+          <div class="form-group">
+            <label>原始均分 / GPA</label>
+            <input type="text" id="new-profile-gpa-input" class="modal-input" placeholder="例如: 88.5/100">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer-actions">
+        <button class="btn-ghost" id="cancel-create-profile-btn">取消</button>
+        <button class="btn-primary" id="confirm-create-profile-btn">✦ 立即创建并载入</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Prism System & Graph Console Modal (Milestone 8) -->
+  <div class="optic-modal-backdrop hidden" id="prism-console-modal">
+    <div class="optic-modal-dialog modal-dialog-admin">
+      <div class="optic-modal-header">
+        <div class="modal-title-wrap">
+          <span class="modal-prism-icon">⚙️</span>
+          <div>
+            <h3 class="modal-title">棱镜控制台 · 系统与图谱管理中心</h3>
+            <p class="modal-subtitle">模型与引擎热切换 · 知识图谱与案例库在线摄取 · Benchmark 在线巡检仪表盘</p>
+          </div>
+        </div>
+        <button class="modal-close-btn" id="close-console-modal-btn">✕</button>
+      </div>
+
+      <!-- Console Navigation Tabs -->
+      <div class="modal-toolbar-bar">
+        <div class="modal-toolbar-left">
+          <div class="preview-tab-pills">
+            <button class="preview-tab-pill active" id="tab-console-engine">⚙️ 模型与引擎热切换</button>
+            <button class="preview-tab-pill" id="tab-console-graph">🌌 知识图谱与案例库在线摄取</button>
+            <button class="preview-tab-pill" id="tab-console-benchmark">🔬 Benchmark 在线巡检</button>
+          </div>
+        </div>
+        <div class="modal-toolbar-right">
+          <span class="console-mode-badge" id="console-header-mode-tag">引擎状态: 加载中...</span>
+        </div>
+      </div>
+
+      <!-- Console Body Panes -->
+      <div class="optic-modal-body console-modal-body">
+        <!-- PANE A: Model & Engine Hot-Switching -->
+        <div class="console-pane active" id="pane-console-engine">
+          <div class="console-engine-container">
+            <!-- Mode Banner -->
+            <div class="engine-mode-banner" id="engine-mode-banner">
+              <div class="mode-banner-info">
+                <span class="mode-pulse-indicator" id="mode-pulse-dot"></span>
+                <div class="mode-text-wrap">
+                  <div class="mode-title-row">
+                    <span class="mode-main-label" id="current-engine-mode-title">Deterministic 离线引擎模式</span>
+                    <span class="mode-sub-tag" id="current-engine-sub-tag">100% 确定性 · 零网络依赖</span>
+                  </div>
+                  <p class="mode-desc" id="current-engine-mode-desc">
+                    当前运行于本地离线模拟与图谱规则引擎，无需网络与 API Key，确保开发自测与离线评审 100% 稳定可复现。
+                  </p>
+                </div>
+              </div>
+              <div class="mode-banner-actions">
+                <button class="btn-optic-toggle" id="btn-toggle-engine-mode" title="一键在离线模式与在线大模型之间切换">
+                  <span class="toggle-icon">⇄</span>
+                  <span class="toggle-text" id="toggle-engine-btn-text">切换至 Live LLM 模式</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Parameters Grid Form -->
+            <div class="console-form-card">
+              <h4 class="card-section-title">✦ 引擎运行时推理参数 (Runtime Inference Settings)</h4>
+              <div class="form-grid-2col">
+                <div class="form-group">
+                  <label for="console-provider-select">LLM Provider (推理服务提供商)</label>
+                  <select id="console-provider-select" class="modal-input modal-select">
+                    <option value="auto">Auto (自动探测可用渠道)</option>
+                    <option value="mock">Mock (确定性离线模拟引擎)</option>
+                    <option value="openai">OpenAI / OpenAI-Compatible (GPT-4o / Qwen / etc.)</option>
+                    <option value="deepseek">DeepSeek (官方直连 API)</option>
+                    <option value="claude">Anthropic Claude (官方 API)</option>
+                    <option value="ollama">Ollama (本地私有化开源大模型)</option>
+                  </select>
+                  <span class="field-hint">支持任何兼容 OpenAI 规范的中转网关与自建 vLLM / Ollama 节点。</span>
+                </div>
+
+                <div class="form-group">
+                  <label for="console-model-input">Model Name (模型标识码)</label>
+                  <input type="text" id="console-model-input" class="modal-input" placeholder="例如: gpt-4o, deepseek-chat, claude-3-5-sonnet-20241022">
+                  <span class="field-hint">当前各智能体调用的统一底层大语言模型。</span>
+                </div>
+
+                <div class="form-group">
+                  <label for="console-base-url-input">Base URL (接口基础地址)</label>
+                  <input type="text" id="console-base-url-input" class="modal-input" placeholder="例如: https://api.openai.com/v1 或 https://api.deepseek.com/v1">
+                  <span class="field-hint">自定义中转网关或本地服务地址（末尾请勿带斜杠）。</span>
+                </div>
+
+                <div class="form-group">
+                  <label for="console-api-key-input">API Key (密钥口令)</label>
+                  <div class="input-with-action">
+                    <input type="password" id="console-api-key-input" class="modal-input" placeholder="留空则保持现有或使用离线 Mock">
+                    <button class="btn-input-icon" id="btn-toggle-key-view" type="button" title="显示/隐藏密钥">👁️</button>
+                  </div>
+                  <span class="field-hint" id="console-key-masked-hint">当前状态: 未配置或已加密保护</span>
+                </div>
+
+                <div class="form-group full-width">
+                  <div class="slider-label-row">
+                    <label for="console-temp-slider">Temperature (温度值 / 随机度)</label>
+                    <span class="slider-val-badge" id="console-temp-badge">0.20</span>
+                  </div>
+                  <input type="range" id="console-temp-slider" min="0" max="1" step="0.05" value="0.2" class="optic-slider">
+                  <span class="field-hint">留学申请决策推荐建议保持 0.1 ~ 0.3 严谨低温；文书创意生成可调至 0.4 ~ 0.6。</span>
+                </div>
+              </div>
+
+              <!-- Form Action Bar -->
+              <div class="card-action-bar">
+                <button class="btn-optic-action btn-test-conn" id="btn-test-conn">
+                  <span class="btn-icon">⚡</span> 测试连接 (Test Connection)
+                </button>
+                <button class="btn-optic-action btn-save-cfg" id="btn-save-cfg">
+                  <span class="btn-icon">💾</span> 保存并热生效 (Save & Apply)
+                </button>
+              </div>
+
+              <!-- Test Feedback Banner -->
+              <div class="console-feedback-box hidden" id="console-engine-feedback"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PANE B: Knowledge Graph & Case Ingestion -->
+        <div class="console-pane" id="pane-console-graph">
+          <div class="console-graph-container">
+            <!-- Top Metric Stats Cards -->
+            <div class="graph-stats-dashboard">
+              <div class="stat-card">
+                <div class="stat-icon-wrap">🏛️</div>
+                <div class="stat-info">
+                  <span class="stat-num" id="stat-unis">0</span>
+                  <span class="stat-label">University 院校节点</span>
+                </div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-icon-wrap">🎓</div>
+                <div class="stat-info">
+                  <span class="stat-num" id="stat-programs">0</span>
+                  <span class="stat-label">Program 硕士/博士项目</span>
+                </div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-icon-wrap">📚</div>
+                <div class="stat-info">
+                  <span class="stat-num" id="stat-courses">0</span>
+                  <span class="stat-label">Course 核心先修课</span>
+                </div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-icon-wrap">🔬</div>
+                <div class="stat-info">
+                  <span class="stat-num" id="stat-profs">0</span>
+                  <span class="stat-label">Professor 学者导师</span>
+                </div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-icon-wrap">🔗</div>
+                <div class="stat-info">
+                  <span class="stat-num" id="stat-edges">0</span>
+                  <span class="stat-label">拓扑带权关系边 (Edges)</span>
+                </div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-icon-wrap">📑</div>
+                <div class="stat-info">
+                  <span class="stat-num" id="stat-cases">0</span>
+                  <span class="stat-label">同辈录取/被拒案例库</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="graph-refresh-row">
+              <span class="graph-storage-hint" id="graph-storage-path">底座存储: SQLite 本地持久化</span>
+              <button class="btn-optic-sm" id="btn-refresh-stats">🔄 刷新数据统计</button>
+            </div>
+
+            <!-- Ingestion Forms Grid -->
+            <div class="ingestion-split-grid">
+              <!-- Form 1: Add Graph Node -->
+              <div class="console-form-card">
+                <div class="card-header-badge">
+                  <span class="card-badge-icon">🌐</span>
+                  <span class="card-badge-title">新增院校与项目节点 (GraphStore)</span>
+                </div>
+                <p class="card-desc">自动建立拓扑关系并持久化至 NetworkX + SQLite，供定焦师与切面师动态剪枝。</p>
+
+                <div class="form-stack">
+                  <div class="form-row-2col">
+                    <div class="form-group">
+                      <label>节点类型 (Node Label)</label>
+                      <select id="node-type-input" class="modal-input modal-select">
+                        <option value="Program">Program (研究生专业项目)</option>
+                        <option value="University">University (全球院校)</option>
+                        <option value="Course">Course (先修课程)</option>
+                        <option value="Professor">Professor (科研学者导师)</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label>节点唯一标识码 (ID)</label>
+                      <input type="text" id="node-id-input" class="modal-input" placeholder="例如: ucl_cs_msc, ucl">
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label>节点名称 (Display Title)</label>
+                    <input type="text" id="node-name-input" class="modal-input" placeholder="例如: MSc Computer Science 或 伦敦大学学院">
+                  </div>
+
+                  <div class="form-row-2col" id="program-specific-row-1">
+                    <div class="form-group">
+                      <label>所属大学 ID (University ID)</label>
+                      <input type="text" id="node-uni-id-input" class="modal-input" placeholder="例如: ucl, cmu, ic">
+                    </div>
+                    <div class="form-group">
+                      <label>地区 (Region)</label>
+                      <select id="node-region-input" class="modal-input modal-select">
+                        <option value="UK">英国 (UK)</option>
+                        <option value="US">美国 (US)</option>
+                        <option value="HK">中国香港 (HK)</option>
+                        <option value="SG">新加坡 (SG)</option>
+                        <option value="EU">欧洲大陆 (EU)</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="form-row-2col" id="program-specific-row-2">
+                    <div class="form-group">
+                      <label>专业方向 (Major Category)</label>
+                      <select id="node-major-input" class="modal-input modal-select">
+                        <option value="CS">计算机科学与工程 (CS)</option>
+                        <option value="DS">数据科学 (DS)</option>
+                        <option value="BA">商业分析 (BA)</option>
+                        <option value="EE">电子与计算机工程 (ECE)</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label>最低均分要求 (Min GPA)</label>
+                      <input type="number" id="node-gpa-input" class="modal-input" placeholder="例如: 85.0" step="0.5">
+                    </div>
+                  </div>
+
+                  <div class="form-group" id="program-specific-row-3">
+                    <label>语言要求与 List 隐形限制 (JSON 或描述)</label>
+                    <input type="text" id="node-extra-input" class="modal-input" placeholder='例如: 雅思7.0小分6.5 | 仅限 [985, 211, 海本]'>
+                  </div>
+
+                  <button class="btn-optic-action btn-submit-ingest" id="btn-submit-node">
+                    ➕ 校验并写入知识图谱
+                  </button>
+                </div>
+              </div>
+
+              <!-- Form 2: Add Admission Case -->
+              <div class="console-form-card">
+                <div class="card-header-badge">
+                  <span class="card-badge-icon">📑</span>
+                  <span class="card-badge-title">补充同辈录取/被拒案例 (VectorStore)</span>
+                </div>
+                <p class="card-desc">自动计算局部密集嵌入向量并写入向量库，供定焦师测算动态同辈中位线与录取率。</p>
+
+                <div class="form-stack">
+                  <div class="form-row-2col">
+                    <div class="form-group">
+                      <label>目标项目 ID (Target Program ID)</label>
+                      <input type="text" id="case-program-input" class="modal-input" placeholder="例如: cmu_msit_se, ic_computing_msc">
+                    </div>
+                    <div class="form-group">
+                      <label>录取结果 (Outcome)</label>
+                      <select id="case-outcome-input" class="modal-input modal-select">
+                        <option value="ADMIT">录取 (ADMIT)</option>
+                        <option value="REJECT">被拒 (REJECT)</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="form-row-2col">
+                    <div class="form-group">
+                      <label>本科院校 (Undergraduate University)</label>
+                      <input type="text" id="case-school-input" class="modal-input" placeholder="例如: 浙江大学">
+                    </div>
+                    <div class="form-group">
+                      <label>院校档次 (Tier)</label>
+                      <select id="case-tier-input" class="modal-input modal-select">
+                        <option value="985">985 高校</option>
+                        <option value="211">211 高校</option>
+                        <option value="双非一本">双非一本</option>
+                        <option value="双非">双非其他</option>
+                        <option value="海本">海外本科 (US/UK/HK/CAN)</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="form-row-3col">
+                    <div class="form-group">
+                      <label>专业 (Major)</label>
+                      <input type="text" id="case-major-input" class="modal-input" placeholder="例如: 软件工程">
+                    </div>
+                    <div class="form-group">
+                      <label>均分/GPA</label>
+                      <input type="number" id="case-gpa-input" class="modal-input" placeholder="例如: 88.5" step="0.1">
+                    </div>
+                    <div class="form-group">
+                      <label>分制 (Scale)</label>
+                      <select id="case-scale-input" class="modal-input modal-select">
+                        <option value="100">100分制</option>
+                        <option value="4.0">4.0分制</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="form-row-2col">
+                    <div class="form-group">
+                      <label>语言成绩 (Language)</label>
+                      <input type="text" id="case-lang-input" class="modal-input" placeholder="例如: 雅思 7.5 (口语 7.0)">
+                    </div>
+                    <div class="form-group">
+                      <label>录取申请年份 (Year)</label>
+                      <input type="number" id="case-year-input" class="modal-input" value="2025">
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label>软性背景概述 (科研、实习、竞赛、奖项)</label>
+                    <textarea id="case-summary-input" class="modal-input modal-textarea" rows="2" placeholder="例如: 腾讯微服务后端实习，国家级大创自适应网络调度器项目，两篇顶会Workshop。"></textarea>
+                  </div>
+
+                  <button class="btn-optic-action btn-submit-ingest" id="btn-submit-case">
+                    ➕ 向量化写入同辈案例库
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Ingestion Feedback Box -->
+            <div class="console-feedback-box hidden" id="console-graph-feedback"></div>
+          </div>
+        </div>
+
+        <!-- PANE C: Benchmark Online Inspection -->
+        <div class="console-pane" id="pane-console-benchmark">
+          <div class="console-eval-container">
+            <!-- Action Toolbar Header -->
+            <div class="eval-top-toolbar">
+              <div class="eval-status-info">
+                <span class="eval-pulse-dot"></span>
+                <div>
+                  <h4 class="eval-title">GraphRAG 量化评测基准套件 (28 个高危陷阱题压测)</h4>
+                  <p class="eval-subtext" id="eval-last-run-timestamp">尚未加载评测数据</p>
+                </div>
+              </div>
+              <div class="eval-actions">
+                <button class="btn-optic-primary btn-run-benchmark" id="btn-run-benchmark">
+                  <span class="btn-icon">🚀</span> 启动全量 Benchmark 巡检
+                </button>
+              </div>
+            </div>
+
+            <!-- 4 Metric Cards Dashboard -->
+            <div class="eval-metrics-grid">
+              <!-- Metric 1: Hard Constraint Precision -->
+              <div class="eval-gauge-card">
+                <div class="gauge-card-header">
+                  <div class="gauge-title-wrap">
+                    <span class="gauge-symbol">🎯</span>
+                    <span class="gauge-name">硬性门槛拦截精准率</span>
+                  </div>
+                  <span class="gauge-delta-tag" id="gauge-delta-hard">+100.0%</span>
+                </div>
+                <div class="gauge-value-row">
+                  <span class="gauge-main-val" id="gauge-val-hard">100.0%</span>
+                  <span class="gauge-baseline-val" id="gauge-base-hard">Baseline: 0.0%</span>
+                </div>
+                <div class="gauge-bar-track">
+                  <div class="gauge-bar-fill fill-cyan" id="gauge-bar-hard" style="width: 100%;"></div>
+                </div>
+                <p class="gauge-desc">严卡英国/港新院校隐形 List、雅思托福单项与跨专业核心先修课，零误判漏判。</p>
+              </div>
+
+              <!-- Metric 2: Stage Gate Compliance -->
+              <div class="eval-gauge-card">
+                <div class="gauge-card-header">
+                  <div class="gauge-title-wrap">
+                    <span class="gauge-symbol">🛡️</span>
+                    <span class="gauge-name">苏格拉底状态机守门率</span>
+                  </div>
+                  <span class="gauge-delta-tag" id="gauge-delta-gate">+62.5%</span>
+                </div>
+                <div class="gauge-value-row">
+                  <span class="gauge-main-val" id="gauge-val-gate">100.0%</span>
+                  <span class="gauge-baseline-val" id="gauge-base-gate">Baseline: 37.5%</span>
+                </div>
+                <div class="gauge-bar-track">
+                  <div class="gauge-bar-fill fill-purple" id="gauge-bar-gate" style="width: 100%;"></div>
+                </div>
+                <p class="gauge-desc">坚守“原石未剖，绝不落笔”，用户强行催稿或跳步时 100% 触发阶段守门拦截。</p>
+              </div>
+
+              <!-- Metric 3: Anti-AI Lexicon Cleanliness -->
+              <div class="eval-gauge-card">
+                <div class="gauge-card-header">
+                  <div class="gauge-title-wrap">
+                    <span class="gauge-symbol">✨</span>
+                    <span class="gauge-name">文书禁用词纯净度</span>
+                  </div>
+                  <span class="gauge-delta-tag" id="gauge-delta-ai">+87.5%</span>
+                </div>
+                <div class="gauge-value-row">
+                  <span class="gauge-main-val" id="gauge-val-ai">100.0%</span>
+                  <span class="gauge-baseline-val" id="gauge-base-ai">Baseline: 12.5%</span>
+                </div>
+                <div class="gauge-bar-track">
+                  <div class="gauge-bar-fill fill-emerald" id="gauge-bar-ai" style="width: 100%;"></div>
+                </div>
+                <p class="gauge-desc">后置 AntiAIGuardrail 规则净化，对 40+ 典型陈词滥调禁用词词族绝对 0% 命中。</p>
+              </div>
+
+              <!-- Metric 4: Citation Faithfulness -->
+              <div class="eval-gauge-card">
+                <div class="gauge-card-header">
+                  <div class="gauge-title-wrap">
+                    <span class="gauge-symbol">📜</span>
+                    <span class="gauge-name">学术套磁论文忠实度</span>
+                  </div>
+                  <span class="gauge-delta-tag" id="gauge-delta-cite">+75.0%</span>
+                </div>
+                <div class="gauge-value-row">
+                  <span class="gauge-main-val" id="gauge-val-cite">100.0%</span>
+                  <span class="gauge-baseline-val" id="gauge-base-cite">Baseline: 25.0%</span>
+                </div>
+                <div class="gauge-bar-track">
+                  <div class="gauge-bar-fill fill-amber" id="gauge-bar-cite" style="width: 100%;"></div>
+                </div>
+                <p class="gauge-desc">基于图谱真实论文索引开展学术共振，面对未知学者 100% 触发学术诚信红线。</p>
+              </div>
+            </div>
+
+            <!-- Test Cases Breakdown Scrollable Area -->
+            <div class="eval-cases-table-wrap">
+              <div class="cases-table-header">
+                <span class="cases-table-title">✦ 28 个高危陷阱题在线巡检明细清单</span>
+                <span class="cases-table-meta" id="cases-table-count">共 28 项用例</span>
+              </div>
+              <div class="cases-table-scroll" id="eval-cases-list">
+                <!-- Dynamically rendered via JS -->
+                <div class="cases-loading-hint">正在加载最近一次评测详情...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Rename Profile Modal -->
+  <div class="optic-modal-backdrop hidden" id="rename-profile-modal">
+    <div class="optic-modal-dialog modal-dialog-sm">
+      <div class="optic-modal-header">
+        <div class="modal-title-wrap">
+          <span class="modal-prism-icon">✏️</span>
+          <div>
+            <h3 class="modal-title">重命名当前学生档案</h3>
+          </div>
+        </div>
+        <button class="modal-close-btn" id="close-rename-modal-btn">✕</button>
+      </div>
+      <div class="modal-form-body">
+        <div class="form-group">
+          <label>新档案名称</label>
+          <input type="text" id="rename-profile-name-input" class="modal-input" placeholder="输入新档案名称...">
+        </div>
+      </div>
+      <div class="modal-footer-actions">
+        <button class="btn-ghost" id="cancel-rename-profile-btn">取消</button>
+        <button class="btn-primary" id="confirm-rename-profile-btn">保存修改</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Prism System & Graph Console Modal (Milestone 8) -->
+  <div class="optic-modal-backdrop hidden" id="prism-console-modal">
+    <div class="optic-modal-dialog modal-dialog-admin">
+      <div class="optic-modal-header">
+        <div class="modal-title-wrap">
+          <span class="modal-prism-icon">⚙️</span>
+          <div>
+            <h3 class="modal-title">棱镜控制台 · 系统与图谱管理中心</h3>
+            <p class="modal-subtitle">模型与引擎热切换 · 知识图谱与案例库在线摄取 · Benchmark 在线巡检仪表盘</p>
+          </div>
+        </div>
+        <button class="modal-close-btn" id="close-console-modal-btn">✕</button>
+      </div>
+
+      <!-- Console Navigation Tabs -->
+      <div class="modal-toolbar-bar">
+        <div class="modal-toolbar-left">
+          <div class="preview-tab-pills">
+            <button class="preview-tab-pill active" id="tab-console-engine">⚙️ 模型与引擎热切换</button>
+            <button class="preview-tab-pill" id="tab-console-graph">🌌 知识图谱与案例库在线摄取</button>
+            <button class="preview-tab-pill" id="tab-console-benchmark">🔬 Benchmark 在线巡检</button>
+          </div>
+        </div>
+        <div class="modal-toolbar-right">
+          <span class="console-mode-badge" id="console-header-mode-tag">引擎状态: 加载中...</span>
+        </div>
+      </div>
+
+      <!-- Console Body Panes -->
+      <div class="optic-modal-body console-modal-body">
+        <!-- PANE A: Model & Engine Hot-Switching -->
+        <div class="console-pane active" id="pane-console-engine">
+          <div class="console-engine-container">
+            <!-- Mode Banner -->
+            <div class="engine-mode-banner" id="engine-mode-banner">
+              <div class="mode-banner-info">
+                <span class="mode-pulse-indicator" id="mode-pulse-dot"></span>
+                <div class="mode-text-wrap">
+                  <div class="mode-title-row">
+                    <span class="mode-main-label" id="current-engine-mode-title">Deterministic 离线引擎模式</span>
+                    <span class="mode-sub-tag" id="current-engine-sub-tag">100% 确定性 · 零网络依赖</span>
+                  </div>
+                  <p class="mode-desc" id="current-engine-mode-desc">
+                    当前运行于本地离线模拟与图谱规则引擎，无需网络与 API Key，确保开发自测与离线评审 100% 稳定可复现。
+                  </p>
+                </div>
+              </div>
+              <div class="mode-banner-actions">
+                <button class="btn-optic-toggle" id="btn-toggle-engine-mode" title="一键在离线模式与在线大模型之间切换">
+                  <span class="toggle-icon">⇄</span>
+                  <span class="toggle-text" id="toggle-engine-btn-text">切换至 Live LLM 模式</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Parameters Grid Form -->
+            <div class="console-form-card">
+              <h4 class="card-section-title">✦ 引擎运行时推理参数 (Runtime Inference Settings)</h4>
+              <div class="form-grid-2col">
+                <div class="form-group">
+                  <label for="console-provider-select">LLM Provider (推理服务提供商)</label>
+                  <select id="console-provider-select" class="modal-input modal-select">
+                    <option value="auto">Auto (自动探测可用渠道)</option>
+                    <option value="mock">Mock (确定性离线模拟引擎)</option>
+                    <option value="openai">OpenAI / OpenAI-Compatible (GPT-4o / Qwen / etc.)</option>
+                    <option value="deepseek">DeepSeek (官方直连 API)</option>
+                    <option value="claude">Anthropic Claude (官方 API)</option>
+                    <option value="ollama">Ollama (本地私有化开源大模型)</option>
+                  </select>
+                  <span class="field-hint">支持任何兼容 OpenAI 规范的中转网关与自建 vLLM / Ollama 节点。</span>
+                </div>
+
+                <div class="form-group">
+                  <label for="console-model-input">Model Name (模型标识码)</label>
+                  <input type="text" id="console-model-input" class="modal-input" placeholder="例如: gpt-4o, deepseek-chat, claude-3-5-sonnet-20241022">
+                  <span class="field-hint">当前各智能体调用的统一底层大语言模型。</span>
+                </div>
+
+                <div class="form-group">
+                  <label for="console-base-url-input">Base URL (接口基础地址)</label>
+                  <input type="text" id="console-base-url-input" class="modal-input" placeholder="例如: https://api.openai.com/v1 或 https://api.deepseek.com/v1">
+                  <span class="field-hint">自定义中转网关或本地服务地址（末尾请勿带斜杠）。</span>
+                </div>
+
+                <div class="form-group">
+                  <label for="console-api-key-input">API Key (密钥口令)</label>
+                  <div class="input-with-action">
+                    <input type="password" id="console-api-key-input" class="modal-input" placeholder="留空则保持现有或使用离线 Mock">
+                    <button class="btn-input-icon" id="btn-toggle-key-view" type="button" title="显示/隐藏密钥">👁️</button>
+                  </div>
+                  <span class="field-hint" id="console-key-masked-hint">当前状态: 未配置或已加密保护</span>
+                </div>
+
+                <div class="form-group full-width">
+                  <div class="slider-label-row">
+                    <label for="console-temp-slider">Temperature (温度值 / 随机度)</label>
+                    <span class="slider-val-badge" id="console-temp-badge">0.20</span>
+                  </div>
+                  <input type="range" id="console-temp-slider" min="0" max="1" step="0.05" value="0.2" class="optic-slider">
+                  <span class="field-hint">留学申请决策推荐建议保持 0.1 ~ 0.3 严谨低温；文书创意生成可调至 0.4 ~ 0.6。</span>
+                </div>
+              </div>
+
+              <!-- Form Action Bar -->
+              <div class="card-action-bar">
+                <button class="btn-optic-action btn-test-conn" id="btn-test-conn">
+                  <span class="btn-icon">⚡</span> 测试连接 (Test Connection)
+                </button>
+                <button class="btn-optic-action btn-save-cfg" id="btn-save-cfg">
+                  <span class="btn-icon">💾</span> 保存并热生效 (Save & Apply)
+                </button>
+              </div>
+
+              <!-- Test Feedback Banner -->
+              <div class="console-feedback-box hidden" id="console-engine-feedback"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PANE B: Knowledge Graph & Case Ingestion -->
+        <div class="console-pane" id="pane-console-graph">
+          <div class="console-graph-container">
+            <!-- Top Metric Stats Cards -->
+            <div class="graph-stats-dashboard">
+              <div class="stat-card">
+                <div class="stat-icon-wrap">🏛️</div>
+                <div class="stat-info">
+                  <span class="stat-num" id="stat-unis">0</span>
+                  <span class="stat-label">University 院校节点</span>
+                </div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-icon-wrap">🎓</div>
+                <div class="stat-info">
+                  <span class="stat-num" id="stat-programs">0</span>
+                  <span class="stat-label">Program 硕士/博士项目</span>
+                </div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-icon-wrap">📚</div>
+                <div class="stat-info">
+                  <span class="stat-num" id="stat-courses">0</span>
+                  <span class="stat-label">Course 核心先修课</span>
+                </div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-icon-wrap">🔬</div>
+                <div class="stat-info">
+                  <span class="stat-num" id="stat-profs">0</span>
+                  <span class="stat-label">Professor 学者导师</span>
+                </div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-icon-wrap">🔗</div>
+                <div class="stat-info">
+                  <span class="stat-num" id="stat-edges">0</span>
+                  <span class="stat-label">拓扑带权关系边 (Edges)</span>
+                </div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-icon-wrap">📑</div>
+                <div class="stat-info">
+                  <span class="stat-num" id="stat-cases">0</span>
+                  <span class="stat-label">同辈录取/被拒案例库</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="graph-refresh-row">
+              <span class="graph-storage-hint" id="graph-storage-path">底座存储: SQLite 本地持久化</span>
+              <button class="btn-optic-sm" id="btn-refresh-stats">🔄 刷新数据统计</button>
+            </div>
+
+            <!-- Ingestion Forms Grid -->
+            <div class="ingestion-split-grid">
+              <!-- Form 1: Add Graph Node -->
+              <div class="console-form-card">
+                <div class="card-header-badge">
+                  <span class="card-badge-icon">🌐</span>
+                  <span class="card-badge-title">新增院校与项目节点 (GraphStore)</span>
+                </div>
+                <p class="card-desc">自动建立拓扑关系并持久化至 NetworkX + SQLite，供定焦师与切面师动态剪枝。</p>
+
+                <div class="form-stack">
+                  <div class="form-row-2col">
+                    <div class="form-group">
+                      <label>节点类型 (Node Label)</label>
+                      <select id="node-type-input" class="modal-input modal-select">
+                        <option value="Program">Program (研究生专业项目)</option>
+                        <option value="University">University (全球院校)</option>
+                        <option value="Course">Course (先修课程)</option>
+                        <option value="Professor">Professor (科研学者导师)</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label>节点唯一标识码 (ID)</label>
+                      <input type="text" id="node-id-input" class="modal-input" placeholder="例如: ucl_cs_msc, ucl">
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label>节点名称 (Display Title)</label>
+                    <input type="text" id="node-name-input" class="modal-input" placeholder="例如: MSc Computer Science 或 伦敦大学学院">
+                  </div>
+
+                  <div class="form-row-2col" id="program-specific-row-1">
+                    <div class="form-group">
+                      <label>所属大学 ID (University ID)</label>
+                      <input type="text" id="node-uni-id-input" class="modal-input" placeholder="例如: ucl, cmu, ic">
+                    </div>
+                    <div class="form-group">
+                      <label>地区 (Region)</label>
+                      <select id="node-region-input" class="modal-input modal-select">
+                        <option value="UK">英国 (UK)</option>
+                        <option value="US">美国 (US)</option>
+                        <option value="HK">中国香港 (HK)</option>
+                        <option value="SG">新加坡 (SG)</option>
+                        <option value="EU">欧洲大陆 (EU)</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="form-row-2col" id="program-specific-row-2">
+                    <div class="form-group">
+                      <label>专业方向 (Major Category)</label>
+                      <select id="node-major-input" class="modal-input modal-select">
+                        <option value="CS">计算机科学与工程 (CS)</option>
+                        <option value="DS">数据科学 (DS)</option>
+                        <option value="BA">商业分析 (BA)</option>
+                        <option value="EE">电子与计算机工程 (ECE)</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label>最低均分要求 (Min GPA)</label>
+                      <input type="number" id="node-gpa-input" class="modal-input" placeholder="例如: 85.0" step="0.5">
+                    </div>
+                  </div>
+
+                  <div class="form-group" id="program-specific-row-3">
+                    <label>语言要求与 List 隐形限制 (JSON 或描述)</label>
+                    <input type="text" id="node-extra-input" class="modal-input" placeholder='例如: 雅思7.0小分6.5 | 仅限 [985, 211, 海本]'>
+                  </div>
+
+                  <button class="btn-optic-action btn-submit-ingest" id="btn-submit-node">
+                    ➕ 校验并写入知识图谱
+                  </button>
+                </div>
+              </div>
+
+              <!-- Form 2: Add Admission Case -->
+              <div class="console-form-card">
+                <div class="card-header-badge">
+                  <span class="card-badge-icon">📑</span>
+                  <span class="card-badge-title">补充同辈录取/被拒案例 (VectorStore)</span>
+                </div>
+                <p class="card-desc">自动计算局部密集嵌入向量并写入向量库，供定焦师测算动态同辈中位线与录取率。</p>
+
+                <div class="form-stack">
+                  <div class="form-row-2col">
+                    <div class="form-group">
+                      <label>目标项目 ID (Target Program ID)</label>
+                      <input type="text" id="case-program-input" class="modal-input" placeholder="例如: cmu_msit_se, ic_computing_msc">
+                    </div>
+                    <div class="form-group">
+                      <label>录取结果 (Outcome)</label>
+                      <select id="case-outcome-input" class="modal-input modal-select">
+                        <option value="ADMIT">录取 (ADMIT)</option>
+                        <option value="REJECT">被拒 (REJECT)</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="form-row-2col">
+                    <div class="form-group">
+                      <label>本科院校 (Undergraduate University)</label>
+                      <input type="text" id="case-school-input" class="modal-input" placeholder="例如: 浙江大学">
+                    </div>
+                    <div class="form-group">
+                      <label>院校档次 (Tier)</label>
+                      <select id="case-tier-input" class="modal-input modal-select">
+                        <option value="985">985 高校</option>
+                        <option value="211">211 高校</option>
+                        <option value="双非一本">双非一本</option>
+                        <option value="双非">双非其他</option>
+                        <option value="海本">海外本科 (US/UK/HK/CAN)</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="form-row-3col">
+                    <div class="form-group">
+                      <label>专业 (Major)</label>
+                      <input type="text" id="case-major-input" class="modal-input" placeholder="例如: 软件工程">
+                    </div>
+                    <div class="form-group">
+                      <label>均分/GPA</label>
+                      <input type="number" id="case-gpa-input" class="modal-input" placeholder="例如: 88.5" step="0.1">
+                    </div>
+                    <div class="form-group">
+                      <label>分制 (Scale)</label>
+                      <select id="case-scale-input" class="modal-input modal-select">
+                        <option value="100">100分制</option>
+                        <option value="4.0">4.0分制</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="form-row-2col">
+                    <div class="form-group">
+                      <label>语言成绩 (Language)</label>
+                      <input type="text" id="case-lang-input" class="modal-input" placeholder="例如: 雅思 7.5 (口语 7.0)">
+                    </div>
+                    <div class="form-group">
+                      <label>录取申请年份 (Year)</label>
+                      <input type="number" id="case-year-input" class="modal-input" value="2025">
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label>软性背景概述 (科研、实习、竞赛、奖项)</label>
+                    <textarea id="case-summary-input" class="modal-input modal-textarea" rows="2" placeholder="例如: 腾讯微服务后端实习，国家级大创自适应网络调度器项目，两篇顶会Workshop。"></textarea>
+                  </div>
+
+                  <button class="btn-optic-action btn-submit-ingest" id="btn-submit-case">
+                    ➕ 向量化写入同辈案例库
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Ingestion Feedback Box -->
+            <div class="console-feedback-box hidden" id="console-graph-feedback"></div>
+          </div>
+        </div>
+
+        <!-- PANE C: Benchmark Online Inspection -->
+        <div class="console-pane" id="pane-console-benchmark">
+          <div class="console-eval-container">
+            <!-- Action Toolbar Header -->
+            <div class="eval-top-toolbar">
+              <div class="eval-status-info">
+                <span class="eval-pulse-dot"></span>
+                <div>
+                  <h4 class="eval-title">GraphRAG 量化评测基准套件 (28 个高危陷阱题压测)</h4>
+                  <p class="eval-subtext" id="eval-last-run-timestamp">尚未加载评测数据</p>
+                </div>
+              </div>
+              <div class="eval-actions">
+                <button class="btn-optic-primary btn-run-benchmark" id="btn-run-benchmark">
+                  <span class="btn-icon">🚀</span> 启动全量 Benchmark 巡检
+                </button>
+              </div>
+            </div>
+
+            <!-- 4 Metric Cards Dashboard -->
+            <div class="eval-metrics-grid">
+              <!-- Metric 1: Hard Constraint Precision -->
+              <div class="eval-gauge-card">
+                <div class="gauge-card-header">
+                  <div class="gauge-title-wrap">
+                    <span class="gauge-symbol">🎯</span>
+                    <span class="gauge-name">硬性门槛拦截精准率</span>
+                  </div>
+                  <span class="gauge-delta-tag" id="gauge-delta-hard">+100.0%</span>
+                </div>
+                <div class="gauge-value-row">
+                  <span class="gauge-main-val" id="gauge-val-hard">100.0%</span>
+                  <span class="gauge-baseline-val" id="gauge-base-hard">Baseline: 0.0%</span>
+                </div>
+                <div class="gauge-bar-track">
+                  <div class="gauge-bar-fill fill-cyan" id="gauge-bar-hard" style="width: 100%;"></div>
+                </div>
+                <p class="gauge-desc">严卡英国/港新院校隐形 List、雅思托福单项与跨专业核心先修课，零误判漏判。</p>
+              </div>
+
+              <!-- Metric 2: Stage Gate Compliance -->
+              <div class="eval-gauge-card">
+                <div class="gauge-card-header">
+                  <div class="gauge-title-wrap">
+                    <span class="gauge-symbol">🛡️</span>
+                    <span class="gauge-name">苏格拉底状态机守门率</span>
+                  </div>
+                  <span class="gauge-delta-tag" id="gauge-delta-gate">+62.5%</span>
+                </div>
+                <div class="gauge-value-row">
+                  <span class="gauge-main-val" id="gauge-val-gate">100.0%</span>
+                  <span class="gauge-baseline-val" id="gauge-base-gate">Baseline: 37.5%</span>
+                </div>
+                <div class="gauge-bar-track">
+                  <div class="gauge-bar-fill fill-purple" id="gauge-bar-gate" style="width: 100%;"></div>
+                </div>
+                <p class="gauge-desc">坚守“原石未剖，绝不落笔”，用户强行催稿或跳步时 100% 触发阶段守门拦截。</p>
+              </div>
+
+              <!-- Metric 3: Anti-AI Lexicon Cleanliness -->
+              <div class="eval-gauge-card">
+                <div class="gauge-card-header">
+                  <div class="gauge-title-wrap">
+                    <span class="gauge-symbol">✨</span>
+                    <span class="gauge-name">文书禁用词纯净度</span>
+                  </div>
+                  <span class="gauge-delta-tag" id="gauge-delta-ai">+87.5%</span>
+                </div>
+                <div class="gauge-value-row">
+                  <span class="gauge-main-val" id="gauge-val-ai">100.0%</span>
+                  <span class="gauge-baseline-val" id="gauge-base-ai">Baseline: 12.5%</span>
+                </div>
+                <div class="gauge-bar-track">
+                  <div class="gauge-bar-fill fill-emerald" id="gauge-bar-ai" style="width: 100%;"></div>
+                </div>
+                <p class="gauge-desc">后置 AntiAIGuardrail 规则净化，对 40+ 典型陈词滥调禁用词词族绝对 0% 命中。</p>
+              </div>
+
+              <!-- Metric 4: Citation Faithfulness -->
+              <div class="eval-gauge-card">
+                <div class="gauge-card-header">
+                  <div class="gauge-title-wrap">
+                    <span class="gauge-symbol">📜</span>
+                    <span class="gauge-name">学术套磁论文忠实度</span>
+                  </div>
+                  <span class="gauge-delta-tag" id="gauge-delta-cite">+75.0%</span>
+                </div>
+                <div class="gauge-value-row">
+                  <span class="gauge-main-val" id="gauge-val-cite">100.0%</span>
+                  <span class="gauge-baseline-val" id="gauge-base-cite">Baseline: 25.0%</span>
+                </div>
+                <div class="gauge-bar-track">
+                  <div class="gauge-bar-fill fill-amber" id="gauge-bar-cite" style="width: 100%;"></div>
+                </div>
+                <p class="gauge-desc">基于图谱真实论文索引开展学术共振，面对未知学者 100% 触发学术诚信红线。</p>
+              </div>
+            </div>
+
+            <!-- Test Cases Breakdown Scrollable Area -->
+            <div class="eval-cases-table-wrap">
+              <div class="cases-table-header">
+                <span class="cases-table-title">✦ 28 个高危陷阱题在线巡检明细清单</span>
+                <span class="cases-table-meta" id="cases-table-count">共 28 项用例</span>
+              </div>
+              <div class="cases-table-scroll" id="eval-cases-list">
+                <!-- Dynamically rendered via JS -->
+                <div class="cases-loading-hint">正在加载最近一次评测详情...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Notification Toast -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <script src="/js/app.js"></script>
+</body>
+</html>

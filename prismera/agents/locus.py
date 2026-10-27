@@ -104,12 +104,19 @@ def locus_node(state: PrismEraState) -> Dict[str, Any]:
     safety_cards = "\n".join(_format_program_card(p, "基光·稳妥档", ">75%") for p in safety_list)
 
     regions_str = "/".join(target_regions)
+    pruned_notes = ""
+    if hasattr(filtered_programs, "pruned_records") and filtered_programs.pruned_records:
+        pruned_items = []
+        for r in filtered_programs.pruned_records[:4]:
+            pruned_items.append(f"  - `{r['program_name']}`：{r['reason']}")
+        pruned_notes = "\n- **知识图谱硬核剪枝拦截清单（Graph Pruning Audit）**：\n" + "\n".join(pruned_items)
+
     overview_text = (
         f"申请者当前身位处于 **{undergrad_tier} ({undergrad_name})**、均分 **{gpa_raw}** 的有力竞争区间。\n"
         f"在 **{regions_str}** 地区的知识图谱剪枝中：\n"
         f"- 依据英国/港新院校隐形认可名单（List），已自动过滤严卡高梯队或不承认非核心名单的超高危项目；\n"
         f"- 依据学生语言现有水位（IELTS {language_scores.get('IELTS_total', 7.0)}，口语 {language_scores.get('speaking', 6.5)}），"
-        f"已自动避开语言小分有硬性阻断的项目，确保申请通道畅通。"
+        f"已自动避开语言小分有硬性阻断的项目，确保申请通道畅通。{pruned_notes}"
     )
 
     response_markdown = f"""### 1. 定焦坐标系综述（Locus Overview）
@@ -142,4 +149,5 @@ def locus_node(state: PrismEraState) -> Dict[str, Any]:
         "student_profile": updated_profile,
         "latest_response": response_markdown,
         "active_agent": None,
+        "pending_human_review": "locus_matrix",
     }

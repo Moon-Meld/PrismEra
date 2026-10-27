@@ -17,8 +17,9 @@ def facet_node(state: PrismEraState) -> Dict[str, Any]:
     gpa_raw = profile.get("gpa_raw") or "86.5/100"
     target_major = (profile.get("target_majors") or ["CS"])[0]
 
-    # Mock completed courses from context or typical transcript
-    sample_completed = [
+    # 提取已修课程（若学生上传了解析后的先修课成绩单则直接使用，否则使用基准课程）
+    prereq_dict = profile.get("prerequisite_grades") or {}
+    completed_courses = list(prereq_dict.keys()) if prereq_dict else [
         "高等数学 (Calculus)",
         "线性代数 (Linear Algebra)",
         "概率论与数理统计 (Probability)",
@@ -29,7 +30,7 @@ def facet_node(state: PrismEraState) -> Dict[str, Any]:
 
     # 1. 优先调用确定性工具
     gpa_res = calculate_gpa_metrics(gpa_raw)
-    prereq_res = check_prerequisite_graph(target_major, sample_completed)
+    prereq_res = check_prerequisite_graph(target_major, completed_courses)
 
     # 2. 构建符合 Prompt 规范的三段式输出
     align_rows = []

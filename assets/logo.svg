@@ -1,0 +1,261 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="100%" height="100%">
+  <defs>
+    <!-- Background Radial Gradient -->
+    <radialGradient id="bg-grad" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#0c1322" />
+      <stop offset="45%" stop-color="#070a12" />
+      <stop offset="100%" stop-color="#020408" />
+    </radialGradient>
+
+    <!-- Ambient Core Nebula -->
+    <radialGradient id="nebula-glow" cx="48%" cy="46%" r="40%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.18" />
+      <stop offset="35%" stop-color="#818cf8" stop-opacity="0.10" />
+      <stop offset="70%" stop-color="#c084fc" stop-opacity="0.04" />
+      <stop offset="100%" stop-color="#000000" stop-opacity="0" />
+    </radialGradient>
+
+    <!-- Incident Beam: Pure White Light -->
+    <linearGradient id="incident-beam" x1="0%" y1="50%" x2="100%" y2="50%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0" />
+      <stop offset="40%" stop-color="#ffffff" stop-opacity="0.4" />
+      <stop offset="85%" stop-color="#ffffff" stop-opacity="0.95" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="1" />
+    </linearGradient>
+
+    <!-- Incident Beam Core Halo -->
+    <linearGradient id="incident-glow" x1="0%" y1="50%" x2="100%" y2="50%">
+      <stop offset="0%" stop-color="#e0f2fe" stop-opacity="0" />
+      <stop offset="70%" stop-color="#bae6fd" stop-opacity="0.3" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.7" />
+    </linearGradient>
+
+    <!-- Spectral Rays Gradients -->
+    <!-- 1. Luminary Gold (Core / Routing) -->
+    <linearGradient id="spec-gold" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.9" />
+      <stop offset="20%" stop-color="#fbbf24" stop-opacity="0.85" />
+      <stop offset="70%" stop-color="#f59e0b" stop-opacity="0.6" />
+      <stop offset="100%" stop-color="#d97706" stop-opacity="0" />
+    </linearGradient>
+
+    <!-- 2. Facet Emerald (Diagnostic / WES) -->
+    <linearGradient id="spec-emerald" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.9" />
+      <stop offset="25%" stop-color="#34d399" stop-opacity="0.85" />
+      <stop offset="75%" stop-color="#10b981" stop-opacity="0.55" />
+      <stop offset="100%" stop-color="#059669" stop-opacity="0" />
+    </linearGradient>
+
+    <!-- 3. Echo Cyan (Interview / Timeline) -->
+    <linearGradient id="spec-cyan" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.9" />
+      <stop offset="25%" stop-color="#38bdf8" stop-opacity="0.85" />
+      <stop offset="75%" stop-color="#0284c7" stop-opacity="0.55" />
+      <stop offset="100%" stop-color="#0369a1" stop-opacity="0" />
+    </linearGradient>
+
+    <!-- 4. Locus Indigo (GraphRAG / Positioning) -->
+    <linearGradient id="spec-indigo" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.9" />
+      <stop offset="25%" stop-color="#818cf8" stop-opacity="0.85" />
+      <stop offset="75%" stop-color="#6366f1" stop-opacity="0.55" />
+      <stop offset="100%" stop-color="#4338ca" stop-opacity="0" />
+    </linearGradient>
+
+    <!-- 5. Disperser Magenta (SOP / Storytelling) -->
+    <linearGradient id="spec-magenta" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.9" />
+      <stop offset="25%" stop-color="#f472b6" stop-opacity="0.85" />
+      <stop offset="75%" stop-color="#ec4899" stop-opacity="0.55" />
+      <stop offset="100%" stop-color="#be185d" stop-opacity="0" />
+    </linearGradient>
+
+    <!-- 6. Resonator Coral (Paper / Scholar) -->
+    <linearGradient id="spec-coral" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.9" />
+      <stop offset="25%" stop-color="#fb7185" stop-opacity="0.8" />
+      <stop offset="75%" stop-color="#f43f5e" stop-opacity="0.5" />
+      <stop offset="100%" stop-color="#e11d48" stop-opacity="0" />
+    </linearGradient>
+
+    <!-- Crystal Prism Facet Gradients -->
+    <linearGradient id="prism-front" x1="30%" y1="10%" x2="70%" y2="90%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.28" />
+      <stop offset="40%" stop-color="#bae6fd" stop-opacity="0.12" />
+      <stop offset="80%" stop-color="#38bdf8" stop-opacity="0.05" />
+      <stop offset="100%" stop-color="#0284c7" stop-opacity="0.18" />
+    </linearGradient>
+
+    <linearGradient id="prism-back" x1="80%" y1="15%" x2="20%" y2="85%">
+      <stop offset="0%" stop-color="#e0e7ff" stop-opacity="0.22" />
+      <stop offset="50%" stop-color="#6366f1" stop-opacity="0.08" />
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0.45" />
+    </linearGradient>
+
+    <linearGradient id="prism-bottom" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#c084fc" stop-opacity="0.15" />
+      <stop offset="100%" stop-color="#1e1b4b" stop-opacity="0.4" />
+    </linearGradient>
+
+    <!-- Soft Blur Filter for Light Diffusion -->
+    <filter id="soft-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+    <filter id="ultra-glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="18" result="blur2" />
+      <feMerge>
+        <feMergeNode in="blur2" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="800" height="800" rx="48" fill="url(#bg-grad)" />
+
+  <!-- Ambient Light Nebula -->
+  <circle cx="430" cy="380" r="320" fill="url(#nebula-glow)" />
+
+  <!-- Subtle Knowledge Graph Coordinate Grid Rings -->
+  <g opacity="0.15" stroke="#94a3b8" stroke-width="0.8" stroke-dasharray="3 6" fill="none">
+    <circle cx="400" cy="400" r="280" />
+    <circle cx="400" cy="400" r="210" />
+    <circle cx="400" cy="400" r="140" />
+    <!-- Angular Guides -->
+    <line x1="400" y1="110" x2="400" y2="690" stroke-dasharray="2 8" />
+    <line x1="110" y1="400" x2="690" y2="400" stroke-dasharray="2 8" />
+  </g>
+
+  <!-- Constellation Nodes (GraphRAG Optical Metaphor) -->
+  <g fill="#93c5fd" opacity="0.4">
+    <circle cx="210" cy="240" r="2" />
+    <circle cx="280" cy="180" r="1.5" />
+    <circle cx="590" cy="190" r="2" />
+    <circle cx="660" cy="270" r="1.5" />
+    <circle cx="640" cy="550" r="2" />
+    <circle cx="220" cy="540" r="2" />
+  </g>
+
+  <!-- ================= SPECTRAL DISPERSION BEAMS (RIGHT) ================= -->
+  <!-- Rays origin inside the prism right facet ~ (435, 395) -->
+  <g filter="url(#soft-glow)">
+    <!-- Ray 1: Luminary Gold (-26 deg) -->
+    <path d="M 430 380 L 760 210 L 755 228 L 430 384 Z" fill="url(#spec-gold)" />
+
+    <!-- Ray 2: Facet Emerald (-15 deg) -->
+    <path d="M 430 384 L 775 285 L 770 304 L 430 389 Z" fill="url(#spec-emerald)" />
+
+    <!-- Ray 3: Echo Cyan (-4 deg) -->
+    <path d="M 430 389 L 780 365 L 775 385 L 430 395 Z" fill="url(#spec-cyan)" />
+
+    <!-- Ray 4: Locus Indigo (+8 deg) -->
+    <path d="M 430 395 L 775 448 L 768 468 L 430 402 Z" fill="url(#spec-indigo)" />
+
+    <!-- Ray 5: Disperser Magenta (+20 deg) -->
+    <path d="M 430 402 L 755 528 L 746 548 L 430 410 Z" fill="url(#spec-magenta)" />
+
+    <!-- Ray 6: Resonator Coral (+32 deg) -->
+    <path d="M 430 410 L 725 605 L 715 625 L 430 418 Z" fill="url(#spec-coral)" />
+  </g>
+
+  <!-- Subtle Ray Core Filaments -->
+  <g opacity="0.75" stroke-linecap="round">
+    <line x1="432" y1="382" x2="740" y2="218" stroke="#fef08a" stroke-width="1.8" filter="url(#soft-glow)" />
+    <line x1="432" y1="387" x2="755" y2="294" stroke="#a7f3d0" stroke-width="1.8" filter="url(#soft-glow)" />
+    <line x1="432" y1="392" x2="760" y2="375" stroke="#bae6fd" stroke-width="2.2" filter="url(#soft-glow)" />
+    <line x1="432" y1="399" x2="755" y2="458" stroke="#c7d2fe" stroke-width="1.8" filter="url(#soft-glow)" />
+    <line x1="432" y1="406" x2="735" y2="538" stroke="#fbcfe8" stroke-width="1.8" filter="url(#soft-glow)" />
+    <line x1="432" y1="414" x2="705" y2="615" stroke="#fecdd3" stroke-width="1.6" filter="url(#soft-glow)" />
+  </g>
+
+  <!-- ================= INCIDENT BEAM (LEFT) ================= -->
+  <!-- Applicant's White Light entering from (60, 400) to (342, 400) -->
+  <g filter="url(#soft-glow)">
+    <!-- Outer Glow halo -->
+    <line x1="40" y1="400" x2="344" y2="400" stroke="url(#incident-glow)" stroke-width="14" stroke-linecap="round" />
+    <!-- Inner Radiant Beam -->
+    <line x1="40" y1="400" x2="344" y2="400" stroke="url(#incident-beam)" stroke-width="4.5" stroke-linecap="round" />
+    <!-- Needle Core -->
+    <line x1="120" y1="400" x2="344" y2="400" stroke="#ffffff" stroke-width="2" stroke-linecap="round" />
+  </g>
+
+  <!-- Incident Point of Contact Flares -->
+  <circle cx="344" cy="400" r="5" fill="#ffffff" filter="url(#soft-glow)" />
+  <circle cx="344" cy="400" r="1.8" fill="#ffffff" />
+
+  <!-- ================= INTERNAL REFRACTION PATH ================= -->
+  <g opacity="0.9" filter="url(#soft-glow)">
+    <line x1="344" y1="400" x2="430" y2="395" stroke="#ffffff" stroke-width="4" stroke-opacity="0.8" />
+    <line x1="344" y1="400" x2="430" y2="384" stroke="#fef08a" stroke-width="2" stroke-opacity="0.7" />
+    <line x1="344" y1="400" x2="430" y2="412" stroke="#bae6fd" stroke-width="2" stroke-opacity="0.7" />
+  </g>
+
+  <!-- ================= 3D CRYSTAL PRISM ================= -->
+  <!-- Apex: (390, 190)
+       Left Base: (265, 530)
+       Right Base: (515, 530)
+       Front Depth Vertex: (415, 565)
+  -->
+  <g>
+    <!-- Rear / Bottom Shadow Depth Facet -->
+    <polygon points="265,530 515,530 415,575" fill="url(#prism-bottom)" stroke="#6366f1" stroke-width="1.2" stroke-opacity="0.4" />
+
+    <!-- Left Incident Facet -->
+    <polygon points="390,190 265,530 415,575" fill="url(#prism-front)" stroke="#bae6fd" stroke-width="1.8" stroke-opacity="0.75" />
+
+    <!-- Right Refraction Facet -->
+    <polygon points="390,190 415,575 515,530" fill="url(#prism-back)" stroke="#a5b4fc" stroke-width="1.8" stroke-opacity="0.7" />
+
+    <!-- Crystal Facet Edges & Light Glints -->
+    <line x1="390" y1="190" x2="415" y2="575" stroke="#ffffff" stroke-width="2.6" stroke-opacity="0.85" filter="url(#soft-glow)" />
+    <line x1="390" y1="190" x2="265" y2="530" stroke="#ffffff" stroke-width="1.5" stroke-opacity="0.6" />
+    <line x1="390" y1="190" x2="515" y2="530" stroke="#818cf8" stroke-width="1.4" stroke-opacity="0.5" />
+    <line x1="265" y1="530" x2="415" y2="575" stroke="#38bdf8" stroke-width="1.5" stroke-opacity="0.6" />
+    <line x1="415" y1="575" x2="515" y2="530" stroke="#c084fc" stroke-width="1.5" stroke-opacity="0.6" />
+
+    <!-- Internal Crystalline Lattice Ribs -->
+    <g stroke="#ffffff" stroke-opacity="0.25" stroke-width="1" stroke-dasharray="2 4">
+      <line x1="390" y1="190" x2="390" y2="540" />
+      <line x1="344" y1="400" x2="465" y2="360" />
+      <line x1="344" y1="400" x2="415" y2="575" />
+    </g>
+
+    <!-- Top Apex Glint -->
+    <circle cx="390" cy="190" r="3.5" fill="#ffffff" filter="url(#soft-glow)" />
+    <circle cx="390" cy="190" r="1.5" fill="#ffffff" />
+  </g>
+
+  <!-- ================= OPTICAL CORE PARTICLES ================= -->
+  <g fill="#ffffff">
+    <circle cx="432" cy="382" r="2.5" opacity="0.9" filter="url(#soft-glow)" />
+    <circle cx="432" cy="392" r="3" opacity="0.95" filter="url(#soft-glow)" />
+    <circle cx="432" cy="406" r="2.5" opacity="0.9" filter="url(#soft-glow)" />
+    <!-- Floating Prismatic Sparkles -->
+    <polygon points="460,320 463,328 471,331 463,334 460,342 457,334 449,331 457,328" fill="#38bdf8" opacity="0.6" />
+    <polygon points="320,330 322,335 327,337 322,339 320,344 318,339 313,337 318,335" fill="#ffffff" opacity="0.5" />
+    <polygon points="560,480 562,485 567,487 562,489 560,494 558,489 553,487 558,485" fill="#f472b6" opacity="0.6" />
+  </g>
+
+  <!-- ================= TYPOGRAPHY & EMBLEM ================= -->
+  <g text-anchor="middle">
+    <!-- Brand Title -->
+    <text x="400" y="695" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif" font-size="44" font-weight="700" letter-spacing="14" fill="#ffffff">
+      PRISM<tspan fill="#38bdf8">ERA</tspan>
+    </text>
+    <!-- Worldview / Subtitle -->
+    <text x="400" y="735" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="500" letter-spacing="7" fill="#94a3b8">
+      全球留学多智能体光学阵列
+    </text>
+    <!-- Geometric Monogram Underline -->
+    <g stroke="url(#spec-cyan)" stroke-width="1.2" opacity="0.6">
+      <line x1="280" y1="760" x2="380" y2="760" />
+      <circle cx="400" cy="760" r="3" fill="#38bdf8" />
+      <line x1="420" y1="760" x2="520" y2="760" />
+    </g>
+  </g>
+</svg>
