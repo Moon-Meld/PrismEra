@@ -551,7 +551,9 @@ def get_llm(
     import prismera.config as cfg
     chosen_provider = (provider or cfg.LLM_PROVIDER).strip().lower()
 
-    if chosen_provider == "mock" or cfg.is_offline_mock():
+    if chosen_provider == "mock":
+        return MockLLM()
+    if provider is None and cfg.is_offline_mock():
         return MockLLM()
 
     temp = cfg.DEFAULT_TEMPERATURE if temperature is None else temperature
@@ -577,6 +579,14 @@ def get_llm(
             api_key="ollama",
             base_url=cfg.OLLAMA_API_BASE,
             model=model or cfg.OLLAMA_MODEL,
+            temperature=temp,
+        )
+
+    if chosen_provider in ["vllm", "lora", "local_lora"]:
+        return OpenAILikeLLM(
+            api_key=os.getenv("LORA_API_KEY", "EMPTY"),
+            base_url=cfg.LORA_API_BASE,
+            model=model or cfg.LORA_MODEL,
             temperature=temp,
         )
 

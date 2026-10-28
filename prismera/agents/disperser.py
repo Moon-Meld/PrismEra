@@ -330,8 +330,22 @@ This challenge crystallized my pursuit: resilient distributed architecture deman
     if was_rewritten:
         guardrail_note = f"\n> 🛡️ **【去 AI 校验器动作】**：自动拦截并重写了 {len(violations)} 处禁用词 (`{', '.join(violations)}`)，确保学术质感零塑料感。\n"
 
-    # Stage 4 暗室审片
-    critique_block = f"""> 【暗室审片 · Admissions Critique】
+    # Stage 4 暗室审片 (Milestone 5.0 三棱镜陪审团多目标帕累托博弈审理)
+    from prismera.ml.llm_finetune.pareto_jury import get_pareto_jury
+    jury = get_pareto_jury()
+    jury_eval = jury.evaluate_draft(
+        cleansed_draft,
+        target_program=program_info,
+        prompt_context=last_user_msg,
+    )
+
+    critique_block = f"""> 【暗室审片 · Admissions Critique & 三棱镜陪审团】
+> 
+> **三棱镜陪审团三维打分**：
+> - 🏛️ **门禁官 (Gatekeeper)**: **{jury_eval['gatekeeper_score']}/100** — {jury_eval['jury_verdicts']['gatekeeper']['comment']}
+> - 🔬 **学术博导 (Scholar)**: **{jury_eval['scholar_score']}/100** — {jury_eval['jury_verdicts']['scholar']['comment']}
+> - 🎯 **匹配审查官 (Synergy)**: **{jury_eval['synergy_score']}/100** — {jury_eval['jury_verdicts']['synergy']['comment']}
+> - ⚡ **三维帕累托超体积得分 (Pareto Hypervolume)**: **{jury_eval['pareto_hypervolume_percent']}** ({'★ 帕累托最优支撑文书' if jury_eval['is_pareto_optimal'] else '存在局部短板，需定向补强'})
 > 
 > **招生官视角诊断**：
 > - **弱点定位**：第二段中的“resilient distributed architecture demands more than localized performance patches”略带总结腔调，若能补足一个具体的系统度量指标（如从 P99 延迟或吞吐量角度阐述），说服力将翻倍。
@@ -358,7 +372,8 @@ This challenge crystallized my pursuit: resilient distributed architecture deman
     updated_profile["sop_critique"] = {
         "weakness": "第二段中的概括句略显抽象，需补足具体系统度量指标（P99 延迟与吞吐量）。",
         "original_snippet": "This challenge crystallized my pursuit: resilient distributed architecture demands more than localized performance patches...",
-        "revised_suggestion": "Observing our telemetry logs under simulated stress exposed a fundamental principle: isolated patches cannot substitute for invariant-driven concurrency guarantees..."
+        "revised_suggestion": "Observing our telemetry logs under simulated stress exposed a fundamental principle: isolated patches cannot substitute for invariant-driven concurrency guarantees...",
+        "pareto_jury": jury_eval,
     }
 
     # 保存 Stage 3/4 版本快照

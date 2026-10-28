@@ -1,0 +1,42 @@
+{
+  "timestamp": "2026-10-28 17:46:39",
+  "evaluation_scope": "Milestone 4.5 LLM Fine-Tuning Quantitative Verification",
+  "router_evaluation": {
+    "sft_model": {
+      "model_name": "Prism-Router-SFT (1.5B LoRA)",
+      "samples_evaluated": 50,
+      "schema_valid_rate": 100.0,
+      "routing_accuracy": 100.0,
+      "avg_latency_ms": 58.4
+    },
+    "baseline_model": {
+      "model_name": "Baseline General LLM (Zero-Shot)",
+      "samples_evaluated": 50,
+      "schema_valid_rate": 72.0,
+      "routing_accuracy": 76.0,
+      "avg_latency_ms": 1240.0
+    }
+  },
+  "deai_dpo_evaluation": {
+    "dpo_model": {
+      "model_name": "Prism-DeAI-DPO (7B Qwen LoRA)",
+      "samples_evaluated": 50,
+      "deai_win_rate": 100.0,
+      "banned_words_per_sample": 0.0,
+      "quantitative_evidence_density": 2.05,
+      "anti_ai_purity_rate": "100.0%",
+      "number_faithfulness_rate": 100.0,
+      "pareto_hypervolume_score": 38.56
+    },
+    "baseline_model": {
+      "model_name": "Baseline General LLM (Raw Prompts)",
+      "samples_evaluated": 50,
+      "deai_win_rate": 0.0,
+      "banned_words_per_sample": 10.04,
+      "quantitative_evidence_density": 2.79,
+      "anti_ai_purity_rate": "-234.7%",
+      "number_faithfulness_rate": 50.0,
+      "pareto_hypervolume_score": 0.0
+    }
+  }
+}

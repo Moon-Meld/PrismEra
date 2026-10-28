@@ -18,7 +18,8 @@ from prismera.state import StudentSpectrumProfile, create_initial_spectrum_profi
 
 logger = logging.getLogger("PrismEraSessionStore")
 
-DEFAULT_DATA_DIR = Path(__file__).resolve().parent.parent / "data"
+FALLBACK_DATA_DIR = Path(__file__).resolve().parent.parent / "data"
+DEFAULT_DATA_DIR = Path(os.getenv("PRISMERA_DATA_DIR")) if os.getenv("PRISMERA_DATA_DIR") else FALLBACK_DATA_DIR
 DEFAULT_SESSION_SQLITE_PATH = DEFAULT_DATA_DIR / "session_store.sqlite"
 
 

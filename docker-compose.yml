@@ -1,0 +1,31 @@
+# ==============================================================================
+# PrismEra (棱镜纪) · Docker Compose 生产级部署编排配置
+# ==============================================================================
+version: "3.8"
+
+services:
+  prismera:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: prismera_app
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - PRISMERA_DATA_DIR=/app/data
+      - LLM_PROVIDER=auto
+      - TEMPERATURE=0.2
+    env_file:
+      - path: .env
+        required: false
+    volumes:
+      # 持久化挂载：本地 ./data 映射至容器 /app/data，保障图谱与向量库数据永久留存
+      - ./data:/app/data
+      - ./prismera/data:/app/prismera/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s

@@ -1,0 +1,50 @@
+{
+  "model_name": "Prism-AdmitNet",
+  "version": "1.0.0",
+  "feature_names": [
+    "undergrad_tier_score",
+    "gpa_normalized",
+    "gpa_gap_to_min",
+    "language_margin",
+    "prereq_coverage_ratio",
+    "research_internship_score",
+    "program_selectivity_index"
+  ],
+  "theta": [
+    2.332082876811326,
+    -0.7561461425056513,
+    3.459315151560784,
+    1.9830835075662716,
+    -0.10207190323959682,
+    2.502308045891397,
+    3.129091679741562
+  ],
+  "weights": [
+    10.299371529404418,
+    0.46947222418197193,
+    31.7951941676156,
+    7.265110505442766,
+    0.9029646232529699,
+    12.210644189349697,
+    -22.85321207661412,
+    2.225540928492468
+  ],
+  "bias": -1.0146107476718675,
+  "baseline_profile": {
+    "undergrad_tier_score": 0.72,
+    "gpa_normalized": 0.85,
+    "gpa_gap_to_min": 0.0,
+    "language_margin": 0.0,
+    "prereq_coverage_ratio": 0.8,
+    "research_internship_score": 0.55,
+    "program_selectivity_index": 0.7
+  },
+  "metrics": {
+    "training_samples": 1200,
+    "accuracy": 0.8983,
+    "roc_auc": 0.9684,
+    "expected_calibration_error": 0.0189,
+    "epochs": 300,
+    "architecture": "Monotonic Regularized Logistic Estimator (NumPy)"
+  }
+}

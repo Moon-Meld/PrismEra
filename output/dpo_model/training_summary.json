@@ -1,0 +1,17 @@
+{
+  "status": "DRY_RUN_SUCCESS",
+  "stage": "DPO",
+  "model_name": "Qwen/Qwen2.5-7B-Instruct",
+  "dataset_path": "data/finetune/disperser_dpo_train.jsonl",
+  "dataset_samples": 350,
+  "total_base_parameters": 7615000000,
+  "trainable_lora_parameters": 19799000,
+  "trainable_percentage": "0.26%",
+  "lora_rank": 16,
+  "lora_alpha": 32,
+  "epochs": 3,
+  "effective_batch_size": 16,
+  "estimated_total_steps": 63,
+  "learning_rate": 5e-06,
+  "output_dir": "output/dpo_model"
+}

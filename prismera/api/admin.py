@@ -276,14 +276,22 @@ async def add_graph_node(payload: AddGraphNodeRequest = Body(...)):
     gs.add_node(node_id, label=node_type, properties=props)
 
     # If program and university_id provided, create affiliation edge
-    if node_type == "Program" and payload.university_id:
-        uni_id = payload.university_id.strip()
-        if gs.graph.has_node(uni_id):
-            gs.add_edge(uni_id, node_id, "OFFERS_PROGRAM", properties={"program_name": node_name})
-        else:
-            # Auto-create university stub if missing
-            gs.add_node(uni_id, label="University", properties={"name": uni_id.upper()})
-            gs.add_edge(uni_id, node_id, "OFFERS_PROGRAM", properties={"program_name": node_name})
+    if node_type == "Program":
+        if payload.university_id:
+            uni_id = payload.university_id.strip()
+            if gs.graph.has_node(uni_id):
+                gs.add_edge(uni_id, node_id, "OFFERS_PROGRAM", properties={"program_name": node_name})
+            else:
+                # Auto-create university stub if missing
+                gs.add_node(uni_id, label="University", properties={"name": uni_id.upper()})
+                gs.add_edge(uni_id, node_id, "OFFERS_PROGRAM", properties={"program_name": node_name})
+
+        # If tier requirements provided, add ACCEPTS_LIST edges
+        tier_req = props.get("tier_requirement") or props.get("tier_requirements")
+        if tier_req and isinstance(tier_req, list):
+            min_gpa_val = float(props.get("min_gpa", 85.0))
+            for t in tier_req:
+                gs.add_edge(node_id, t, "ACCEPTS_LIST", properties={"min_gpa_score": min_gpa_val})
 
     try:
         gs.save_to_sqlite()

@@ -1,0 +1,83 @@
+# ==============================================================================
+# PrismEra LLaMA-Factory Fine-Tuning Configuration
+# Supports:
+#   1. Prism-DeAI Essay DPO (Qwen2.5-7B-Instruct)
+#   2. Prism-Luminary Edge Router SFT (Qwen2.5-1.5B/3B-Instruct)
+# ==============================================================================
+
+### Dataset Registration (dataset_info.json)
+# Copy the block below to your LLaMA-Factory data/dataset_info.json:
+# {
+#   "disperser_dpo": {
+#     "file_name": "data/finetune/disperser_dpo_train.jsonl",
+#     "ranking": true,
+#     "columns": {
+#       "prompt": "prompt",
+#       "chosen": "chosen",
+#       "rejected": "rejected"
+#     }
+#   },
+#   "luminary_sft": {
+#     "file_name": "data/finetune/luminary_sft_train.jsonl",
+#     "formatting": "sharegpt",
+#     "columns": {
+#       "messages": "messages"
+#     }
+#   }
+# }
+
+### 1. Stage: DPO (Disperser De-AI & Show-Don't-Tell Alignment)
+dpo_training:
+  stage: dpo
+  do_train: true
+  model_name_or_path: Qwen/Qwen2.5-7B-Instruct
+  preprocessing_num_workers: 4
+  dataset: disperser_dpo
+  template: qwen
+  cutoff_len: 2048
+  dpo_beta: 0.1
+  dpo_loss_type: sigmoid
+  finetuning_type: lora
+  lora_target: all
+  lora_rank: 16
+  lora_alpha: 32
+  lora_dropout: 0.05
+  output_dir: output/qwen2.5-7b-disperser-dpo
+  overwrite_output_dir: true
+  per_device_train_batch_size: 2
+  gradient_accumulation_steps: 8
+  learning_rate: 5.0e-6
+  num_train_epochs: 3.0
+  lr_scheduler_type: cosine
+  warmup_ratio: 0.1
+  bf16: true
+  logging_steps: 10
+  save_steps: 50
+  plot_loss: true
+
+### 2. Stage: SFT (Luminary Edge Router 1.5B/3B Decision Dispatcher)
+sft_router_training:
+  stage: sft
+  do_train: true
+  model_name_or_path: Qwen/Qwen2.5-1.5B-Instruct
+  preprocessing_num_workers: 4
+  dataset: luminary_sft
+  template: qwen
+  cutoff_len: 2048
+  finetuning_type: lora
+  lora_target: all
+  lora_rank: 16
+  lora_alpha: 32
+  lora_dropout: 0.05
+  output_dir: output/qwen2.5-1.5b-luminary-router-sft
+  overwrite_output_dir: true
+  per_device_train_batch_size: 4
+  gradient_accumulation_steps: 4
+  learning_rate: 1.0e-4
+  num_train_epochs: 3.0
+  lr_scheduler_type: cosine
+  warmup_ratio: 0.05
+  bf16: true
+  logging_steps: 10
+  save_steps: 50
+  plot_loss: true

@@ -195,6 +195,12 @@ def main():
     # 5. init-db (Database seeding)
     subparsers.add_parser("init-db", aliases=["init_db", "initdb"], help="重置并重新灌注全量种子知识图谱与案例向量库")
 
+    # 6. desktop (Native Desktop Mode)
+    desktop_parser = subparsers.add_parser("desktop", aliases=["app", "gui"], help="启动原生暗黑光学桌面客户端工作台")
+    desktop_parser.add_argument("--host", default="127.0.0.1", help="Binding host (default: 127.0.0.1)")
+    desktop_parser.add_argument("--port", type=int, default=8000, help="Port number (default: 8000)")
+    desktop_parser.add_argument("--no-init", action="store_true", help="Skip automatic DB existence check")
+
     args = parser.parse_args()
 
     if args.command in ["serve", "web", "server"]:
@@ -215,6 +221,9 @@ def main():
     elif args.command in ["init-db", "init_db", "initdb"]:
         from scripts.init_knowledge_base import init_knowledge_base
         init_knowledge_base()
+    elif args.command in ["desktop", "app", "gui"]:
+        from prismera.desktop import launch_desktop
+        launch_desktop(host=args.host, port=args.port, auto_init=not args.no_init)
     else:
         # Default: print banner and help
         print_colored(BANNER, "35")

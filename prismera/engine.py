@@ -348,11 +348,20 @@ class PrismEraSession:
 
         return output_state
 
-    def upload_document(self, file_path_or_text: str) -> Dict[str, Any]:
+    def upload_document(
+        self,
+        file_path_or_text: Optional[str] = None,
+        file_bytes: Optional[bytes] = None,
+        file_name: Optional[str] = None,
+    ) -> Dict[str, Any]:
         """Parse student document and synchronize directly into student spectrum profile."""
         import os
         from prismera.tools.document_parser import parse_student_document
-        parsed = parse_student_document(file_path_or_text)
+        parsed = parse_student_document(
+            file_path_or_text=file_path_or_text,
+            file_bytes=file_bytes,
+            file_name=file_name
+        )
 
         profile = self.state["student_profile"]
         if parsed.get("undergrad_name"):
@@ -374,10 +383,17 @@ class PrismEraSession:
         if parsed.get("experiences"):
             profile["experiences"] = parsed["experiences"]
 
-        doc_name = os.path.basename(file_path_or_text) if os.path.exists(file_path_or_text) else "Uploaded_Document"
+        if file_name:
+            doc_name = file_name
+        elif file_path_or_text and os.path.exists(file_path_or_text):
+            doc_name = os.path.basename(file_path_or_text)
+        else:
+            doc_name = "Uploaded_Document"
+
         if "parsed_documents" not in profile or profile["parsed_documents"] is None:
             profile["parsed_documents"] = []
-        profile["parsed_documents"].append(doc_name)
+        if doc_name not in profile["parsed_documents"]:
+            profile["parsed_documents"].append(doc_name)
 
         upload_event = (
             f"【系统事件 · 档案导入】已完成《{doc_name}》解析，学生光谱档案硬指标已自动同步更新。"

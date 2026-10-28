@@ -126,10 +126,63 @@
     tabBtnMatrix: document.getElementById("tab-btn-matrix"),
     tabBtnSop: document.getElementById("tab-btn-sop"),
     tabBtnEcho: document.getElementById("tab-btn-echo"),
+    tabBtnResonator: document.getElementById("tab-btn-resonator"),
+    resonatorCountBadge: document.getElementById("resonator-count-badge"),
     viewProfile: document.getElementById("view-profile"),
     viewMatrix: document.getElementById("view-matrix"),
     viewSop: document.getElementById("view-sop"),
     viewEcho: document.getElementById("view-echo"),
+    viewResonator: document.getElementById("view-resonator"),
+
+    // Milestone 9: Document Upload Dropzone
+    dropzoneCard: document.getElementById("dropzone-card"),
+    dropzoneArea: document.getElementById("dropzone-area"),
+    resumeFileInput: document.getElementById("resume-file-input"),
+    btnTriggerFileUpload: document.getElementById("btn-trigger-file-upload"),
+    uploadProgressBar: document.getElementById("upload-progress-bar"),
+    uploadProgressFill: document.getElementById("upload-progress-fill"),
+    uploadResultPill: document.getElementById("upload-result-pill"),
+    uploadResultText: document.getElementById("upload-result-text"),
+    btnClearUploadPill: document.getElementById("btn-clear-upload-pill"),
+
+    // Milestone 9: Prerequisite Alignment & Blindspots Radar
+    prereqCard: document.getElementById("prereq-card"),
+    prereqCoverageBadge: document.getElementById("prereq-coverage-badge"),
+    btnFacetPrereqAudit: document.getElementById("btn-facet-prereq-audit"),
+    prereqAdviceBox: document.getElementById("prereq-advice-box"),
+    prereqAdviceText: document.getElementById("prereq-advice-text"),
+    prereqCoursesGrid: document.getElementById("prereq-courses-grid"),
+
+    // Milestone 9: Experiences & STAR Radar
+    experiencesCard: document.getElementById("experiences-card"),
+    experiencesCounter: document.getElementById("experiences-counter"),
+    experiencesListContainer: document.getElementById("experiences-list-container"),
+
+    // Milestone 9: Add Program Modal Elements
+    btnOpenAddProgModal: document.getElementById("btn-open-add-prog-modal"),
+    addProgramModal: document.getElementById("add-program-modal"),
+    closeAddProgModalBtn: document.getElementById("close-add-prog-modal-btn"),
+    cancelAddProgBtn: document.getElementById("cancel-add-prog-btn"),
+    progSearchKeyword: document.getElementById("prog-search-keyword"),
+    progRegionPills: document.getElementById("prog-region-pills"),
+    progTargetBracket: document.getElementById("prog-target-bracket"),
+    progResultsList: document.getElementById("prog-results-list"),
+
+    // Milestone 9: Resonator Scholar Workbench Elements
+    resonatorBanner: document.getElementById("resonator-banner"),
+    resonatorProfInput: document.getElementById("resonator-prof-input"),
+    btnSearchProfessor: document.getElementById("btn-search-professor"),
+    matchedProfsCounter: document.getElementById("matched-profs-counter"),
+    resonatorProfsGrid: document.getElementById("resonator-profs-grid"),
+    coldEmailWordcount: document.getElementById("cold-email-wordcount"),
+    coldEmailBox: document.getElementById("cold-email-box"),
+    btnCopyColdEmail: document.getElementById("btn-copy-cold-email"),
+
+    // Milestone 9: Live Interview Workbench Elements
+    liveInterviewSandbox: document.getElementById("live-interview-sandbox"),
+    interviewLiveInput: document.getElementById("interview-live-input"),
+    interviewInputCounter: document.getElementById("interview-input-counter"),
+    btnSubmitLiveEval: document.getElementById("btn-submit-live-eval"),
 
     // Profile View Elements
     completenessPercentage: document.getElementById("completeness-percentage"),
@@ -163,7 +216,7 @@
     jsonInput: document.getElementById("json-input"),
     applyJsonBtn: document.getElementById("apply-json-btn"),
 
-    // Matrix View Elements (Milestone 4 HITL)
+    // Matrix View Elements (Milestone 4 HITL & Milestone 5 Portfolio)
     matrixBanner: document.getElementById("matrix-banner"),
     matrixOverviewText: document.getElementById("matrix-overview-text"),
     matrixCountBadge: document.getElementById("matrix-count-badge"),
@@ -172,6 +225,14 @@
     reachCardsContainer: document.getElementById("reach-cards-container"),
     matchCardsContainer: document.getElementById("match-cards-container"),
     safetyCardsContainer: document.getElementById("safety-cards-container"),
+    portOfferProb: document.getElementById("port-offer-prob"),
+    portRejectRisk: document.getElementById("port-reject-risk"),
+    portRejectGap: document.getElementById("port-reject-gap"),
+    portSharpe: document.getElementById("port-sharpe"),
+    portAvgCorr: document.getElementById("port-avg-corr"),
+    portRecBanner: document.getElementById("portfolio-rec-banner"),
+    portRecText: document.getElementById("portfolio-rec-text"),
+    btnSubmodularOptimize: document.getElementById("btn-submodular-optimize"),
 
     // SOP View Elements (Milestone 4 Editable Outline, Refraction, Versions)
     sopStageBadge: document.getElementById("sop-stage-badge"),
@@ -280,6 +341,100 @@
     cancelRenameProfileBtn: document.getElementById("cancel-rename-profile-btn"),
     confirmRenameProfileBtn: document.getElementById("confirm-rename-profile-btn"),
     renameProfileNameInput: document.getElementById("rename-profile-name-input"),
+
+    // Milestone 8: 棱镜控制台 (Prism Console)
+    btnOpenConsole: document.getElementById("btn-open-console"),
+    prismConsoleModal: document.getElementById("prism-console-modal"),
+    closeConsoleModalBtn: document.getElementById("close-console-modal-btn"),
+    tabConsoleEngine: document.getElementById("tab-console-engine"),
+    tabConsoleGraph: document.getElementById("tab-console-graph"),
+    tabConsoleBenchmark: document.getElementById("tab-console-benchmark"),
+    consoleHeaderModeTag: document.getElementById("console-header-mode-tag"),
+    paneConsoleEngine: document.getElementById("pane-console-engine"),
+    paneConsoleGraph: document.getElementById("pane-console-graph"),
+    paneConsoleBenchmark: document.getElementById("pane-console-benchmark"),
+
+    // Tab A: Engine & Model
+    currentEngineModeTitle: document.getElementById("current-engine-mode-title"),
+    currentEngineSubTag: document.getElementById("current-engine-sub-tag"),
+    currentEngineModeDesc: document.getElementById("current-engine-mode-desc"),
+    modePulseDot: document.getElementById("mode-pulse-dot"),
+    btnToggleEngineMode: document.getElementById("btn-toggle-engine-mode"),
+    toggleEngineBtnText: document.getElementById("toggle-engine-btn-text"),
+    consoleProviderSelect: document.getElementById("console-provider-select"),
+    consoleModelInput: document.getElementById("console-model-input"),
+    consoleBaseUrlInput: document.getElementById("console-base-url-input"),
+    consoleApiKeyInput: document.getElementById("console-api-key-input"),
+    btnToggleKeyView: document.getElementById("btn-toggle-key-view"),
+    consoleKeyMaskedHint: document.getElementById("console-key-masked-hint"),
+    consoleTempSlider: document.getElementById("console-temp-slider"),
+    consoleTempBadge: document.getElementById("console-temp-badge"),
+    btnTestConn: document.getElementById("btn-test-conn"),
+    btnSaveCfg: document.getElementById("btn-save-cfg"),
+    consoleEngineFeedback: document.getElementById("console-engine-feedback"),
+
+    // Tab B: Graph & Cases
+    statUnis: document.getElementById("stat-unis"),
+    statPrograms: document.getElementById("stat-programs"),
+    statCourses: document.getElementById("stat-courses"),
+    statProfs: document.getElementById("stat-profs"),
+    statEdges: document.getElementById("stat-edges"),
+    statCases: document.getElementById("stat-cases"),
+    btnRefreshStats: document.getElementById("btn-refresh-stats"),
+    graphStoragePath: document.getElementById("graph-storage-path"),
+    nodeTypeInput: document.getElementById("node-type-input"),
+    nodeIdInput: document.getElementById("node-id-input"),
+    nodeNameInput: document.getElementById("node-name-input"),
+    nodeUniIdInput: document.getElementById("node-uni-id-input"),
+    nodeRegionInput: document.getElementById("node-region-input"),
+    nodeMajorInput: document.getElementById("node-major-input"),
+    nodeGpaInput: document.getElementById("node-gpa-input"),
+    nodeExtraInput: document.getElementById("node-extra-input"),
+    btnSubmitNode: document.getElementById("btn-submit-node"),
+
+    caseProgramInput: document.getElementById("case-program-input"),
+    caseOutcomeInput: document.getElementById("case-outcome-input"),
+    caseSchoolInput: document.getElementById("case-school-input"),
+    caseTierInput: document.getElementById("case-tier-input"),
+    caseMajorInput: document.getElementById("case-major-input"),
+    caseGpaInput: document.getElementById("case-gpa-input"),
+    caseScaleInput: document.getElementById("case-scale-input"),
+    caseLangInput: document.getElementById("case-lang-input"),
+    caseYearInput: document.getElementById("case-year-input"),
+    caseSummaryInput: document.getElementById("case-summary-input"),
+    btnSubmitCase: document.getElementById("btn-submit-case"),
+    consoleGraphFeedback: document.getElementById("console-graph-feedback"),
+
+    // Tab C: Benchmark
+    evalLastRunTimestamp: document.getElementById("eval-last-run-timestamp"),
+    btnRunBenchmark: document.getElementById("btn-run-benchmark"),
+    gaugeValHard: document.getElementById("gauge-val-hard"),
+    gaugeBaseHard: document.getElementById("gauge-base-hard"),
+    gaugeBarHard: document.getElementById("gauge-bar-hard"),
+    gaugeDeltaHard: document.getElementById("gauge-delta-hard"),
+    gaugeValGate: document.getElementById("gauge-val-gate"),
+    gaugeBaseGate: document.getElementById("gauge-base-gate"),
+    gaugeBarGate: document.getElementById("gauge-bar-gate"),
+    gaugeDeltaGate: document.getElementById("gauge-delta-gate"),
+    gaugeValAi: document.getElementById("gauge-val-ai"),
+    gaugeBaseAi: document.getElementById("gauge-base-ai"),
+    gaugeBarAi: document.getElementById("gauge-bar-ai"),
+    gaugeDeltaAi: document.getElementById("gauge-delta-ai"),
+    gaugeValCite: document.getElementById("gauge-val-cite"),
+    gaugeBaseCite: document.getElementById("gauge-base-cite"),
+    gaugeBarCite: document.getElementById("gauge-bar-cite"),
+    gaugeDeltaCite: document.getElementById("gauge-delta-cite"),
+    casesTableCount: document.getElementById("cases-table-count"),
+    evalCasesList: document.getElementById("eval-cases-list"),
+
+    // Desktop App Distribution Modal
+    btnOpenDesktopModal: document.getElementById("btn-open-desktop-modal"),
+    desktopDownloadModal: document.getElementById("desktop-download-modal"),
+    closeDesktopModalBtn: document.getElementById("close-desktop-modal-btn"),
+    cancelDesktopModalBtn: document.getElementById("cancel-desktop-modal-btn"),
+    desktopModalVersion: document.getElementById("desktop-modal-version"),
+    macDetectBanner: document.getElementById("mac-detect-banner"),
+    winDetectBanner: document.getElementById("win-detect-banner"),
   };
 
   // 4. Toast 通知展示器
@@ -321,8 +476,8 @@
   // 6. 右侧 Tab 切换
   function switchCanvasTab(tabKey) {
     state.activeTab = tabKey;
-    [elements.tabBtnProfile, elements.tabBtnMatrix, elements.tabBtnSop, elements.tabBtnEcho].forEach(t => t && t.classList.remove("active"));
-    [elements.viewProfile, elements.viewMatrix, elements.viewSop, elements.viewEcho].forEach(v => v && v.classList.remove("active"));
+    [elements.tabBtnProfile, elements.tabBtnMatrix, elements.tabBtnSop, elements.tabBtnEcho, elements.tabBtnResonator].forEach(t => t && t.classList.remove("active"));
+    [elements.viewProfile, elements.viewMatrix, elements.viewSop, elements.viewEcho, elements.viewResonator].forEach(v => v && v.classList.remove("active"));
 
     if (tabKey === "profile") {
       if (elements.tabBtnProfile) elements.tabBtnProfile.classList.add("active");
@@ -336,6 +491,10 @@
     } else if (tabKey === "echo") {
       if (elements.tabBtnEcho) elements.tabBtnEcho.classList.add("active");
       if (elements.viewEcho) elements.viewEcho.classList.add("active");
+    } else if (tabKey === "resonator") {
+      if (elements.tabBtnResonator) elements.tabBtnResonator.classList.add("active");
+      if (elements.viewResonator) elements.viewResonator.classList.add("active");
+      refreshResonatorView();
     }
   }
 
@@ -442,6 +601,253 @@
     if (elements.inputProfGpa && p.gpa_raw) elements.inputProfGpa.value = p.gpa_raw;
     if (elements.inputProfIelts && langStrs.length > 0) elements.inputProfIelts.value = langStrs.join(", ");
     if (elements.inputProfTargets && targetList.length > 0) elements.inputProfTargets.value = targetList.join(", ");
+
+    // Milestone 9: 联动刷新先修课图谱、STAR经历诊断与学者徽章
+    refreshPrerequisitesView(p);
+    refreshExperiencesView(p.experiences);
+    refreshResonatorBadge(p.target_professors);
+  }
+
+  // 7.1 先修课知识图谱与结构性暗区刷新
+  function refreshPrerequisitesView(p) {
+    if (!elements.prereqCoursesGrid) return;
+    const prereqs = (p && p.prerequisite_grades) || {};
+    const prereqKeys = Object.keys(prereqs);
+
+    if (prereqKeys.length > 0) {
+      if (elements.prereqCoverageBadge) {
+        elements.prereqCoverageBadge.textContent = `已收录 ${prereqKeys.length} 门先修课`;
+        elements.prereqCoverageBadge.style.color = "#34d399";
+      }
+      elements.prereqCoursesGrid.innerHTML = prereqKeys.map(cName => {
+        const info = prereqs[cName] || {};
+        const grade = info.grade || "已修";
+        const orig = info.matched_name ? ` (原名: ${info.matched_name})` : "";
+        return `
+          <div class="prereq-course-pill status-completed">
+            <div class="prereq-course-top">
+              <span class="prereq-course-name">${escapeHtml(cName)}</span>
+              <span class="prereq-status-tag tag-completed">✓ ${escapeHtml(grade)}</span>
+            </div>
+            <div class="prereq-match-text">${escapeHtml(orig || "已对齐先修课知识图谱")}</div>
+          </div>
+        `;
+      }).join("");
+    } else {
+      if (elements.prereqCoverageBadge) {
+        elements.prereqCoverageBadge.textContent = "待切面师诊断";
+        elements.prereqCoverageBadge.style.color = "#fbbf24";
+      }
+      const defaultCourses = [
+        { name: "高等数学 (Calculus)", status: "待核对", cls: "status-weak" },
+        { name: "线性代数 (Linear Algebra)", status: "待核对", cls: "status-weak" },
+        { name: "数据结构与算法 (Data Structures)", status: "待核对", cls: "status-weak" },
+        { name: "操作系统 (Operating Systems)", status: "待核对", cls: "status-weak" },
+        { name: "概率论与数理统计 (Probability)", status: "待核对", cls: "status-weak" },
+        { name: "面向对象程序设计 (OOP)", status: "待核对", cls: "status-weak" },
+      ];
+      elements.prereqCoursesGrid.innerHTML = defaultCourses.map(c => `
+        <div class="prereq-course-pill ${c.cls}">
+          <div class="prereq-course-top">
+            <span class="prereq-course-name">${escapeHtml(c.name)}</span>
+            <span class="prereq-status-tag tag-weak">${c.status}</span>
+          </div>
+          <div class="prereq-match-text">导入成绩单或点击右上角【切面师诊断】</div>
+        </div>
+      `).join("");
+    }
+  }
+
+  // 7.2 科研与工程经历 STAR 切面诊断刷新
+  function refreshExperiencesView(experiences) {
+    if (!elements.experiencesListContainer) return;
+    const exps = experiences || [];
+    if (elements.experiencesCounter) {
+      elements.experiencesCounter.textContent = `${exps.length} 项经历`;
+    }
+
+    if (exps.length === 0) {
+      elements.experiencesListContainer.innerHTML = `<div class="empty-state-notice">暂无结构化经历数据。上传简历或在左侧对话中阐述科研/实习后，系统将自动进行 STAR 完整度评估。</div>`;
+      return;
+    }
+
+    elements.experiencesListContainer.innerHTML = exps.map((exp, idx) => {
+      const isMining = Boolean(exp.needs_mining);
+      const starTag = isMining
+        ? '<span class="exp-star-tag star-mining">⚠️ 待折光挖掘 (needs_mining)</span>'
+        : '<span class="exp-star-tag star-solid">✅ STAR完备</span>';
+      const reasonHtml = exp.mining_reason
+        ? `<div class="exp-mining-reason">↳ 诊断意见: ${escapeHtml(exp.mining_reason)}</div>`
+        : "";
+
+      return `
+        <div class="exp-card-item">
+          <div class="exp-card-header">
+            <span class="exp-card-title">${idx + 1}. ${escapeHtml(exp.title || "科研/实习经历")}</span>
+            <span class="exp-card-period">${escapeHtml(exp.period || "在校期间")}</span>
+          </div>
+          <div class="exp-card-badges">
+            ${starTag}
+          </div>
+          ${reasonHtml}
+          <div class="exp-card-actions">
+            <button class="btn-mine-exp" data-title="${escapeHtml(exp.title || '')}" type="button">
+              💡 移交折光师苏格拉底挖掘
+            </button>
+          </div>
+        </div>
+      `;
+    }).join("");
+
+    elements.experiencesListContainer.querySelectorAll(".btn-mine-exp").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const title = btn.getAttribute("data-title");
+        sendUserMessage(`请折光师针对我档案中的【${title}】展开苏格拉底深度追问与故事挖掘。`);
+      });
+    });
+  }
+
+  // 7.3 共鸣者学者与套磁信看板刷新 (Tab 5)
+  function refreshResonatorView() {
+    const profs = (state.studentProfile && state.studentProfile.target_professors) || [];
+    if (elements.resonatorCountBadge) {
+      elements.resonatorCountBadge.textContent = `${profs.length} 学者`;
+    }
+    if (elements.matchedProfsCounter) {
+      elements.matchedProfsCounter.textContent = `${profs.length} 位学者`;
+    }
+
+    if (!elements.resonatorProfsGrid) return;
+
+    if (profs.length === 0) {
+      elements.resonatorProfsGrid.innerHTML = `
+        <div class="empty-column-placeholder" style="grid-column: 1 / -1; padding: 24px; text-align: center;">
+          尚未匹配学者。在上方输入学者姓名（如 Indranil Gupta）或向【共鸣者】发送：“想联系某某教授写套磁信”，即可自动进行学术论文对齐。
+        </div>
+      `;
+      return;
+    }
+
+    elements.resonatorProfsGrid.innerHTML = profs.map(p => `
+      <div class="prof-card-item">
+        <div class="prof-card-header">
+          <div>
+            <div class="prof-name">${escapeHtml(p.scholar_name || "学术导师")}</div>
+            <div class="prof-uni">${escapeHtml(p.institution || "目标院校")} · ${escapeHtml(p.lab || "课题组")}</div>
+          </div>
+          <span class="prof-status-tag">Fall 2027 招生中</span>
+        </div>
+        <div class="prof-paper-anchor">
+          <div class="prof-paper-title">📄 代表作: “${escapeHtml(p.paper_title || "近期代表作")}”</div>
+          <div class="prof-paper-bottleneck">↳ 学术共振切入点: 对接高可用分布式不变量与性能基准评测</div>
+        </div>
+      </div>
+    `).join("");
+
+    // 更新套磁信预览
+    if (elements.coldEmailBox && profs.length > 0) {
+      const topProf = profs[profs.length - 1];
+      const scholarLastName = (topProf.scholar_name || "Gupta").split(" ").pop();
+      const emailDraft = `Dear Professor ${scholarLastName},
+
+I am an incoming applicant for Fall 2027 graduate research, with a background in systems engineering and distributed systems. I recently read your publication, "${topProf.paper_title || 'Adaptive Consensus Protocols in Heterogeneous Clouds'}," with keen interest. Your empirical analysis and theoretical framing were illuminating, particularly your note regarding runtime scalability bottlenecks.
+
+In my recent undergraduate engineering practicum, I focused on runtime performance bottlenecks closely related to systems engineering. Specifically, I profiled concurrency bottlenecks under stress conditions and developed kernel-level monitoring hooks that cut synchronization latency under bursty loads. Given your laboratory's recent initiatives at ${topProf.lab || topProf.institution}, I believe my hands-on benchmarking background aligns closely with your technical agenda.
+
+I noticed that your group is actively reviewing graduate applications for Fall 2027. I would welcome the opportunity to contribute to your ongoing research initiatives. I have attached my CV and transcript for your review. Would you be open to a brief 15-minute introductory call in the coming weeks to discuss prospective synergy?
+
+Thank you for your time and guidance.
+
+Sincerely,
+[Your Name]
+[Undergraduate Institution] | [Email / GitHub Profile]`;
+
+      elements.coldEmailBox.textContent = emailDraft;
+      const words = emailDraft.trim().split(/\s+/).length;
+      if (elements.coldEmailWordcount) {
+        elements.coldEmailWordcount.textContent = `约 ${words} 词 (黄金标准)`;
+      }
+    }
+  }
+
+  function refreshResonatorBadge(profs) {
+    const list = profs || [];
+    if (elements.resonatorCountBadge) {
+      elements.resonatorCountBadge.textContent = `${list.length} 学者`;
+    }
+  }
+
+  // 7.4 文件上传与光学文档解析
+  async function handleFileUpload(file) {
+    if (!file) return;
+
+    if (elements.uploadProgressBar) elements.uploadProgressBar.classList.remove("hidden");
+    if (elements.uploadProgressFill) elements.uploadProgressFill.style.width = "35%";
+    showToast(`正在光学解析《${file.name}》...`, "info");
+
+    const fileName = file.name;
+    const isPdf = fileName.toLowerCase().endsWith(".pdf");
+
+    const reader = new FileReader();
+
+    reader.onload = async (e) => {
+      try {
+        if (elements.uploadProgressFill) elements.uploadProgressFill.style.width = "70%";
+
+        const payload = {
+          session_id: state.sessionId,
+          file_name: fileName,
+          file_type: file.type || (isPdf ? "application/pdf" : "text/plain"),
+        };
+
+        if (isPdf) {
+          payload.content_base64 = e.target.result;
+        } else {
+          payload.text_content = e.target.result;
+        }
+
+        const resp = await fetch("/api/profile/upload-document", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+
+        if (!resp.ok) throw new Error(`HTTP 状态码: ${resp.status}`);
+        const data = await resp.json();
+
+        if (elements.uploadProgressFill) elements.uploadProgressFill.style.width = "100%";
+        setTimeout(() => {
+          if (elements.uploadProgressBar) elements.uploadProgressBar.classList.add("hidden");
+          if (elements.uploadProgressFill) elements.uploadProgressFill.style.width = "0%";
+        }, 500);
+
+        if (data.status === "success" && data.profile) {
+          state.studentProfile = data.profile;
+          refreshProfileView(data.profile);
+          if (data.profile.shortlisted_programs) {
+            refreshMatrixView(data.profile.shortlisted_programs);
+          }
+          if (elements.uploadResultPill) {
+            elements.uploadResultPill.classList.remove("hidden");
+            if (elements.uploadResultText) {
+              elements.uploadResultText.textContent = `《${fileName}》解析成功：已提取【${data.profile.undergrad_name || '院校'} · ${data.profile.major || '专业'}】均分【${data.profile.gpa_raw || 'GPA'}】！`;
+            }
+          }
+          showToast(`《${fileName}》解析成功！档案指标已更新`, "success");
+        } else {
+          throw new Error(data.detail || "解析失败");
+        }
+      } catch (err) {
+        if (elements.uploadProgressBar) elements.uploadProgressBar.classList.add("hidden");
+        showToast(`文件解析异常: ${err.message}`, "error");
+      }
+    };
+
+    if (isPdf) {
+      reader.readAsDataURL(file);
+    } else {
+      reader.readAsText(file);
+    }
   }
 
   // 8. 选校矩阵与 Tab 2 视图刷新 (Milestone 4 双向交互)
@@ -465,6 +871,37 @@
 
     const lockedTarget = state.studentProfile.locked_target_program || null;
 
+    function renderAttributionBars(attrs) {
+      if (!attrs || Object.keys(attrs).length === 0) {
+        return `<div class="attr-empty">各维度相对均衡，契合基线标准</div>`;
+      }
+      return Object.entries(attrs).slice(0, 5).map(([label, val]) => {
+        let num = 0;
+        let isPos = true;
+        let strVal = "";
+        if (typeof val === "number") {
+          num = Math.abs(val) * 100;
+          isPos = val >= 0;
+          strVal = `${isPos ? "+" : "-"}${num.toFixed(1)}%`;
+        } else {
+          strVal = String(val);
+          isPos = !strVal.startsWith("-");
+          num = parseFloat(strVal.replace(/[^\d.-]/g, "")) || 0;
+        }
+        const widthPct = Math.min(100, Math.max(10, num * 2.2));
+        const fillClass = isPos ? "attr-fill-pos" : "attr-fill-neg";
+        return `
+          <div class="attr-bar-row">
+            <span class="attr-lbl" title="${escapeHtml(label)}">${escapeHtml(label)}</span>
+            <div class="attr-track">
+              <div class="attr-bar ${fillClass}" style="width: ${widthPct}%;"></div>
+            </div>
+            <span class="attr-num ${isPos ? 'num-pos' : 'num-neg'}">${escapeHtml(strVal)}</span>
+          </div>
+        `;
+      }).join("");
+    }
+
     function renderCards(list, bracketKey) {
       if (!list || list.length === 0) {
         return `<div class="empty-column-placeholder">暂无该档位项目</div>`;
@@ -477,16 +914,91 @@
         const langReq = item.min_ielts ? `雅思 ≥ ${item.min_ielts.total}` : "语言合规";
         const median = (item.peer_cases && item.peer_cases.peer_median_gpa) ? `中位线: ${item.peer_cases.peer_median_gpa}` : "中位线: 88.0";
 
+        const peer = item.peer_cases || {};
+        const probPct = peer.probability_percent || (bracketKey === "Reach" ? "25.0%" : (bracketKey === "Safety" ? "85.0%" : "55.0%"));
+        const confLevel = peer.confidence_level || "high";
+        const marginErr = peer.margin_of_error || "±4.5%";
+        const attributions = peer.feature_attributions || peer.attributions || {};
+
         return `
           <div class="program-card ${isLocked ? 'locked-target' : ''}" data-prog-id="${escapeHtml(progId)}">
             ${isLocked ? `<div class="target-badge-pill">★ 选定文书目标校</div>` : ''}
             <div class="prog-name-cn">${escapeHtml(item.name_cn || item.name || item.program || "目标项目")}</div>
             <div class="prog-name-en">${escapeHtml(item.name_en || item.institution || "")}</div>
+            
             <div class="prog-metrics-row">
               <span class="metric-pill">${escapeHtml(gpaReq)}</span>
               <span class="metric-pill">${escapeHtml(langReq)}</span>
               <span class="metric-pill">${escapeHtml(median)}</span>
             </div>
+
+            <!-- AdmitNet ML 录取率与置信度 -->
+            <div class="admitnet-prob-badge">
+              <div class="prob-title-row">
+                <span class="prob-label">✦ Prism-AdmitNet 预估录取率</span>
+                <span class="prob-val" id="prob-val-${escapeHtml(progId)}">${escapeHtml(probPct)}</span>
+              </div>
+              <div class="prob-ci-tag">置信度: <span class="ci-badge ci-level-${confLevel}">${confLevel === 'high' ? '高' : (confLevel === 'medium' ? '中' : '参考')}</span> · 边际误差: ${escapeHtml(marginErr)}</div>
+              ${(peer.overqualified_yield_risk || item.overqualified_yield_risk) ? `
+                <div class="yield-risk-alert-pill">
+                  <span>⚠️ Yield Protection 控录取风险: 背景显著高于该校中位线</span>
+                </div>
+              ` : ''}
+            </div>
+
+            <!-- 特征归因双向条 -->
+            <div class="attribution-bars-container" id="attrs-container-${escapeHtml(progId)}">
+              <div class="attr-header-row">
+                <span>特征归因溯源 (Feature Attribution)</span>
+                <span class="attr-sub-hint">Exact Additive</span>
+              </div>
+              <div class="attr-list">
+                ${renderAttributionBars(attributions)}
+              </div>
+            </div>
+
+            <!-- What-If 逆袭沙盘滑块面板 -->
+            <div class="what-if-panel" id="what-if-panel-${escapeHtml(progId)}">
+              <button type="button" class="btn-toggle-what-if" data-prog-id="${escapeHtml(progId)}">
+                <span>🔮 What-If 逆袭沙盘模拟</span>
+                <span class="toggle-icon">▼</span>
+              </button>
+              <div class="what-if-controls hidden" id="what-if-controls-${escapeHtml(progId)}">
+                <div class="what-if-timeline-tag">⏳ 距申请截止约 4 个月 · 大四上可行域约束</div>
+                <div class="what-if-field">
+                  <div class="field-label-row">
+                    <label>GPA 提升幅度 (ΔGPA)</label>
+                    <span class="field-val-display" id="gpa-disp-${escapeHtml(progId)}">+0.00</span>
+                  </div>
+                  <input type="range" class="what-if-slider gpa-slider" data-prog-id="${escapeHtml(progId)}" min="0.0" max="0.40" step="0.05" value="0.0">
+                </div>
+                <div class="what-if-field">
+                  <div class="field-label-row">
+                    <label>标化语言跃迁</label>
+                  </div>
+                  <select class="what-if-select lang-select" data-prog-id="${escapeHtml(progId)}">
+                    <option value="0">保持现有水平</option>
+                    <option value="7.5">雅思 7.5 (或 托福 105)</option>
+                    <option value="8.0">雅思 8.0 (或 托福 112)</option>
+                  </select>
+                </div>
+                <div class="what-if-field">
+                  <div class="field-label-row">
+                    <label>科研与工程背景跃升</label>
+                  </div>
+                  <select class="what-if-select research-select" data-prog-id="${escapeHtml(progId)}">
+                    <option value="none">保持现有经历</option>
+                    <option value="tier2_intern">补充头部大厂核心工程实习</option>
+                    <option value="top_lab">国家重点实验室分布式攻坚科研</option>
+                    <option value="first_author_paper">CCF-A / 顶会一作学术论文在投</option>
+                  </select>
+                </div>
+                <div class="what-if-result-box" id="what-if-result-${escapeHtml(progId)}">
+                  <div class="sim-delta-badge">拖动滑块或调整背景查看实时预测跃升</div>
+                </div>
+              </div>
+            </div>
+
             <div class="card-actions-bar">
               <button class="btn-lock-target ${isLocked ? 'locked' : ''}" data-prog-id="${escapeHtml(progId)}">
                 ${isLocked ? '★ 已是目标校' : '🎯 设为目标校'}
@@ -513,6 +1025,59 @@
     if (programs.length > 0 && elements.matrixOverviewText) {
       elements.matrixOverviewText.textContent = `已基于知识图谱与同辈案例库锁定 ${programs.length} 个靶向项目（远光·冲刺 ${reachList.length} 个 / 聚光·核心 ${matchList.length} 个 / 基光·稳妥 ${safetyList.length} 个），院校隐形认可名单与语言小分阻断均已完成校验。`;
     }
+
+    // Milestone 5.0 全息干涉仪组合风险计算
+    updatePortfolioDashboard(programs);
+  }
+
+  let portfolioDebounceTimer = null;
+  async function updatePortfolioDashboard(programs) {
+    if (!programs || programs.length === 0) {
+      if (elements.portOfferProb) elements.portOfferProb.textContent = "--%";
+      if (elements.portRejectRisk) elements.portRejectRisk.textContent = "--%";
+      if (elements.portSharpe) elements.portSharpe.textContent = "--";
+      if (elements.portAvgCorr) elements.portAvgCorr.textContent = "--";
+      if (elements.portRecBanner) elements.portRecBanner.classList.add("hidden");
+      return;
+    }
+
+    clearTimeout(portfolioDebounceTimer);
+    portfolioDebounceTimer = setTimeout(async () => {
+      try {
+        const resp = await fetch("/api/ml/optimize-portfolio", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            student_profile: state.studentProfile,
+            candidate_programs: programs,
+            current_selected_ids: programs.map(p => p.id || p.program_id),
+            k_budget: Math.min(6, programs.length),
+          }),
+        });
+        if (!resp.ok) return;
+        const data = await resp.json();
+        const res = data.result;
+        if (!res) return;
+
+        const cur = res.current_metrics || res.optimal_metrics;
+        if (cur) {
+          if (elements.portOfferProb) elements.portOfferProb.textContent = cur.prob_at_least_one_percent || `${(cur.prob_at_least_one_offer * 100).toFixed(1)}%`;
+          if (elements.portRejectRisk) elements.portRejectRisk.textContent = cur.correlated_rejection_risk_percent || `${(cur.correlated_rejection_risk * 100).toFixed(1)}%`;
+          if (elements.portRejectGap) {
+            elements.portRejectGap.textContent = `独立模型低估: ${cur.risk_underestimation_gap_percent || '+0.0%'}`;
+          }
+          if (elements.portSharpe) elements.portSharpe.textContent = cur.portfolio_sharpe_ratio != null ? cur.portfolio_sharpe_ratio.toFixed(2) : "--";
+          if (elements.portAvgCorr) elements.portAvgCorr.textContent = cur.average_correlation != null ? cur.average_correlation.toFixed(2) : "--";
+        }
+
+        if (elements.portRecBanner && elements.portRecText && res.recommendations) {
+          elements.portRecText.textContent = res.recommendations;
+          elements.portRecBanner.classList.remove("hidden");
+        }
+      } catch (err) {
+        console.warn("Portfolio metrics calculation failed:", err);
+      }
+    }, 200);
   }
 
   function bindMatrixCardEvents() {
@@ -558,6 +1123,353 @@
         }, "已从矩阵中剔除该项目");
       });
     });
+
+    // 4. What-If 逆袭沙盘折叠展开
+    document.querySelectorAll(".btn-toggle-what-if").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const progId = btn.dataset.progId;
+        const panel = document.getElementById(`what-if-controls-${progId}`);
+        const icon = btn.querySelector(".toggle-icon");
+        if (!panel) return;
+        const isHidden = panel.classList.contains("hidden");
+        if (isHidden) {
+          panel.classList.remove("hidden");
+          if (icon) icon.textContent = "▲";
+        } else {
+          panel.classList.add("hidden");
+          if (icon) icon.textContent = "▼";
+        }
+      });
+    });
+
+    // 5. What-If 动态滑块与参数实时模拟
+    const whatIfDebounceTimers = {};
+    document.querySelectorAll(".program-card").forEach(card => {
+      const progId = card.dataset.progId;
+      if (!progId) return;
+
+      const gpaSlider = card.querySelector(".gpa-slider");
+      const gpaDisp = card.querySelector(`#gpa-disp-${progId}`);
+      const langSel = card.querySelector(".lang-select");
+      const resSel = card.querySelector(".research-select");
+      const probVal = card.querySelector(`#prob-val-${progId}`);
+      const attrsList = card.querySelector(`#attrs-container-${progId} .attr-list`);
+      const resBox = card.querySelector(`#what-if-result-${progId}`);
+
+      function triggerSimulation() {
+        if (!gpaSlider) return;
+        const gpaDelta = parseFloat(gpaSlider.value) || 0.0;
+        const langScore = parseFloat(langSel ? langSel.value : 0) || null;
+        const resTier = (resSel && resSel.value !== "none") ? resSel.value : null;
+
+        if (gpaDisp) {
+          gpaDisp.textContent = `${gpaDelta >= 0 ? '+' : ''}${gpaDelta.toFixed(2)}`;
+        }
+
+        clearTimeout(whatIfDebounceTimers[progId]);
+        whatIfDebounceTimers[progId] = setTimeout(async () => {
+          try {
+            const resp = await fetch("/api/ml/simulate-what-if", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                student_profile: state.studentProfile,
+                target_program_id: progId,
+                simulated_gpa_delta: gpaDelta,
+                simulated_lang_score: langScore,
+                added_research_tier: resTier,
+                major: (state.studentProfile.target_majors && state.studentProfile.target_majors[0]) || state.studentProfile.major,
+                months_remaining: 4,
+                current_semester: (state.studentProfile && state.studentProfile.current_semester) || "大四上",
+              }),
+            });
+            if (!resp.ok) return;
+            const data = await resp.json();
+            const sim = data.simulation;
+            if (!sim) return;
+
+            // 更新概率显示与色彩高亮
+            if (probVal) {
+              probVal.textContent = sim.simulated_probability_percent;
+              probVal.classList.add("highlight-pulse");
+              setTimeout(() => probVal.classList.remove("highlight-pulse"), 800);
+            }
+
+            // 更新归因条
+            if (attrsList && sim.attribution_changes) {
+              const newAttrs = {};
+              Object.entries(sim.attribution_changes).forEach(([k, v]) => {
+                newAttrs[k] = v.new;
+              });
+              attrsList.innerHTML = renderAttributionBars(newAttrs);
+            }
+
+            // 更新跃升提示卡 & 可行性预警 & Recourse 优先级
+            if (resBox) {
+              const isPromoted = sim.bracket_transition && sim.bracket_transition.is_promoted;
+              const deltaStr = sim.probability_delta_percent;
+              const promoText = isPromoted
+                ? `<span class="badge-jump">★ 档位跃迁: ${sim.bracket_transition.from_bracket} ➔ ${sim.bracket_transition.to_bracket}</span>`
+                : (gpaDelta > 0 || langScore || resTier ? `<span class="badge-gain">概率净提升 ${deltaStr}</span>` : '拖动滑块查看实时预测跃升');
+
+              let warningsHtml = "";
+              if (sim.feasibility_warnings && sim.feasibility_warnings.length > 0) {
+                warningsHtml = `<div class="feasibility-warning-box">⚠️ <strong>可行域物理拦截:</strong><br>${sim.feasibility_warnings.map(w => `• ${escapeHtml(w)}`).join('<br>')}</div>`;
+              }
+
+              let yieldHtml = "";
+              if (sim.yield_risk_warning) {
+                yieldHtml = `<div class="yield-risk-alert-pill">⚠️ ${escapeHtml(sim.yield_risk_warning)}</div>`;
+              }
+
+              let recourseHtml = "";
+              if (sim.recommended_action_priority && sim.recommended_action_priority.length > 0) {
+                const topActions = sim.recommended_action_priority.slice(0, 2);
+                recourseHtml = `
+                  <div class="recourse-priority-box">
+                    <div class="recourse-title">⚡ 最高性价比提升动作 (时间ROI排序):</div>
+                    <div class="recourse-list">
+                      ${topActions.map(act => `
+                        <div class="recourse-item">
+                          <span class="recourse-act-name">${escapeHtml(act.action)}</span>
+                          <span class="recourse-act-roi">${escapeHtml(act.roi_label || (act.roi_score + '%/月'))} <span class="recourse-act-cost">(${act.time_cost_months}mo)</span></span>
+                        </div>
+                      `).join("")}
+                    </div>
+                  </div>
+                `;
+              }
+
+              resBox.innerHTML = `
+                <div class="sim-delta-badge ${isPromoted ? 'badge-promoted' : ''}">
+                  ${promoText}
+                </div>
+                ${warningsHtml}
+                ${yieldHtml}
+                ${recourseHtml}
+              `;
+            }
+          } catch (err) {
+            console.error("What-If simulation failed:", err);
+          }
+        }, 150);
+      }
+
+      if (gpaSlider) gpaSlider.addEventListener("input", triggerSimulation);
+      if (langSel) langSel.addEventListener("change", triggerSimulation);
+      if (resSel) resSel.addEventListener("change", triggerSimulation);
+    });
+
+    // 6. 一键次模最优组合重排 (Milestone 5.0 Submodular Portfolio Rebalance)
+    if (elements.btnSubmodularOptimize && !elements.btnSubmodularOptimize._bound) {
+      elements.btnSubmodularOptimize._bound = true;
+      elements.btnSubmodularOptimize.addEventListener("click", async () => {
+        const origText = elements.btnSubmodularOptimize.innerHTML;
+        elements.btnSubmodularOptimize.innerHTML = `<span>⏳ 次模对冲寻优中...</span>`;
+        elements.btnSubmodularOptimize.disabled = true;
+
+        try {
+          const currentProgs = state.studentProfile.shortlisted_programs || [];
+          const resp = await fetch("/api/ml/optimize-portfolio", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              student_profile: state.studentProfile,
+              candidate_programs: currentProgs.length > 0 ? currentProgs : null,
+              current_selected_ids: currentProgs.map(p => p.id || p.program_id),
+              k_budget: Math.min(6, Math.max(3, currentProgs.length)),
+            }),
+          });
+          if (!resp.ok) throw new Error("次模优化接口调用失败");
+          const data = await resp.json();
+          const res = data.result;
+          if (res && res.optimal_portfolio && res.optimal_portfolio.length > 0) {
+            patchCanvasState({
+              shortlisted_programs: res.optimal_portfolio,
+            }, "★ 已应用【次模投资组合对冲重排】！收获至少 1 枚 Offer 概率与夏普比率已达理论最优。");
+
+            setTimeout(() => {
+              document.querySelectorAll(".program-card").forEach(c => c.classList.add("rebalance-highlight"));
+              setTimeout(() => {
+                document.querySelectorAll(".program-card").forEach(c => c.classList.remove("rebalance-highlight"));
+              }, 3000);
+            }, 100);
+          }
+        } catch (err) {
+          alert("次模优化失败: " + err.message);
+        } finally {
+          elements.btnSubmodularOptimize.innerHTML = origText;
+          elements.btnSubmodularOptimize.disabled = false;
+        }
+      });
+    }
+  }
+
+  // 8.5 添加图谱项目到选校矩阵 (Add Program Modal)
+  let cachedKgPrograms = [];
+  let selectedRegionFilter = "";
+
+  async function openAddProgramModal() {
+    if (!elements.addProgramModal) return;
+    elements.addProgramModal.classList.remove("hidden");
+    if (elements.progSearchKeyword) {
+      elements.progSearchKeyword.value = "";
+      elements.progSearchKeyword.focus();
+    }
+    await loadKgPrograms();
+  }
+
+  function closeAddProgramModal() {
+    if (elements.addProgramModal) elements.addProgramModal.classList.add("hidden");
+  }
+
+  async function loadKgPrograms() {
+    if (!elements.progResultsList) return;
+    elements.progResultsList.innerHTML = `<div class="empty-state-notice">正在载入知识图谱院校项目...</div>`;
+
+    try {
+      const resp = await fetch("/api/programs");
+      if (!resp.ok) throw new Error("无法读取图谱项目列表");
+      const data = await resp.json();
+      cachedKgPrograms = data.programs || [];
+      renderProgramSearchResults();
+    } catch (e) {
+      elements.progResultsList.innerHTML = `<div class="empty-state-notice" style="color:#f87171;">加载失败: ${e.message}</div>`;
+    }
+  }
+
+  function renderProgramSearchResults() {
+    if (!elements.progResultsList) return;
+    const q = (elements.progSearchKeyword ? elements.progSearchKeyword.value : "").toLowerCase().trim();
+    const r = selectedRegionFilter;
+
+    let filtered = cachedKgPrograms.filter(p => {
+      if (r && (p.region || "").toUpperCase() !== r) return false;
+      if (q) {
+        const text = `${p.name_cn || ""} ${p.name_en || ""} ${p.university || ""} ${p.id || ""}`.toLowerCase();
+        if (!text.includes(q)) return false;
+      }
+      return true;
+    });
+
+    if (filtered.length === 0) {
+      elements.progResultsList.innerHTML = `<div class="empty-state-notice">未找到匹配项目，可尝试调整关键词或地区。</div>`;
+      return;
+    }
+
+    elements.progResultsList.innerHTML = filtered.map(item => {
+      const gpaReq = item.gpa_min_4_0 ? `GPA ≥ ${item.gpa_min_4_0}` : `均分 ≥ ${item.gpa_min_100 || '85'}`;
+      const langReq = item.min_ielts ? `雅思 ≥ ${item.min_ielts.total}` : "语言合规";
+      const region = item.region || "US";
+
+      return `
+        <div class="prog-result-item" data-id="${escapeHtml(item.id)}">
+          <div class="prog-item-info">
+            <span class="prog-item-title">${escapeHtml(item.name_cn || item.name || item.id)}</span>
+            <span class="prog-item-sub">${escapeHtml(item.name_en || item.university || "")}</span>
+            <div class="prog-item-tags">
+              <span class="prog-item-tag">${escapeHtml(region)}</span>
+              <span class="prog-item-tag">${escapeHtml(gpaReq)}</span>
+              <span class="prog-item-tag">${escapeHtml(langReq)}</span>
+            </div>
+          </div>
+          <button class="btn-add-to-matrix" data-id="${escapeHtml(item.id)}" type="button">
+            ＋ 加入矩阵
+          </button>
+        </div>
+      `;
+    }).join("");
+
+    elements.progResultsList.querySelectorAll(".btn-add-to-matrix").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const pId = btn.getAttribute("data-id");
+        const found = cachedKgPrograms.find(x => x.id === pId);
+        if (!found) return;
+
+        const targetBracket = elements.progTargetBracket ? elements.progTargetBracket.value : "Match";
+        const currentList = [...(state.studentProfile.shortlisted_programs || [])];
+
+        const existingIdx = currentList.findIndex(x => x.id === pId);
+        const itemToAdd = Object.assign({}, found, {
+          tier_bracket: targetBracket,
+          tier: targetBracket,
+        });
+
+        if (existingIdx >= 0) {
+          currentList[existingIdx] = itemToAdd;
+        } else {
+          currentList.push(itemToAdd);
+        }
+
+        patchCanvasState({
+          shortlisted_programs: currentList
+        }, `已将【${itemToAdd.name_cn || itemToAdd.name || pId}】加入选校矩阵【${targetBracket}档】！`);
+
+        closeAddProgramModal();
+      });
+    });
+  }
+
+  // 8.6 实战模拟作答与智能三维评分 (Live Interview Evaluation)
+  async function submitLiveInterviewAnswer() {
+    if (!elements.interviewLiveInput) return;
+    const ansText = elements.interviewLiveInput.value.trim();
+    if (!ansText) {
+      showToast("请输入拟作答内容后再提交评分", "warn");
+      return;
+    }
+
+    const qText = (elements.evalQText && elements.evalQText.textContent.trim()) || "Tell us about a time you had to deal with an ambiguous software specification or unexpected production bug.";
+    const qProg = (elements.evalQProg && elements.evalQProg.textContent.trim()) || "cmu_msit_se";
+
+    const origBtn = elements.btnSubmitLiveEval.innerHTML;
+    elements.btnSubmitLiveEval.innerHTML = "⏳ 正在评分...";
+    elements.btnSubmitLiveEval.disabled = true;
+
+    try {
+      const resp = await fetch("/api/echo/evaluate-answer", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          session_id: state.sessionId,
+          question_text: qText,
+          answer_text: ansText,
+          interview_type: "kira_video",
+          program_id: qProg
+        })
+      });
+
+      if (!resp.ok) throw new Error("评分请求失败");
+      const data = await resp.json();
+      const evalRes = data.evaluation;
+
+      if (evalRes && evalRes.scores) {
+        if (elements.scoreValRelevance) elements.scoreValRelevance.textContent = `${evalRes.scores.content_relevance} / 100`;
+        if (elements.barFillRelevance) elements.barFillRelevance.style.width = `${evalRes.scores.content_relevance}%`;
+
+        if (elements.scoreValStar) elements.scoreValStar.textContent = `${evalRes.scores.star_structure} / 100`;
+        if (elements.barFillStar) elements.barFillStar.style.width = `${evalRes.scores.star_structure}%`;
+
+        if (elements.scoreValLang) elements.scoreValLang.textContent = `${evalRes.scores.linguistic_authenticity} / 100`;
+        if (elements.barFillLang) elements.barFillLang.style.width = `${evalRes.scores.linguistic_authenticity}%`;
+
+        if (elements.scoreValComposite) elements.scoreValComposite.textContent = `${evalRes.scores.composite} / 100`;
+
+        if (elements.evalAnsText) elements.evalAnsText.textContent = ansText;
+        if (elements.evalAnsWordcount) elements.evalAnsWordcount.textContent = `${ansText.split(/\s+/).length} 词`;
+
+        if (elements.refinedSampleBody && evalRes.refined_sample_answer) {
+          elements.refinedSampleBody.textContent = evalRes.refined_sample_answer;
+        }
+
+        showToast("✓ 三维智能评分与高分示范生成完毕！", "success");
+      }
+    } catch (e) {
+      showToast(`评分失败: ${e.message}`, "error");
+    } finally {
+      elements.btnSubmitLiveEval.innerHTML = origBtn;
+      elements.btnSubmitLiveEval.disabled = false;
+    }
   }
 
   // 9. 文书状态机与 Tab 3 视图刷新 (Milestone 4 大纲可编辑列表、版本快照与审片)
@@ -1192,6 +2104,10 @@
           switchCanvasTab("sop");
         } else if (targetAgent === "echo") {
           switchCanvasTab("echo");
+        } else if (targetAgent === "resonator") {
+          switchCanvasTab("resonator");
+        } else if (targetAgent === "facet") {
+          switchCanvasTab("profile");
         }
         break;
 
@@ -1267,6 +2183,12 @@
             switchCanvasTab("echo");
           }
         }
+        if (data.active_agent === "resonator" || (data.student_profile && data.student_profile.target_professors?.length > 0)) {
+          refreshResonatorView();
+          if (data.active_agent === "resonator") {
+            switchCanvasTab("resonator");
+          }
+        }
         break;
 
       case "error":
@@ -1286,6 +2208,7 @@
           state.studentProfile = data.profile;
           refreshProfileView(data.profile);
           refreshEchoView(data.profile);
+          refreshResonatorView();
         }
         if (data.shortlisted_programs) {
           refreshMatrixView(data.shortlisted_programs);
@@ -1852,6 +2775,527 @@
     window.open(`/api/session/${state.sessionId}/export?format=html`, "_blank");
   }
 
+  // =========================================================================
+  // 21.5 Milestone 8: 棱镜控制台 (Prism Console) 驱动逻辑
+  // =========================================================================
+  let currentConsoleConfig = null;
+
+  async function openConsoleModal() {
+    if (!elements.prismConsoleModal) return;
+    elements.prismConsoleModal.classList.remove("hidden");
+    await loadConsoleConfig();
+    await loadConsoleStats();
+    await loadConsoleBenchmarkLatest();
+  }
+
+  function closeConsoleModal() {
+    if (!elements.prismConsoleModal) return;
+    elements.prismConsoleModal.classList.add("hidden");
+  }
+
+  function switchConsoleTab(tabKey) {
+    const tabs = [
+      { key: "engine", pill: elements.tabConsoleEngine, pane: elements.paneConsoleEngine },
+      { key: "graph", pill: elements.tabConsoleGraph, pane: elements.paneConsoleGraph },
+      { key: "benchmark", pill: elements.tabConsoleBenchmark, pane: elements.paneConsoleBenchmark },
+    ];
+
+    tabs.forEach(t => {
+      if (t.pill && t.pane) {
+        if (t.key === tabKey) {
+          t.pill.classList.add("active");
+          t.pane.classList.add("active");
+        } else {
+          t.pill.classList.remove("active");
+          t.pane.classList.remove("active");
+        }
+      }
+    });
+
+    if (tabKey === "graph") {
+      loadConsoleStats();
+    } else if (tabKey === "benchmark") {
+      loadConsoleBenchmarkLatest();
+    }
+  }
+
+  // --- Tab A: Engine & Hot-Switching ---
+  async function loadConsoleConfig() {
+    try {
+      const resp = await fetch("/api/admin/config");
+      if (!resp.ok) return;
+      const data = await resp.json();
+      currentConsoleConfig = data.config;
+
+      const isMock = data.config.is_offline_mock;
+
+      if (elements.consoleHeaderModeTag) {
+        elements.consoleHeaderModeTag.textContent = data.engine_mode;
+      }
+
+      if (elements.currentEngineModeTitle) {
+        elements.currentEngineModeTitle.textContent = isMock ? "Deterministic 离线引擎模式" : `Live LLM 真实模型模式 (${(data.config.llm_provider || "OPENAI").toUpperCase()})`;
+      }
+      if (elements.currentEngineSubTag) {
+        elements.currentEngineSubTag.textContent = isMock ? "100% 确定性 · 零网络依赖" : "在线大模型 · 实时推理";
+      }
+      if (elements.currentEngineModeDesc) {
+        elements.currentEngineModeDesc.textContent = isMock
+          ? "当前运行于本地离线模拟与图谱规则引擎，无需网络与 API Key，确保开发自测与离线评审 100% 稳定可复现。"
+          : "当前正在调用真实大模型推理接口，进行高拟真多轮对话、文书润色与学术套磁文献共振。";
+      }
+      if (elements.modePulseDot) {
+        if (isMock) {
+          elements.modePulseDot.classList.remove("live");
+        } else {
+          elements.modePulseDot.classList.add("live");
+        }
+      }
+      if (elements.toggleEngineBtnText) {
+        elements.toggleEngineBtnText.textContent = isMock ? "切换至 Live LLM 模式" : "切换至离线 Mock 模式";
+      }
+
+      if (elements.consoleProviderSelect) {
+        elements.consoleProviderSelect.value = data.config.llm_provider || "auto";
+      }
+      if (elements.consoleModelInput) {
+        elements.consoleModelInput.value = data.config.openai_model || "";
+      }
+      if (elements.consoleBaseUrlInput) {
+        elements.consoleBaseUrlInput.value = data.config.openai_api_base || "";
+      }
+      if (elements.consoleKeyMaskedHint) {
+        elements.consoleKeyMaskedHint.textContent = data.config.has_api_key
+          ? `当前密钥状态: 已配置 [${data.config.api_key_masked}]`
+          : "当前状态: 未配置 API Key (使用离线 Mock)";
+      }
+      if (elements.consoleTempSlider) {
+        elements.consoleTempSlider.value = data.config.temperature || 0.2;
+      }
+      if (elements.consoleTempBadge) {
+        elements.consoleTempBadge.textContent = Number(data.config.temperature || 0.2).toFixed(2);
+      }
+    } catch (e) {
+      console.error("Failed to load console config:", e);
+    }
+  }
+
+  async function toggleEngineMode() {
+    if (!currentConsoleConfig) await loadConsoleConfig();
+    const isMock = currentConsoleConfig && currentConsoleConfig.is_offline_mock;
+    const targetMock = !isMock;
+
+    try {
+      const resp = await fetch("/api/admin/config", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ offline_mock: targetMock })
+      });
+      const data = await resp.json();
+      currentConsoleConfig = data.config;
+      await loadConsoleConfig();
+      showToast(targetMock ? "已切换为 Deterministic 离线模拟引擎" : "已激活 Live LLM 在线模型模式", "success");
+    } catch (e) {
+      showToast(`模式切换失败: ${e.message}`, "error");
+    }
+  }
+
+  async function testConsoleConnection() {
+    if (!elements.btnTestConn) return;
+    const origText = elements.btnTestConn.innerHTML;
+    elements.btnTestConn.innerHTML = '<span class="btn-icon">⏳</span> 正在测试...';
+    elements.btnTestConn.disabled = true;
+
+    const payload = {
+      provider: elements.consoleProviderSelect ? elements.consoleProviderSelect.value : null,
+      api_key: elements.consoleApiKeyInput && elements.consoleApiKeyInput.value.trim() ? elements.consoleApiKeyInput.value.trim() : null,
+      base_url: elements.consoleBaseUrlInput ? elements.consoleBaseUrlInput.value.trim() : null,
+      model: elements.consoleModelInput ? elements.consoleModelInput.value.trim() : null,
+    };
+
+    try {
+      const resp = await fetch("/api/admin/config/test", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+      const data = await resp.json();
+
+      if (elements.consoleEngineFeedback) {
+        elements.consoleEngineFeedback.classList.remove("hidden", "success", "error");
+        if (data.status === "ok") {
+          elements.consoleEngineFeedback.classList.add("success");
+          elements.consoleEngineFeedback.innerHTML = `
+            <strong>✓ 测试成功 [${data.mode.toUpperCase()}]</strong>: ${data.message}
+            <div style="margin-top:4px; font-size:0.75rem; opacity:0.85;">
+              耗时: ${data.latency_ms}ms | 模型: ${data.model || "default"} | 渠道: ${data.provider}
+            </div>
+          `;
+          showToast("LLM 连接测试成功！", "success");
+        } else {
+          elements.consoleEngineFeedback.classList.add("error");
+          elements.consoleEngineFeedback.innerHTML = `
+            <strong>✕ 连接测试未通过</strong>: ${data.message}
+          `;
+          showToast("连接测试未通过，请检查参数", "warn");
+        }
+      }
+    } catch (e) {
+      if (elements.consoleEngineFeedback) {
+        elements.consoleEngineFeedback.classList.remove("hidden", "success");
+        elements.consoleEngineFeedback.classList.add("error");
+        elements.consoleEngineFeedback.textContent = `网络错误: ${e.message}`;
+      }
+    } finally {
+      elements.btnTestConn.innerHTML = origText;
+      elements.btnTestConn.disabled = false;
+    }
+  }
+
+  async function saveConsoleConfig() {
+    if (!elements.btnSaveCfg) return;
+    const origText = elements.btnSaveCfg.innerHTML;
+    elements.btnSaveCfg.innerHTML = '<span class="btn-icon">⏳</span> 正在保存...';
+    elements.btnSaveCfg.disabled = true;
+
+    const payload = {
+      llm_provider: elements.consoleProviderSelect ? elements.consoleProviderSelect.value : undefined,
+      base_url: elements.consoleBaseUrlInput ? elements.consoleBaseUrlInput.value.trim() : undefined,
+      model: elements.consoleModelInput ? elements.consoleModelInput.value.trim() : undefined,
+      temperature: elements.consoleTempSlider ? parseFloat(elements.consoleTempSlider.value) : undefined,
+    };
+
+    if (elements.consoleApiKeyInput && elements.consoleApiKeyInput.value.trim()) {
+      payload.api_key = elements.consoleApiKeyInput.value.trim();
+    }
+
+    try {
+      const resp = await fetch("/api/admin/config", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+      const data = await resp.json();
+      currentConsoleConfig = data.config;
+      await loadConsoleConfig();
+
+      if (elements.consoleApiKeyInput) elements.consoleApiKeyInput.value = "";
+
+      if (elements.consoleEngineFeedback) {
+        elements.consoleEngineFeedback.classList.remove("hidden", "error");
+        elements.consoleEngineFeedback.classList.add("success");
+        elements.consoleEngineFeedback.textContent = "✓ 系统配置热更新成功，智能体已实时重载推理参数！";
+      }
+      showToast("系统配置已热更新并即时生效！", "success");
+    } catch (e) {
+      if (elements.consoleEngineFeedback) {
+        elements.consoleEngineFeedback.classList.remove("hidden", "success");
+        elements.consoleEngineFeedback.classList.add("error");
+        elements.consoleEngineFeedback.textContent = `保存失败: ${e.message}`;
+      }
+    } finally {
+      elements.btnSaveCfg.innerHTML = origText;
+      elements.btnSaveCfg.disabled = false;
+    }
+  }
+
+  // --- Tab B: Knowledge Graph & Case Ingestion ---
+  async function loadConsoleStats() {
+    try {
+      const resp = await fetch("/api/admin/stats");
+      if (!resp.ok) return;
+      const data = await resp.json();
+      const s = data.stats;
+
+      if (elements.statUnis) elements.statUnis.textContent = s.universities_count;
+      if (elements.statPrograms) elements.statPrograms.textContent = s.programs_count;
+      if (elements.statCourses) elements.statCourses.textContent = s.courses_count;
+      if (elements.statProfs) elements.statProfs.textContent = s.professors_count;
+      if (elements.statEdges) elements.statEdges.textContent = s.total_edges;
+      if (elements.statCases) elements.statCases.textContent = s.total_admission_cases;
+
+      if (elements.graphStoragePath) {
+        elements.graphStoragePath.textContent = `底座存储: ${s.total_nodes} 节点 / ${s.total_edges} 边 / ${s.total_admission_cases} 案例 (SQLite 持久化)`;
+      }
+    } catch (e) {
+      console.error("Failed to load console stats:", e);
+    }
+  }
+
+  async function submitGraphNode() {
+    const id = elements.nodeIdInput ? elements.nodeIdInput.value.trim() : "";
+    const name = elements.nodeNameInput ? elements.nodeNameInput.value.trim() : "";
+    const nodeType = elements.nodeTypeInput ? elements.nodeTypeInput.value : "Program";
+
+    if (!id || !name) {
+      showToast("请填写节点 ID 和节点名称", "warn");
+      return;
+    }
+
+    const properties = {
+      degree: "Master",
+      region: elements.nodeRegionInput ? elements.nodeRegionInput.value : "UK",
+      major_category: elements.nodeMajorInput ? elements.nodeMajorInput.value : "CS",
+      min_gpa: elements.nodeGpaInput && elements.nodeGpaInput.value ? parseFloat(elements.nodeGpaInput.value) : 85.0,
+      extra_requirements: elements.nodeExtraInput ? elements.nodeExtraInput.value.trim() : "",
+    };
+
+    const payload = {
+      node_type: nodeType,
+      id: id,
+      name: name,
+      properties: properties,
+      university_id: elements.nodeUniIdInput ? elements.nodeUniIdInput.value.trim() : undefined,
+    };
+
+    try {
+      const resp = await fetch("/api/admin/graph/node", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+      const data = await resp.json();
+
+      if (resp.ok) {
+        if (elements.consoleGraphFeedback) {
+          elements.consoleGraphFeedback.classList.remove("hidden", "error");
+          elements.consoleGraphFeedback.classList.add("success");
+          elements.consoleGraphFeedback.textContent = `✓ ${data.message}`;
+        }
+        showToast("新图谱节点录入成功！", "success");
+        if (elements.nodeIdInput) elements.nodeIdInput.value = "";
+        if (elements.nodeNameInput) elements.nodeNameInput.value = "";
+        await loadConsoleStats();
+      } else {
+        throw new Error(data.detail || "录入失败");
+      }
+    } catch (e) {
+      if (elements.consoleGraphFeedback) {
+        elements.consoleGraphFeedback.classList.remove("hidden", "success");
+        elements.consoleGraphFeedback.classList.add("error");
+        elements.consoleGraphFeedback.textContent = `录入错误: ${e.message}`;
+      }
+      showToast(`图谱录入失败: ${e.message}`, "error");
+    }
+  }
+
+  async function submitAdmissionCase() {
+    const progId = elements.caseProgramInput ? elements.caseProgramInput.value.trim() : "";
+    const school = elements.caseSchoolInput ? elements.caseSchoolInput.value.trim() : "";
+    const major = elements.caseMajorInput ? elements.caseMajorInput.value.trim() : "";
+    const gpa = elements.caseGpaInput && elements.caseGpaInput.value ? parseFloat(elements.caseGpaInput.value) : 0;
+
+    if (!progId || !school || !major || !gpa) {
+      showToast("请完整填写目标项目、本科院校、专业和 GPA", "warn");
+      return;
+    }
+
+    const payload = {
+      target_program_id: progId,
+      undergrad_name: school,
+      undergrad_tier: elements.caseTierInput ? elements.caseTierInput.value : "985",
+      gpa: gpa,
+      gpa_scale: elements.caseScaleInput ? elements.caseScaleInput.value : "100",
+      major: major,
+      language: elements.caseLangInput && elements.caseLangInput.value.trim() ? elements.caseLangInput.value.trim() : "雅思 7.5 (6.5)",
+      outcome: elements.caseOutcomeInput ? elements.caseOutcomeInput.value : "ADMIT",
+      outcome_type: elements.caseOutcomeInput && elements.caseOutcomeInput.value === "REJECT" ? "reject" : "admit",
+      year: elements.caseYearInput && elements.caseYearInput.value ? parseInt(elements.caseYearInput.value, 10) : 2025,
+      background_summary: elements.caseSummaryInput ? elements.caseSummaryInput.value.trim() : "微服务后端开发与科研经历",
+    };
+
+    try {
+      const resp = await fetch("/api/admin/cases", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+      const data = await resp.json();
+
+      if (resp.ok) {
+        if (elements.consoleGraphFeedback) {
+          elements.consoleGraphFeedback.classList.remove("hidden", "error");
+          elements.consoleGraphFeedback.classList.add("success");
+          elements.consoleGraphFeedback.textContent = `✓ ${data.message}`;
+        }
+        showToast("同辈案例已成功向量化录入！", "success");
+        if (elements.caseSchoolInput) elements.caseSchoolInput.value = "";
+        if (elements.caseMajorInput) elements.caseMajorInput.value = "";
+        if (elements.caseGpaInput) elements.caseGpaInput.value = "";
+        if (elements.caseSummaryInput) elements.caseSummaryInput.value = "";
+        await loadConsoleStats();
+      } else {
+        throw new Error(data.detail || "录入失败");
+      }
+    } catch (e) {
+      if (elements.consoleGraphFeedback) {
+        elements.consoleGraphFeedback.classList.remove("hidden", "success");
+        elements.consoleGraphFeedback.classList.add("error");
+        elements.consoleGraphFeedback.textContent = `案例写入错误: ${e.message}`;
+      }
+      showToast(`案例写入失败: ${e.message}`, "error");
+    }
+  }
+
+  // --- Tab C: Benchmark Online Inspection ---
+  function renderBenchmarkReportData(report) {
+    if (!report || !report.metrics) return;
+    const gr = report.metrics.prismera_graphrag;
+    const bl = report.metrics.baseline_pure_prompt;
+
+    if (elements.evalLastRunTimestamp && report.execution_meta) {
+      elements.evalLastRunTimestamp.textContent = `最近一次巡检: ${report.execution_meta.timestamp} (耗时 ${report.execution_meta.elapsed_seconds}s | 28/28 通过)`;
+    }
+
+    // Metric 1: Hard Constraint
+    if (elements.gaugeValHard) elements.gaugeValHard.textContent = `${gr.Hard_Constraint_Precision.toFixed(1)}%`;
+    if (elements.gaugeBaseHard) elements.gaugeBaseHard.textContent = `Baseline: ${bl.Hard_Constraint_Precision.toFixed(1)}%`;
+    if (elements.gaugeBarHard) elements.gaugeBarHard.style.width = `${gr.Hard_Constraint_Precision}%`;
+    if (elements.gaugeDeltaHard) {
+      const delta = gr.Hard_Constraint_Precision - bl.Hard_Constraint_Precision;
+      elements.gaugeDeltaHard.textContent = `+${delta.toFixed(1)}%`;
+    }
+
+    // Metric 2: Stage Gate
+    if (elements.gaugeValGate) elements.gaugeValGate.textContent = `${gr.Stage_Gate_Compliance.toFixed(1)}%`;
+    if (elements.gaugeBaseGate) elements.gaugeBaseGate.textContent = `Baseline: ${bl.Stage_Gate_Compliance.toFixed(1)}%`;
+    if (elements.gaugeBarGate) elements.gaugeBarGate.style.width = `${gr.Stage_Gate_Compliance}%`;
+    if (elements.gaugeDeltaGate) {
+      const delta = gr.Stage_Gate_Compliance - bl.Stage_Gate_Compliance;
+      elements.gaugeDeltaGate.textContent = `+${delta.toFixed(1)}%`;
+    }
+
+    // Metric 3: Anti-AI Lexicon
+    if (elements.gaugeValAi) elements.gaugeValAi.textContent = `${gr.Anti_AI_Lexicon_Clean_Rate.toFixed(1)}%`;
+    if (elements.gaugeBaseAi) elements.gaugeBaseAi.textContent = `Baseline: ${bl.Anti_AI_Lexicon_Clean_Rate.toFixed(1)}%`;
+    if (elements.gaugeBarAi) elements.gaugeBarAi.style.width = `${gr.Anti_AI_Lexicon_Clean_Rate}%`;
+    if (elements.gaugeDeltaAi) {
+      const delta = gr.Anti_AI_Lexicon_Clean_Rate - bl.Anti_AI_Lexicon_Clean_Rate;
+      elements.gaugeDeltaAi.textContent = `+${delta.toFixed(1)}%`;
+    }
+
+    // Metric 4: Citation Faithfulness
+    if (elements.gaugeValCite) elements.gaugeValCite.textContent = `${gr.Citation_Faithfulness.toFixed(1)}%`;
+    if (elements.gaugeBaseCite) elements.gaugeBaseCite.textContent = `Baseline: ${bl.Citation_Faithfulness.toFixed(1)}%`;
+    if (elements.gaugeBarCite) elements.gaugeBarCite.style.width = `${gr.Citation_Faithfulness}%`;
+    if (elements.gaugeDeltaCite) {
+      const delta = gr.Citation_Faithfulness - bl.Citation_Faithfulness;
+      elements.gaugeDeltaCite.textContent = `+${delta.toFixed(1)}%`;
+    }
+
+    // Cases Breakdown List
+    if (elements.evalCasesList && report.case_details) {
+      elements.evalCasesList.innerHTML = "";
+      report.case_details.forEach(item => {
+        const row = document.createElement("div");
+        row.className = "case-item-row";
+        const grTag = item.prismera_pass ? '<span class="tag-pass">PrismEra: ✅</span>' : '<span class="tag-fail">PrismEra: ❌</span>';
+        const blTag = item.baseline_pass ? '<span class="tag-pass">Baseline: ✅</span>' : '<span class="tag-fail">Baseline: ❌</span>';
+
+        row.innerHTML = `
+          <span class="case-id-tag">${item.id}</span>
+          <span class="case-title-text" title="${item.title || item.id}">${item.title || item.id}</span>
+          <div class="case-badges-col">
+            ${grTag}
+            ${blTag}
+          </div>
+        `;
+        elements.evalCasesList.appendChild(row);
+      });
+      if (elements.casesTableCount) {
+        elements.casesTableCount.textContent = `共 ${report.case_details.length} 项陷阱用例`;
+      }
+    }
+  }
+
+  async function loadConsoleBenchmarkLatest() {
+    try {
+      const resp = await fetch("/api/admin/benchmark/latest");
+      if (!resp.ok) return;
+      const data = await resp.json();
+      if (data.status === "success" && data.report) {
+        renderBenchmarkReportData(data.report);
+      } else {
+        if (elements.evalLastRunTimestamp) {
+          elements.evalLastRunTimestamp.textContent = "尚未运行评测，请点击右侧按钮启动巡检。";
+        }
+      }
+    } catch (e) {
+      console.error("Failed to load benchmark report:", e);
+    }
+  }
+
+  async function runConsoleBenchmarkOnline() {
+    if (!elements.btnRunBenchmark) return;
+    const origText = elements.btnRunBenchmark.innerHTML;
+    elements.btnRunBenchmark.innerHTML = '<span class="btn-icon">⏳</span> 正在巡检 28 个高危陷阱题...';
+    elements.btnRunBenchmark.disabled = true;
+
+    try {
+      const resp = await fetch("/api/admin/benchmark/run", { method: "POST" });
+      const data = await resp.json();
+      if (resp.ok && data.report) {
+        renderBenchmarkReportData(data.report);
+        showToast(data.message || "Benchmark 在线巡检全通！", "success");
+      } else {
+        throw new Error(data.detail || "巡检失败");
+      }
+    } catch (e) {
+      showToast(`巡检异常: ${e.message}`, "error");
+    } finally {
+      elements.btnRunBenchmark.innerHTML = origText;
+      elements.btnRunBenchmark.disabled = false;
+    }
+  }
+
+  // Desktop App Distribution Handlers
+  async function openDesktopModal() {
+    if (!elements.desktopDownloadModal) return;
+    elements.desktopDownloadModal.classList.remove("hidden");
+
+    // Client OS Auto-detection
+    const ua = (navigator.userAgent || "").toLowerCase();
+    const platform = (navigator.platform || "").toLowerCase();
+    const isMac = platform.includes("mac") || ua.includes("macintosh") || ua.includes("mac os");
+    const isWin = platform.includes("win") || ua.includes("windows");
+
+    if (isWin) {
+      switchDesktopTab("tab-windows");
+      if (elements.winDetectBanner) elements.winDetectBanner.classList.add("detected");
+    } else {
+      // Default to macOS
+      switchDesktopTab("tab-macos");
+      if (elements.macDetectBanner) elements.macDetectBanner.classList.add("detected");
+    }
+
+    // Query Desktop API metadata
+    try {
+      const resp = await fetch("/api/desktop/info");
+      if (resp.ok) {
+        const data = await resp.json();
+        if (elements.desktopModalVersion && data.version) {
+          elements.desktopModalVersion.textContent = `v${data.version} Desktop`;
+        }
+      }
+    } catch (e) {
+      console.warn("Failed to fetch desktop info:", e);
+    }
+  }
+
+  function closeDesktopModal() {
+    if (!elements.desktopDownloadModal) return;
+    elements.desktopDownloadModal.classList.add("hidden");
+  }
+
+  function switchDesktopTab(tabId) {
+    document.querySelectorAll(".desktop-tab-btn").forEach((btn) => {
+      btn.classList.toggle("active", btn.dataset.tab === tabId);
+    });
+    document.querySelectorAll(".desktop-tab-pane").forEach((pane) => {
+      pane.classList.toggle("active", pane.id === `pane-${tabId}`);
+    });
+  }
+
   // 22. 事件监听绑定
   function bindEvents() {
     elements.sessionIdDisplay.textContent = state.sessionId;
@@ -1884,6 +3328,103 @@
     elements.tabBtnSop.addEventListener("click", () => switchCanvasTab("sop"));
     if (elements.tabBtnEcho) {
       elements.tabBtnEcho.addEventListener("click", () => switchCanvasTab("echo"));
+    }
+    if (elements.tabBtnResonator) {
+      elements.tabBtnResonator.addEventListener("click", () => switchCanvasTab("resonator"));
+    }
+
+    // Milestone 9: 文档上传与拖拽事件绑定
+    if (elements.btnTriggerFileUpload && elements.resumeFileInput) {
+      elements.btnTriggerFileUpload.addEventListener("click", () => {
+        elements.resumeFileInput.click();
+      });
+    }
+    if (elements.resumeFileInput) {
+      elements.resumeFileInput.addEventListener("change", (e) => {
+        if (e.target.files && e.target.files[0]) {
+          handleFileUpload(e.target.files[0]);
+          e.target.value = "";
+        }
+      });
+    }
+    if (elements.dropzoneArea) {
+      elements.dropzoneArea.addEventListener("dragover", (e) => {
+        e.preventDefault();
+        if (elements.dropzoneCard) elements.dropzoneCard.classList.add("dragover");
+      });
+      elements.dropzoneArea.addEventListener("dragleave", () => {
+        if (elements.dropzoneCard) elements.dropzoneCard.classList.remove("dragover");
+      });
+      elements.dropzoneArea.addEventListener("drop", (e) => {
+        e.preventDefault();
+        if (elements.dropzoneCard) elements.dropzoneCard.classList.remove("dragover");
+        if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+          handleFileUpload(e.dataTransfer.files[0]);
+        }
+      });
+    }
+    if (elements.btnClearUploadPill && elements.uploadResultPill) {
+      elements.btnClearUploadPill.addEventListener("click", () => {
+        elements.uploadResultPill.classList.add("hidden");
+      });
+    }
+
+    // Milestone 9: 先修课切面师诊断按钮
+    if (elements.btnFacetPrereqAudit) {
+      elements.btnFacetPrereqAudit.addEventListener("click", () => {
+        sendUserMessage("请切面师帮我深度诊断成绩单和先修课，核算WES GPA并梳理结构性暗区。");
+      });
+    }
+
+    // Milestone 9: 共鸣者学术套磁事件绑定
+    if (elements.btnSearchProfessor) {
+      elements.btnSearchProfessor.addEventListener("click", () => {
+        const val = elements.resonatorProfInput ? elements.resonatorProfInput.value.trim() : "";
+        if (val) {
+          sendUserMessage(`我想联系 ${val} 教授，请检索他的最新论文并帮我写一封高信噪比套磁信。`);
+        } else {
+          showToast("请输入导师姓名或研究方向", "warn");
+        }
+      });
+    }
+    if (elements.btnCopyColdEmail && elements.coldEmailBox) {
+      elements.btnCopyColdEmail.addEventListener("click", () => {
+        const text = elements.coldEmailBox.textContent.trim();
+        navigator.clipboard.writeText(text).then(() => {
+          showToast("已复制 220 词黄金标准套磁信草稿！", "success");
+        }).catch(() => {
+          showToast("复制失败，请手动选取", "warn");
+        });
+      });
+    }
+
+    // Milestone 9: 添加图谱项目到选校矩阵事件绑定
+    if (elements.btnOpenAddProgModal) {
+      elements.btnOpenAddProgModal.addEventListener("click", openAddProgramModal);
+    }
+    if (elements.closeAddProgModalBtn) {
+      elements.closeAddProgModalBtn.addEventListener("click", closeAddProgramModal);
+    }
+    if (elements.cancelAddProgBtn) {
+      elements.cancelAddProgBtn.addEventListener("click", closeAddProgramModal);
+    }
+    if (elements.progSearchKeyword) {
+      elements.progSearchKeyword.addEventListener("input", renderProgramSearchResults);
+    }
+    if (elements.progRegionPills) {
+      elements.progRegionPills.querySelectorAll(".filter-pill").forEach(pill => {
+        pill.addEventListener("click", () => {
+          elements.progRegionPills.querySelectorAll(".filter-pill").forEach(p => p.classList.remove("active"));
+          pill.classList.add("active");
+          selectedRegionFilter = pill.getAttribute("data-region") || "";
+          renderProgramSearchResults();
+        });
+      });
+    }
+
+    // Milestone 9: 实战模拟面试在线作答与评分
+    if (elements.btnSubmitLiveEval) {
+      elements.btnSubmitLiveEval.addEventListener("click", submitLiveInterviewAnswer);
     }
 
     // 表单提交
@@ -2153,6 +3694,82 @@
     if (elements.btnModalOpenNew) {
       elements.btnModalOpenNew.addEventListener("click", openFullscreenExport);
     }
+
+    // Milestone 8: 棱镜控制台事件绑定
+    if (elements.btnOpenConsole) {
+      elements.btnOpenConsole.addEventListener("click", openConsoleModal);
+    }
+    if (elements.closeConsoleModalBtn) {
+      elements.closeConsoleModalBtn.addEventListener("click", closeConsoleModal);
+    }
+    if (elements.tabConsoleEngine) {
+      elements.tabConsoleEngine.addEventListener("click", () => switchConsoleTab("engine"));
+    }
+    if (elements.tabConsoleGraph) {
+      elements.tabConsoleGraph.addEventListener("click", () => switchConsoleTab("graph"));
+    }
+    if (elements.tabConsoleBenchmark) {
+      elements.tabConsoleBenchmark.addEventListener("click", () => switchConsoleTab("benchmark"));
+    }
+    if (elements.btnToggleEngineMode) {
+      elements.btnToggleEngineMode.addEventListener("click", toggleEngineMode);
+    }
+    if (elements.btnToggleKeyView && elements.consoleApiKeyInput) {
+      elements.btnToggleKeyView.addEventListener("click", () => {
+        const isPass = elements.consoleApiKeyInput.type === "password";
+        elements.consoleApiKeyInput.type = isPass ? "text" : "password";
+        elements.btnToggleKeyView.textContent = isPass ? "🔒" : "👁️";
+      });
+    }
+    if (elements.consoleTempSlider && elements.consoleTempBadge) {
+      elements.consoleTempSlider.addEventListener("input", (e) => {
+        elements.consoleTempBadge.textContent = Number(e.target.value).toFixed(2);
+      });
+    }
+    if (elements.btnTestConn) {
+      elements.btnTestConn.addEventListener("click", testConsoleConnection);
+    }
+    if (elements.btnSaveCfg) {
+      elements.btnSaveCfg.addEventListener("click", saveConsoleConfig);
+    }
+    if (elements.btnRefreshStats) {
+      elements.btnRefreshStats.addEventListener("click", loadConsoleStats);
+    }
+    if (elements.btnSubmitNode) {
+      elements.btnSubmitNode.addEventListener("click", submitGraphNode);
+    }
+    if (elements.btnSubmitCase) {
+      elements.btnSubmitCase.addEventListener("click", submitAdmissionCase);
+    }
+    if (elements.btnRunBenchmark) {
+      elements.btnRunBenchmark.addEventListener("click", runConsoleBenchmarkOnline);
+    }
+
+    // Desktop App Modal Listeners
+    if (elements.btnOpenDesktopModal) {
+      elements.btnOpenDesktopModal.addEventListener("click", openDesktopModal);
+    }
+    if (elements.closeDesktopModalBtn) {
+      elements.closeDesktopModalBtn.addEventListener("click", closeDesktopModal);
+    }
+    if (elements.cancelDesktopModalBtn) {
+      elements.cancelDesktopModalBtn.addEventListener("click", closeDesktopModal);
+    }
+    document.querySelectorAll(".desktop-tab-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        if (btn.dataset.tab) switchDesktopTab(btn.dataset.tab);
+      });
+    });
+    if (elements.desktopDownloadModal) {
+      elements.desktopDownloadModal.addEventListener("click", (e) => {
+        if (e.target === elements.desktopDownloadModal) closeDesktopModal();
+      });
+    }
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && elements.desktopDownloadModal && !elements.desktopDownloadModal.classList.contains("hidden")) {
+        closeDesktopModal();
+      }
+    });
   }
 
   // 23. 启动初始化

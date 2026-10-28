@@ -19,8 +19,11 @@ import numpy as np
 
 logger = logging.getLogger(__name__)
 
-DEFAULT_DATA_DIR = Path(__file__).resolve().parent.parent / "data"
+FALLBACK_DATA_DIR = Path(__file__).resolve().parent.parent / "data"
+DEFAULT_DATA_DIR = Path(os.getenv("PRISMERA_DATA_DIR")) if os.getenv("PRISMERA_DATA_DIR") else FALLBACK_DATA_DIR
 DEFAULT_SEED_PATH = DEFAULT_DATA_DIR / "seed_graph_data.json"
+if not DEFAULT_SEED_PATH.exists() and (FALLBACK_DATA_DIR / "seed_graph_data.json").exists():
+    DEFAULT_SEED_PATH = FALLBACK_DATA_DIR / "seed_graph_data.json"
 DEFAULT_VECTOR_SQLITE_PATH = DEFAULT_DATA_DIR / "vector_store.sqlite"
 
 EMBEDDING_DIM = 256
@@ -357,7 +360,8 @@ class VectorStore:
         target_program_id: str,
         undergrad_tier: str,
         gpa: float,
-        major: str = ""
+        major: str = "",
+        student_profile: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
         """Dynamically compute median GPA, admit/reject samples, and Reach/Match/Safety rate."""
         # 1. Fetch relevant cases for this program
@@ -365,7 +369,7 @@ class VectorStore:
 
         if not prog_cases:
             # Generic fallback if no specific program cases exist
-            return {
+            base_res = {
                 "admitted_sample": [
                     {"profile": f"{undergrad_tier}院校 {major or '相关专业'} GPA 浮动中位数, 标化达标", "outcome": "ADMIT"}
                 ],
@@ -374,8 +378,30 @@ class VectorStore:
                 ],
                 "peer_median_gpa": 3.60 if gpa <= 4.0 else 85.0,
                 "acceptance_rate_range": "35% - 50%",
-                "bracket_recommendation": "Match"
+                "bracket_recommendation": "Match",
+                "admit_probability": 0.42,
+                "probability_percent": "42.0%",
+                "feature_attributions": {"GPA门槛优势": "+5.0%", "院校Tier影响": "+0.0%"},
+                "top_positive_factors": ["GPA门槛优势 (+5.0%)"],
+                "top_negative_factors": []
             }
+            try:
+                from prismera.ml.admit_predictor import get_admit_predictor
+                predictor = get_admit_predictor()
+                st_data = student_profile or {"undergrad_tier": undergrad_tier, "gpa_raw": str(gpa), "major": major}
+                ml_eval = predictor.explain_admission(st_data, {"id": target_program_id, "tier_bracket": "Match"}, major=major)
+                base_res.update({
+                    "acceptance_rate_range": ml_eval["acceptance_rate_range"],
+                    "bracket_recommendation": ml_eval["tier_bracket"],
+                    "admit_probability": ml_eval["admit_probability"],
+                    "probability_percent": ml_eval["probability_percent"],
+                    "feature_attributions": ml_eval["feature_attributions"],
+                    "top_positive_factors": ml_eval["top_positive_factors"],
+                    "top_negative_factors": ml_eval["top_negative_factors"]
+                })
+            except Exception:
+                pass
+            return base_res
 
         admitted_cases = [c for c in prog_cases if c.outcome_type == "admit"]
         rejected_cases = [c for c in prog_cases if c.outcome_type == "reject"]
@@ -466,12 +492,50 @@ class VectorStore:
         if not rejected_samples:
             rejected_samples = [{"profile": f"{undergrad_tier}院校 GPA 低于门槛或语言小分偏低", "outcome": "REJECT"}]
 
+        # 5. Prism-AdmitNet ML Probability and Feature Attribution
+        ml_admit_prob = estimated_rate
+        ml_prob_pct = f"{int(estimated_rate * 100)}%"
+        ml_bracket = bracket
+        ml_rate_range = rate_str
+        feature_attributions: Dict[str, str] = {
+            "GPA门槛优势": f"+{int(abs(gpa_mod)*100)}%" if gpa_mod >= 0 else f"-{int(abs(gpa_mod)*100)}%",
+            "院校Tier影响": f"+{int(abs(tier_mod)*100)}%" if tier_mod >= 0 else f"-{int(abs(tier_mod)*100)}%",
+        }
+        top_pos: List[str] = ["GPA门槛优势"] if gpa_mod >= 0 else []
+        top_neg: List[str] = ["GPA相对偏弱"] if gpa_mod < 0 else []
+
+        try:
+            from prismera.ml.admit_predictor import get_admit_predictor
+            from prismera.db.graph_store import get_graph_store
+
+            predictor = get_admit_predictor()
+            prog_node = get_graph_store().get_node(target_program_id) or {"id": target_program_id, "tier_bracket": bracket}
+            st_data = student_profile or {
+                "undergrad_tier": undergrad_tier,
+                "gpa_raw": str(gpa),
+                "major": major,
+            }
+            ml_eval = predictor.explain_admission(st_data, prog_node, major=major)
+            ml_admit_prob = ml_eval["admit_probability"]
+            ml_prob_pct = ml_eval["probability_percent"]
+            ml_rate_range = ml_eval["acceptance_rate_range"]
+            feature_attributions = ml_eval["feature_attributions"]
+            top_pos = ml_eval["top_positive_factors"]
+            top_neg = ml_eval["top_negative_factors"]
+        except Exception:
+            pass
+
         return {
             "admitted_sample": admitted_samples,
             "rejected_sample": rejected_samples,
             "peer_median_gpa": peer_median_gpa,
             "acceptance_rate_range": rate_str,
-            "bracket_recommendation": bracket
+            "bracket_recommendation": bracket,
+            "admit_probability": ml_admit_prob,
+            "probability_percent": ml_prob_pct,
+            "feature_attributions": feature_attributions,
+            "top_positive_factors": top_pos,
+            "top_negative_factors": top_neg,
         }
 
 

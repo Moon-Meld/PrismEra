@@ -16,8 +16,11 @@ import networkx as nx
 
 logger = logging.getLogger(__name__)
 
-DEFAULT_DATA_DIR = Path(__file__).resolve().parent.parent / "data"
+FALLBACK_DATA_DIR = Path(__file__).resolve().parent.parent / "data"
+DEFAULT_DATA_DIR = Path(os.getenv("PRISMERA_DATA_DIR")) if os.getenv("PRISMERA_DATA_DIR") else FALLBACK_DATA_DIR
 DEFAULT_SEED_PATH = DEFAULT_DATA_DIR / "seed_graph_data.json"
+if not DEFAULT_SEED_PATH.exists() and (FALLBACK_DATA_DIR / "seed_graph_data.json").exists():
+    DEFAULT_SEED_PATH = FALLBACK_DATA_DIR / "seed_graph_data.json"
 DEFAULT_SQLITE_PATH = DEFAULT_DATA_DIR / "graph_store.sqlite"
 
 
@@ -309,6 +312,22 @@ class GraphStore:
                                 f"GPA未达标：该项目针对【{undergrad_tier}】最低GPA要求为 {required_min_gpa:.2f}，"
                                 f"当前GPA为 {gpa_4:.2f}"
                             )
+            elif not pruned_reason:
+                tier_req = prog.get("tier_requirement") or prog.get("tier_requirements")
+                if tier_req and isinstance(tier_req, (list, tuple)):
+                    if undergrad_tier and undergrad_tier not in tier_req:
+                        pruned_reason = (
+                            f"院校背景受限：该项目内地认可名单(List)仅限 [{', '.join(tier_req)}]，"
+                            f"当前为【{undergrad_tier}】"
+                        )
+                if not pruned_reason and prog.get("min_gpa"):
+                    try:
+                        min_gpa_val = float(prog["min_gpa"])
+                        req_100 = min_gpa_val if min_gpa_val > 10.0 else min_gpa_val * 25.0
+                        if gpa_100 < req_100:
+                            pruned_reason = f"均分未达标：最低要求为 {req_100:.1f}分，当前为 {gpa_100:.1f}分"
+                    except Exception:
+                        pass
 
             # 4. Language constraints
             if not pruned_reason and ielts_total > 0:

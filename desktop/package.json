@@ -1,0 +1,33 @@
+{
+  "name": "prismera-desktop",
+  "productName": "PrismEra",
+  "version": "0.2.0",
+  "description": "PrismEra (棱镜纪) · 全球留学多智能体系统桌面工作台 (macOS & Windows)",
+  "main": "src/main.js",
+  "author": "PrismEra Team <team@prismera.ai>",
+  "license": "MIT",
+  "homepage": "https://github.com/prism-era/prismera",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/prism-era/prismera.git"
+  },
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder",
+    "dist:mac": "electron-builder --mac",
+    "dist:mac-arm64": "electron-builder --mac --arm64",
+    "dist:mac-x64": "electron-builder --mac --x64",
+    "dist:mac-universal": "electron-builder --mac --universal",
+    "dist:win": "electron-builder --win nsis portable --x64",
+    "dist:win-nsis": "electron-builder --win nsis --x64",
+    "dist:win-portable": "electron-builder --win portable --x64",
+    "dist:all": "electron-builder -mw"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "electron": "^33.2.0",
+    "electron-builder": "^25.1.8"
+  }
+}

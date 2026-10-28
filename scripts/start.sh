@@ -43,4 +43,4 @@ echo ""
 
 export PYTHONPATH="$PROJECT_ROOT"
 
-exec "$UVICORN_BIN" prismera.api.server:app --host "$HOST" --port "$PORT" --reload
+exec "$PYTHON_BIN" -m prismera serve --host "$HOST" --port "$PORT"

@@ -55,19 +55,22 @@ def search_peer_admission_cases(
     undergrad_tier: str,
     gpa: float,
     major: str,
-    target_program_id: str
+    target_program_id: str,
+    student_profile: Optional[Dict[str, Any]] = None
 ) -> Dict[str, Any]:
     """Retrieve peer admission/rejection distributions from past 3 years.
 
     Dynamically calculates peer median GPA and acceptance rate range based on
-    the student's tier and GPA position within the historical applicant pool.
+    the student's tier and GPA position within the historical applicant pool,
+    empowered by Prism-AdmitNet ML probability and feature attributions.
     """
     vs = get_vector_store()
     return vs.calculate_admission_metrics(
         target_program_id=target_program_id,
         undergrad_tier=undergrad_tier,
         gpa=gpa,
-        major=major
+        major=major,
+        student_profile=student_profile
     )
 
 

@@ -94,3 +94,84 @@ def test_session_reset():
     reset_data = reset_resp.json()
     assert reset_data["status"] == "reset_successful"
     assert reset_data["profile"]["undergrad_name"] is None
+
+
+def test_upload_document_endpoint():
+    import base64
+    client = TestClient(app)
+    session_id = "test_doc_upload_sess"
+
+    resume_text = """# 个人简历
+- 本科院校: 清华大学 (985)
+- 专业: 计算机科学与技术
+- 均分成绩: 91.5/100
+- 雅思: 8.0, 口语: 7.5
+
+## 核心先修课
+| 课程 | 成绩 |
+| 高等数学 | 98 |
+| 线性代数 | 95 |
+
+## 科研与实习经历
+### 分布式缓存研发
+在项目中针对高并发热点Key击穿，自研了基于双重检查锁与异步刷新的热点拦截器，将P99延时从120ms降低至18ms，支撑50000 QPS。
+"""
+
+    # 1. Test raw text content upload
+    resp = client.post(
+        "/api/profile/upload-document",
+        json={
+            "session_id": session_id,
+            "file_name": "resume.md",
+            "file_type": "text/markdown",
+            "text_content": resume_text
+        }
+    )
+    assert resp.status_code == 200
+    data = resp.json()
+    assert data["status"] == "success"
+    assert data["parsed"]["undergrad_name"] == "清华大学"
+    assert data["profile"]["gpa_raw"] == "91.5/100"
+    assert "高等数学" in data["profile"]["prerequisite_grades"]
+    assert len(data["experiences"]) >= 1
+
+    # 2. Test base64 content upload
+    b64_payload = base64.b64encode(resume_text.encode("utf-8")).decode("utf-8")
+    resp_b64 = client.post(
+        "/api/profile/upload-document",
+        json={
+            "session_id": session_id + "_b64",
+            "file_name": "resume_b64.txt",
+            "file_type": "text/plain",
+            "content_base64": b64_payload
+        }
+    )
+    assert resp_b64.status_code == 200
+    data_b64 = resp_b64.json()
+    assert data_b64["parsed"]["undergrad_name"] == "清华大学"
+
+
+def test_list_programs_and_facet_prerequisites():
+    client = TestClient(app)
+
+    # 1. Programs list & search
+    resp = client.get("/api/programs?query=cmu")
+    assert resp.status_code == 200
+    data = resp.json()
+    assert data["status"] == "success"
+    assert data["count"] >= 1
+    assert any("cmu" in p["id"].lower() or "carnegie" in p.get("name_en", "").lower() for p in data["programs"])
+
+    # 2. Filter by region
+    resp_uk = client.get("/api/programs?region=UK")
+    assert resp_uk.status_code == 200
+    data_uk = resp_uk.json()
+    assert all(p.get("region") == "UK" for p in data_uk["programs"])
+
+    # 3. Facet prerequisites endpoint
+    resp_prereq = client.get("/api/facet/prerequisites?target_major=CS")
+    assert resp_prereq.status_code == 200
+    prereq_data = resp_prereq.json()
+    assert prereq_data["status"] == "success"
+    assert prereq_data["target_major"] == "CS"
+    assert len(prereq_data["alignment_table"]) > 0

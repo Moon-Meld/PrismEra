@@ -1,6 +1,6 @@
 # 🔬 PrismEra GraphRAG 自动化量化评测基准报告 (Evaluation Benchmark Report)
 
-> **评测时间**：`2026-10-27T08:54:28.876780+00:00`  
+> **评测时间**：`2026-10-28T10:23:20.618535+00:00`  
 > **评测用例集**：`benchmarks/eval_dataset.json`（涵盖 **28 个** 真实留学申请高危陷阱题）  
 > **对比方案**：**Baseline 纯 Prompt 模式** vs **PrismEra GraphRAG 多智能体协同模式**
 

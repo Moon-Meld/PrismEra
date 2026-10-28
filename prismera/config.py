@@ -27,6 +27,10 @@ DEEPSEEK_MODEL = os.getenv("DEEPSEEK_MODEL", "deepseek-chat")
 OLLAMA_API_BASE = os.getenv("OLLAMA_API_BASE", "http://localhost:11434/v1")
 OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "llama3")
 
+# Local Fine-Tuned LoRA / vLLM settings
+LORA_API_BASE = os.getenv("LORA_API_BASE", os.getenv("VLLM_API_BASE", "http://localhost:8000/v1"))
+LORA_MODEL = os.getenv("LORA_MODEL", "qwen2.5-7b-prismera-lora")
+
 # Global generation parameters
 DEFAULT_TEMPERATURE = float(os.getenv("TEMPERATURE", "0.2"))
 
@@ -47,7 +51,7 @@ def is_offline_mock() -> bool:
     if provider == "mock":
         return True
 
-    if provider == "ollama":
+    if provider in ["ollama", "vllm", "lora", "local_lora"]:
         return False
 
     if provider in ["deepseek"]:
@@ -81,7 +85,7 @@ def get_current_config() -> dict:
     global LLM_PROVIDER, OPENAI_API_KEY, OPENAI_API_BASE, OPENAI_MODEL
     global ANTHROPIC_API_KEY, ANTHROPIC_BASE_URL, ANTHROPIC_MODEL
     global DEEPSEEK_API_KEY, DEEPSEEK_API_BASE, DEEPSEEK_MODEL
-    global OLLAMA_API_BASE, OLLAMA_MODEL, DEFAULT_TEMPERATURE
+    global OLLAMA_API_BASE, OLLAMA_MODEL, LORA_API_BASE, LORA_MODEL, DEFAULT_TEMPERATURE
 
     active_key = ""
     if LLM_PROVIDER in ["openai", "auto"]:
@@ -110,6 +114,8 @@ def get_current_config() -> dict:
         "anthropic_model": ANTHROPIC_MODEL,
         "ollama_api_base": OLLAMA_API_BASE,
         "ollama_model": OLLAMA_MODEL,
+        "lora_api_base": LORA_API_BASE,
+        "lora_model": LORA_MODEL,
         "temperature": DEFAULT_TEMPERATURE,
     }
 
@@ -126,7 +132,7 @@ def update_llm_config(
     global LLM_PROVIDER, OPENAI_API_KEY, OPENAI_API_BASE, OPENAI_MODEL
     global ANTHROPIC_API_KEY, ANTHROPIC_BASE_URL, ANTHROPIC_MODEL
     global DEEPSEEK_API_KEY, DEEPSEEK_API_BASE, DEEPSEEK_MODEL
-    global OLLAMA_API_BASE, OLLAMA_MODEL, DEFAULT_TEMPERATURE
+    global OLLAMA_API_BASE, OLLAMA_MODEL, LORA_API_BASE, LORA_MODEL, DEFAULT_TEMPERATURE
 
     if offline_mock is not None:
         if offline_mock:
@@ -163,6 +169,9 @@ def update_llm_config(
         elif LLM_PROVIDER == "ollama":
             OLLAMA_API_BASE = base_url
             os.environ["OLLAMA_API_BASE"] = base_url
+        elif LLM_PROVIDER in ["vllm", "lora", "local_lora"]:
+            LORA_API_BASE = base_url
+            os.environ["LORA_API_BASE"] = base_url
         else:
             OPENAI_API_BASE = base_url
             os.environ["OPENAI_API_BASE"] = base_url
@@ -177,6 +186,9 @@ def update_llm_config(
         elif LLM_PROVIDER == "ollama":
             OLLAMA_MODEL = model
             os.environ["OLLAMA_MODEL"] = model
+        elif LLM_PROVIDER in ["vllm", "lora", "local_lora"]:
+            LORA_MODEL = model
+            os.environ["LORA_MODEL"] = model
         else:
             OPENAI_MODEL = model
             os.environ["OPENAI_MODEL"] = model

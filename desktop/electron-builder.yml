@@ -1,0 +1,81 @@
+appId: ai.prismera.desktop
+productName: PrismEra
+copyright: Copyright © 2026 PrismEra Team. All rights reserved.
+
+directories:
+  output: dist
+  buildResources: assets
+
+files:
+  - "src/**/*"
+  - "assets/**/*"
+  - "package.json"
+
+extraResources:
+  - from: "../web"
+    to: "web"
+    filter:
+      - "**/*"
+
+mac:
+  category: public.app-category.education
+  icon: assets/icon.icns
+  target:
+    - target: dmg
+      arch:
+        - arm64
+        - x64
+    - target: zip
+      arch:
+        - arm64
+        - x64
+  darkModeSupport: true
+  minimumSystemVersion: "11.0.0"
+  hardenedRuntime: true
+  gatekeeperAssess: false
+  entitlements: build/entitlements.mac.plist
+  entitlementsInherit: build/entitlements.mac.plist
+  artifactName: "${productName}-${version}-${os}-${arch}.${ext}"
+
+dmg:
+  title: "${productName} 安装器"
+  icon: assets/icon.icns
+  iconSize: 120
+  window:
+    width: 640
+    height: 440
+  contents:
+    - x: 160
+      y: 220
+      type: file
+    - x: 480
+      y: 220
+      type: link
+      path: /Applications
+
+win:
+  target:
+    - target: nsis
+      arch:
+        - x64
+    - target: portable
+      arch:
+        - x64
+  icon: assets/icon.ico
+  legalTrademarks: PrismEra Optical Gateway
+  artifactName: "${productName}-${version}-Windows-${arch}.${ext}"
+
+nsis:
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+  allowElevation: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: "PrismEra 棱镜纪"
+  uninstallDisplayName: "PrismEra 棱镜纪 卸载程序"
+  deleteAppDataOnUninstall: false
+  artifactName: "${productName}-Setup-${version}.${ext}"
+
+portable:
+  artifactName: "${productName}-Portable-${version}.${ext}"

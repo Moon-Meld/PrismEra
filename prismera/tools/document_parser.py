@@ -34,6 +34,20 @@ class DocumentParseResult(BaseModel):
     raw_text_preview: str = Field(default="", description="原始文档内容前 500 字符预览")
 
 
+def _decode_pdf_string(s: str) -> str:
+    """Decodes standard PDF string escapes like octal escapes and special characters."""
+    def replace_oct(m):
+        try:
+            return chr(int(m.group(1), 8))
+        except Exception:
+            return m.group(0)
+
+    s = re.sub(r"\\([0-7]{1,3})", replace_oct, s)
+    s = s.replace(r"\n", "\n").replace(r"\r", "\r").replace(r"\t", "\t")
+    s = s.replace(r"\(", "(").replace(r"\)", ")").replace(r"\\", "\\")
+    return s
+
+
 def _extract_text_from_pdf_pure_python(pdf_bytes: bytes) -> str:
     """Pure-python fallback to extract text from uncompressed and FlateDecode PDF streams."""
     text_chunks: List[str] = []
@@ -59,12 +73,12 @@ def _extract_text_from_pdf_pure_python(pdf_bytes: bytes) -> str:
             # Match (text) Tj
             tj_matches = re.findall(r"\((.*?)\)\s*Tj", block)
             for m in tj_matches:
-                text_chunks.append(m)
+                text_chunks.append(_decode_pdf_string(m))
             # Match [(text1) (text2)] TJ
             array_matches = re.findall(r"\[(.*?)\]\s*TJ", block)
             for arr in array_matches:
                 inner_strings = re.findall(r"\((.*?)\)", arr)
-                text_chunks.append("".join(inner_strings))
+                text_chunks.append("".join(_decode_pdf_string(s) for s in inner_strings))
 
     # Also search for literal text in parenthesis
     if not text_chunks:
@@ -74,8 +88,43 @@ def _extract_text_from_pdf_pure_python(pdf_bytes: bytes) -> str:
     return "\n".join(text_chunks)
 
 
-def _read_document_text(file_path_or_text: str) -> str:
-    """Reads raw text from a file path (.pdf, .txt, .md) or returns text directly."""
+def _read_document_text(
+    file_path_or_text: Optional[str] = None,
+    file_bytes: Optional[bytes] = None,
+    file_name: Optional[str] = None,
+) -> str:
+    """Reads raw text from a file path (.pdf, .txt, .md), bytes, or returns text directly."""
+    # 1. If bytes provided directly
+    if file_bytes is not None:
+        fn = (file_name or "").lower()
+        if fn.endswith(".pdf") or file_bytes.startswith(b"%PDF"):
+            # Try pypdf if installed
+            try:
+                import pypdf
+                import io
+                reader = pypdf.PdfReader(io.BytesIO(file_bytes))
+                extracted = "\n".join(page.extract_text() or "" for page in reader.pages)
+                if extracted.strip():
+                    return extracted
+            except Exception:
+                pass
+            # Pure python fallback
+            extracted = _extract_text_from_pdf_pure_python(file_bytes)
+            if extracted.strip():
+                return extracted
+            return ""
+
+        # Plain text bytes
+        for enc in ["utf-8", "gb18030", "gbk", "latin-1"]:
+            try:
+                return file_bytes.decode(enc)
+            except Exception:
+                continue
+        return ""
+
+    if file_path_or_text is None:
+        return ""
+
     # If it's not a path or doesn't exist on disk, treat as raw text
     if not isinstance(file_path_or_text, str) or len(file_path_or_text) > 500 or "\n" in file_path_or_text:
         if not os.path.exists(file_path_or_text):
@@ -475,16 +524,23 @@ def _extract_experiences(text: str) -> List[Dict[str, Any]]:
 
     return experiences
 
-    return experiences
 
-
-def parse_student_document(file_path_or_text: str) -> Dict[str, Any]:
+def parse_student_document(
+    file_path_or_text: Optional[str] = None,
+    file_bytes: Optional[bytes] = None,
+    file_name: Optional[str] = None,
+) -> Dict[str, Any]:
     """Main document parsing function.
 
     Parses student resume or transcript text / PDF into a structured schema,
     extracting institution, major, GPA, prerequisite grades, and assessing STAR details.
+    Supports file path, raw string content, or raw bytes directly.
     """
-    raw_text = _read_document_text(file_path_or_text)
+    raw_text = _read_document_text(
+        file_path_or_text=file_path_or_text,
+        file_bytes=file_bytes,
+        file_name=file_name
+    )
     if not raw_text.strip():
         # Empty or unreadable document
         empty_res = DocumentParseResult(

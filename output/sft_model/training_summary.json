@@ -1,0 +1,17 @@
+{
+  "status": "DRY_RUN_SUCCESS",
+  "stage": "SFT",
+  "model_name": "Qwen/Qwen2.5-1.5B-Instruct",
+  "dataset_path": "data/finetune/luminary_sft_train.jsonl",
+  "dataset_samples": 350,
+  "total_base_parameters": 1540000000,
+  "trainable_lora_parameters": 5390000,
+  "trainable_percentage": "0.35%",
+  "lora_rank": 16,
+  "lora_alpha": 32,
+  "epochs": 3,
+  "effective_batch_size": 16,
+  "estimated_total_steps": 63,
+  "learning_rate": 0.0001,
+  "output_dir": "output/sft_model"
+}
