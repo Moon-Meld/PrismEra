@@ -22,6 +22,9 @@ def test_workbench_static_assets_serving():
     assert "btn-export-dossier" in resp_index.text
     assert "export-dossier-modal" in resp_index.text
     assert 'aria-haspopup="true"' in resp_index.text
+    assert 'id="profile-dropdown"' in resp_index.text
+    assert 'style="display: none;"' in resp_index.text
+    assert "no-cache" in resp_index.headers.get("cache-control", "").lower()
 
     # 2. Dark optical CSS
     resp_css = client.get("/css/style.css")

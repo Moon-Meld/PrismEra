@@ -2510,6 +2510,7 @@ Sincerely,
   function closeProfileDropdown() {
     if (elements.profileDropdown) {
       elements.profileDropdown.classList.add("hidden");
+      elements.profileDropdown.style.display = "none";
     }
     if (elements.profileSwitcherBtn) {
       elements.profileSwitcherBtn.classList.remove("active");
@@ -2522,9 +2523,12 @@ Sincerely,
 
   function toggleProfileDropdown() {
     if (!elements.profileDropdown) return;
-    const isCurrentlyHidden = elements.profileDropdown.classList.contains("hidden");
+    const isCurrentlyHidden = elements.profileDropdown.classList.contains("hidden") ||
+                              elements.profileDropdown.style.display === "none" ||
+                              (window.getComputedStyle && window.getComputedStyle(elements.profileDropdown).display === "none");
     if (isCurrentlyHidden) {
       elements.profileDropdown.classList.remove("hidden");
+      elements.profileDropdown.style.display = "flex";
       if (elements.profileSwitcherBtn) {
         elements.profileSwitcherBtn.classList.add("active");
         elements.profileSwitcherBtn.setAttribute("aria-expanded", "true");
@@ -3812,6 +3816,7 @@ Sincerely,
   }
 
   // 23. 启动初始化
+  closeProfileDropdown();
   bindEvents();
   loadSessionSpectrum();
   loadProfileList();
