@@ -60,6 +60,11 @@
   padding: 0;
 }
 
+/* 全局隐藏工具类 */
+.hidden {
+  display: none !important;
+}
+
 body {
   background-color: var(--bg-deep-void);
   color: var(--text-primary);
@@ -96,26 +101,37 @@ body {
   position: relative;
   z-index: 20;
   height: var(--header-height);
-  background: rgba(14, 16, 24, 0.82);
-  backdrop-filter: blur(16px);
+  background: rgba(13, 16, 26, 0.92);
+  backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--border-glass);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 20px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  padding: 0 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.45);
+  gap: 12px;
 }
 
-.header-left, .header-right {
+.header-left {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
+  min-width: 0;
+  flex-shrink: 1;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
 }
 
 .brand-logo {
   display: flex;
   align-items: center;
   gap: 8px;
+  flex-shrink: 0;
 }
 
 .logo-prism {
@@ -144,24 +160,29 @@ body {
 }
 
 .brand-sub {
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   color: var(--text-muted);
   border-left: 1px solid rgba(255, 255, 255, 0.12);
-  padding-left: 10px;
-  margin-left: 4px;
+  padding-left: 8px;
+  margin-left: 2px;
+  white-space: nowrap;
 }
 
 /* Agent 活跃胶囊状态条 */
 .agent-live-pill {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid var(--border-glass);
-  padding: 4px 12px;
+  padding: 3px 10px;
   border-radius: var(--radius-pill);
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   transition: var(--transition-smooth);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 260px;
 }
 
 .agent-live-pill:hover {
@@ -259,7 +280,7 @@ body {
   position: relative;
   z-index: 10;
   display: grid;
-  grid-template-columns: 40% 60%;
+  grid-template-columns: minmax(360px, 35%) 1fr;
   height: calc(100vh - var(--header-height));
   overflow: hidden;
 }
@@ -630,15 +651,63 @@ body {
   color: #f1f5f9;
 }
 
+/* 欢迎卡片微排版 */
+.welcome-bubble {
+  border-color: rgba(6, 182, 212, 0.35) !important;
+  background: linear-gradient(135deg, rgba(16, 20, 32, 0.95), rgba(22, 28, 46, 0.9)) !important;
+}
+
+.welcome-heading {
+  font-size: 0.92rem;
+  color: #ffffff;
+  margin-bottom: 6px;
+  line-height: 1.5;
+}
+
+.welcome-desc {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-bottom: 10px;
+}
+
+.welcome-agent-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 6px;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-sm);
+  padding: 8px 10px;
+  margin-bottom: 10px;
+}
+
+.welcome-agent-item {
+  font-size: 0.76rem;
+  color: #cbd5e1;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.welcome-agent-item strong {
+  color: #38bdf8;
+}
+
+.welcome-footer-hint {
+  font-size: 0.74rem;
+  color: var(--text-muted);
+}
+
 /* 底部快捷芯片栏 (Quick Action Chips) */
 .quick-chips-bar {
-  padding: 8px 16px;
-  background: rgba(18, 20, 29, 0.95);
+  padding: 6px 12px;
+  background: rgba(14, 16, 24, 0.96);
   border-top: 1px solid var(--border-glass);
   display: flex;
-  gap: 8px;
+  gap: 6px;
   overflow-x: auto;
   white-space: nowrap;
+  scrollbar-width: thin;
 }
 
 .quick-chips-bar::-webkit-scrollbar {
@@ -653,18 +722,19 @@ body {
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid var(--border-glass);
   color: var(--text-secondary);
-  padding: 4px 10px;
+  padding: 3px 10px;
   border-radius: var(--radius-pill);
-  font-size: 0.72rem;
+  font-size: 0.74rem;
+  font-weight: 500;
   cursor: pointer;
   transition: var(--transition-smooth);
   flex-shrink: 0;
 }
 
 .chip-btn:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(6, 182, 212, 0.12);
   color: #ffffff;
-  border-color: var(--border-glass-glow);
+  border-color: rgba(6, 182, 212, 0.45);
   transform: translateY(-1px);
 }
 
@@ -872,20 +942,28 @@ body {
 .optic-indicator.cyan { background: var(--c-facet); box-shadow: 0 0 6px var(--c-facet); }
 .optic-indicator.amber { background: var(--c-locus); box-shadow: 0 0 6px var(--c-locus); }
 
-/* TAB 1: 完备度标尺 */
-.meter-card {
+/* TAB 1: 完备度标尺与核心硬指标矩阵卡片 */
+.executive-metrics-card {
   border-left: 3px solid #06b6d4;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.meter-card-inner {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  padding-bottom: 12px;
 }
 
 .meter-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 .meter-title {
-  font-size: 0.84rem;
+  font-size: 0.82rem;
   font-weight: 600;
   display: flex;
   align-items: center;
@@ -902,11 +980,11 @@ body {
 }
 
 .meter-bar-container {
-  height: 8px;
+  height: 6px;
   background: rgba(255, 255, 255, 0.06);
   border-radius: var(--radius-pill);
   overflow: hidden;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .meter-bar-fill {
@@ -926,9 +1004,9 @@ body {
 .checkpoint {
   background: rgba(255, 255, 255, 0.02);
   border: 1px solid var(--border-glass);
-  padding: 6px 10px;
+  padding: 5px 8px;
   border-radius: var(--radius-sm);
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -947,32 +1025,32 @@ body {
 }
 
 .chk-status {
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 700;
 }
 
-/* 4 张核心硬指标玻璃卡片 */
+/* 4 张核心硬指标玻璃卡片网格 */
 .metrics-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
 }
 
 .metric-glass-card {
-  background: rgba(20, 23, 34, 0.7);
+  background: rgba(0, 0, 0, 0.32);
   border: 1px solid var(--border-glass);
   border-radius: var(--radius-md);
-  padding: 14px;
+  padding: 10px 12px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 4px;
   transition: var(--transition-smooth);
 }
 
 .metric-glass-card:hover {
   border-color: var(--border-glass-glow);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
 }
 
 .metric-card-header {
@@ -982,24 +1060,41 @@ body {
 }
 
 .metric-card-icon {
-  font-size: 0.95rem;
+  font-size: 0.85rem;
 }
 
 .metric-card-title {
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   color: var(--text-muted);
   font-weight: 500;
 }
 
 .metric-card-value {
-  font-size: 1.05rem;
+  font-size: 0.98rem;
   font-weight: 700;
   color: #ffffff;
 }
 
 .metric-card-sub {
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Tab 1 左右双栏排版布局 */
+.profile-dashboard-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  align-items: start;
+}
+
+.profile-dashboard-col {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
 }
 
 /* 故事碎片标签容器 */
@@ -1556,7 +1651,7 @@ body {
   position: fixed;
   bottom: 24px;
   right: 24px;
-  z-index: 100;
+  z-index: 9999;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -1679,19 +1774,20 @@ body {
   border: 1px solid #f59e0b;
   box-shadow: 0 0 18px rgba(245, 158, 11, 0.25);
   background: linear-gradient(135deg, rgba(26, 29, 43, 0.9), rgba(245, 158, 11, 0.08));
+  padding-top: 14px;
 }
 
 .target-badge-pill {
   position: absolute;
-  top: -8px;
-  right: 12px;
+  top: 8px;
+  right: 8px;
   background: linear-gradient(90deg, #f59e0b, #d97706);
-  color: #000;
-  font-size: 0.68rem;
+  color: #0b0f19;
+  font-size: 0.65rem;
   font-weight: 700;
-  padding: 2px 8px;
+  padding: 1px 7px;
   border-radius: var(--radius-pill);
-  box-shadow: 0 0 10px rgba(245, 158, 11, 0.6);
+  box-shadow: 0 0 8px rgba(245, 158, 11, 0.5);
   z-index: 2;
 }
 
@@ -1949,17 +2045,17 @@ body {
 
 /* 局部折射浮动按钮 */
 .floating-refract-pill {
-  position: absolute;
-  z-index: 100;
+  position: fixed;
+  z-index: 1500;
   background: linear-gradient(135deg, #06b6d4, #7c3aed);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.35);
   color: #ffffff;
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 600;
-  padding: 6px 14px;
+  padding: 5px 12px;
   border-radius: var(--radius-pill);
   cursor: pointer;
-  box-shadow: 0 4px 20px rgba(6, 182, 212, 0.5);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.6), 0 0 12px rgba(6, 182, 212, 0.45);
   transition: transform 0.15s ease-out;
   animation: popInPill 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -2813,7 +2909,18 @@ body {
 .switcher-arrow {
   font-size: 0.75rem;
   color: var(--text-muted);
-  transition: transform 0.2s;
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.profile-switcher-wrapper.open .switcher-arrow,
+.btn-profile-switcher.active .switcher-arrow {
+  transform: rotate(180deg);
+}
+
+.btn-profile-switcher.active {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: var(--border-glass-glow);
+  box-shadow: 0 0 14px rgba(6, 182, 212, 0.25);
 }
 
 /* 档案下拉弹层 */
@@ -2832,6 +2939,10 @@ body {
   flex-direction: column;
   overflow: hidden;
   animation: dropdownFadeIn 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.profile-dropdown.hidden {
+  display: none !important;
 }
 
 @keyframes dropdownFadeIn {
@@ -4920,15 +5031,15 @@ body {
 
 /* Milestone 5.0 全息干涉仪 · 次模组合风险仪表盘 */
 .portfolio-dashboard-panel {
-  background: linear-gradient(135deg, rgba(24, 18, 48, 0.85) 0%, rgba(13, 20, 40, 0.85) 100%);
+  background: linear-gradient(135deg, rgba(20, 16, 40, 0.88) 0%, rgba(12, 18, 36, 0.88) 100%);
   border: 1px solid rgba(168, 85, 247, 0.35);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35), inset 0 0 15px rgba(168, 85, 247, 0.08);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35), inset 0 0 15px rgba(168, 85, 247, 0.08);
   border-radius: var(--radius-md, 8px);
-  padding: 14px 16px;
-  margin-bottom: 14px;
+  padding: 10px 14px;
+  margin-bottom: 10px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
   position: relative;
   overflow: hidden;
 }
@@ -5003,8 +5114,16 @@ body {
 
 .portfolio-metrics-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-  gap: 10px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+/* Tab 5: Resonator 左右双栏 */
+.resonator-dual-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  align-items: start;
 }
 
 .metric-card {
@@ -5501,6 +5620,97 @@ body {
   line-height: 1.5;
   overflow-x: auto;
 }
+
+/* ==============================================================================
+   全面响应式与无重叠自适应规则 (Responsive & Zero-Overlap System)
+   ============================================================================== */
+
+@media (max-width: 1400px) {
+  .btn-console-trigger .console-text,
+  .btn-desktop-download .desktop-btn-text {
+    display: none;
+  }
+  .btn-console-trigger,
+  .btn-desktop-download {
+    padding: 5px 9px;
+  }
+  .agent-live-pill {
+    max-width: 180px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .workbench-container {
+    grid-template-columns: minmax(320px, 34%) 1fr;
+  }
+  .profile-dashboard-split,
+  .resonator-dual-split {
+    grid-template-columns: 1fr;
+  }
+  .metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .portfolio-metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .brand-sub {
+    display: none;
+  }
+}
+
+@media (max-width: 960px) {
+  body {
+    overflow-y: auto;
+    height: auto;
+  }
+  .workbench-container {
+    grid-template-columns: 1fr;
+    height: auto;
+    overflow: visible;
+  }
+  .left-pane-chat {
+    height: 520px;
+    border-right: none;
+    border-bottom: 1px solid var(--border-glass);
+  }
+  .right-pane-canvas {
+    height: auto;
+    min-height: 600px;
+  }
+  .school-matrix-columns {
+    grid-template-columns: 1fr;
+  }
+  .critique-comparison-container {
+    grid-template-columns: 1fr;
+  }
+  .meter-checkpoints {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .prism-header {
+    padding: 0 10px;
+  }
+  .header-left .agent-live-pill {
+    display: none;
+  }
+  .header-right {
+    gap: 4px;
+  }
+  .btn-export-dossier .export-text,
+  .btn-ghost span:not(.btn-icon) {
+    display: none;
+  }
+  .metrics-grid,
+  .portfolio-metrics-grid {
+    grid-template-columns: 1fr;
+  }
+  .profile-form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 
 
 

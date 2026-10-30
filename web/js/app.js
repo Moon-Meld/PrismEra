@@ -306,6 +306,7 @@
     btnTriggerTimeline: document.getElementById("btn-trigger-timeline"),
 
     // Milestone 7: Profile Switcher & Dossier Exporter
+    profileSwitcherWrapper: document.getElementById("profile-switcher-wrapper"),
     profileSwitcherBtn: document.getElementById("profile-switcher-btn"),
     profileDropdown: document.getElementById("profile-dropdown"),
     profileDropdownList: document.getElementById("profile-dropdown-list"),
@@ -2333,6 +2334,7 @@ Sincerely,
 
   // 18. 重置并开启新会话
   async function handleNewSession() {
+    closeProfileDropdown();
     const newId = "prism_" + Math.random().toString(16).substring(2, 10);
     try {
       await fetch("/api/session/reset", {
@@ -2505,6 +2507,37 @@ Sincerely,
   let renamingSessionId = null;
   let cachedMarkdownContent = "";
 
+  function closeProfileDropdown() {
+    if (elements.profileDropdown) {
+      elements.profileDropdown.classList.add("hidden");
+    }
+    if (elements.profileSwitcherBtn) {
+      elements.profileSwitcherBtn.classList.remove("active");
+      elements.profileSwitcherBtn.setAttribute("aria-expanded", "false");
+    }
+    if (elements.profileSwitcherWrapper) {
+      elements.profileSwitcherWrapper.classList.remove("open");
+    }
+  }
+
+  function toggleProfileDropdown() {
+    if (!elements.profileDropdown) return;
+    const isCurrentlyHidden = elements.profileDropdown.classList.contains("hidden");
+    if (isCurrentlyHidden) {
+      elements.profileDropdown.classList.remove("hidden");
+      if (elements.profileSwitcherBtn) {
+        elements.profileSwitcherBtn.classList.add("active");
+        elements.profileSwitcherBtn.setAttribute("aria-expanded", "true");
+      }
+      if (elements.profileSwitcherWrapper) {
+        elements.profileSwitcherWrapper.classList.add("open");
+      }
+      loadProfileList();
+    } else {
+      closeProfileDropdown();
+    }
+  }
+
   async function loadProfileList() {
     if (!elements.profileDropdownList) return;
     try {
@@ -2551,7 +2584,8 @@ Sincerely,
           </div>
         `;
 
-        item.querySelector(".item-main").addEventListener("click", () => {
+        item.addEventListener("click", (e) => {
+          if (e.target.closest(".item-actions")) return;
           switchSession(s.session_id);
         });
 
@@ -2576,13 +2610,14 @@ Sincerely,
 
   async function switchSession(targetSessionId) {
     if (!targetSessionId) return;
+    closeProfileDropdown();
+    if (targetSessionId === state.sessionId) {
+      return;
+    }
     state.sessionId = targetSessionId;
     localStorage.setItem("prismera_session_id", targetSessionId);
     if (elements.sessionIdDisplay) {
       elements.sessionIdDisplay.textContent = targetSessionId;
-    }
-    if (elements.profileDropdown) {
-      elements.profileDropdown.classList.add("hidden");
     }
 
     await loadSessionSpectrum();
@@ -2607,6 +2642,7 @@ Sincerely,
   }
 
   function openRenameModal(sessionId, currentName) {
+    closeProfileDropdown();
     renamingSessionId = sessionId;
     if (elements.renameProfileNameInput) {
       elements.renameProfileNameInput.value = currentName || "";
@@ -2651,9 +2687,7 @@ Sincerely,
   }
 
   function openCreateProfileModal() {
-    if (elements.profileDropdown) {
-      elements.profileDropdown.classList.add("hidden");
-    }
+    closeProfileDropdown();
     if (elements.createProfileModal) {
       elements.createProfileModal.classList.remove("hidden");
       if (elements.newProfileNameInput) elements.newProfileNameInput.value = "";
@@ -2704,6 +2738,7 @@ Sincerely,
 
   // Dossier Exporter Handlers
   async function openExportModal() {
+    closeProfileDropdown();
     if (!elements.exportDossierModal) return;
     elements.exportDossierModal.classList.remove("hidden");
     switchExportPreviewTab("html");
@@ -2781,6 +2816,7 @@ Sincerely,
   let currentConsoleConfig = null;
 
   async function openConsoleModal() {
+    closeProfileDropdown();
     if (!elements.prismConsoleModal) return;
     elements.prismConsoleModal.classList.remove("hidden");
     await loadConsoleConfig();
@@ -3250,6 +3286,7 @@ Sincerely,
 
   // Desktop App Distribution Handlers
   async function openDesktopModal() {
+    closeProfileDropdown();
     if (!elements.desktopDownloadModal) return;
     elements.desktopDownloadModal.classList.remove("hidden");
 
@@ -3514,8 +3551,10 @@ Sincerely,
           const range = selection.getRangeAt(0);
           const rect = range.getBoundingClientRect();
           if (elements.floatingRefractPill) {
-            elements.floatingRefractPill.style.top = `${rect.top + window.scrollY - 38}px`;
-            elements.floatingRefractPill.style.left = `${rect.left + window.scrollX + (rect.width / 2) - 60}px`;
+            const topPos = rect.top - 44 < 60 ? rect.bottom + 8 : rect.top - 40;
+            const leftPos = Math.max(16, Math.min(window.innerWidth - 180, rect.left + (rect.width / 2) - 65));
+            elements.floatingRefractPill.style.top = `${topPos}px`;
+            elements.floatingRefractPill.style.left = `${leftPos}px`;
             elements.floatingRefractPill.classList.remove("hidden");
           }
         } else {
@@ -3628,18 +3667,13 @@ Sincerely,
     if (elements.profileSwitcherBtn) {
       elements.profileSwitcherBtn.addEventListener("click", (e) => {
         e.stopPropagation();
-        if (elements.profileDropdown) {
-          elements.profileDropdown.classList.toggle("hidden");
-          if (!elements.profileDropdown.classList.contains("hidden")) {
-            loadProfileList();
-          }
-        }
+        toggleProfileDropdown();
       });
     }
 
     document.addEventListener("click", (e) => {
       if (elements.profileDropdown && !e.target.closest("#profile-switcher-wrapper")) {
-        elements.profileDropdown.classList.add("hidden");
+        closeProfileDropdown();
       }
     });
 
@@ -3766,8 +3800,13 @@ Sincerely,
       });
     }
     document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && elements.desktopDownloadModal && !elements.desktopDownloadModal.classList.contains("hidden")) {
-        closeDesktopModal();
+      if (e.key === "Escape") {
+        if (elements.profileDropdown && !elements.profileDropdown.classList.contains("hidden")) {
+          closeProfileDropdown();
+        }
+        if (elements.desktopDownloadModal && !elements.desktopDownloadModal.classList.contains("hidden")) {
+          closeDesktopModal();
+        }
       }
     });
   }

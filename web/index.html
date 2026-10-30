@@ -17,7 +17,7 @@
       <div class="brand-logo">
         <span class="logo-prism">✦</span>
         <span class="brand-text">Prism<span class="brand-accent">Era</span></span>
-        <span class="brand-sub">棱镜纪 · 暗黑光学工作台</span>
+        <span class="brand-sub">棱镜纪</span>
       </div>
       <div class="agent-live-pill" id="agent-indicator">
         <span class="pulse-orb orb-luminary"></span>
@@ -28,7 +28,7 @@
     <div class="header-right">
       <!-- Multi-student Profile Switcher -->
       <div class="profile-switcher-wrapper" id="profile-switcher-wrapper">
-        <button class="btn-profile-switcher" id="profile-switcher-btn" title="点击切换或管理学生档案">
+        <button class="btn-profile-switcher" id="profile-switcher-btn" title="点击切换或管理学生档案" aria-haspopup="true" aria-expanded="false">
           <span class="profile-avatar">👤</span>
           <div class="profile-info-compact">
             <span class="profile-name" id="current-profile-name">学员档案</span>
@@ -47,33 +47,31 @@
         </div>
       </div>
 
-      <!-- Desktop Download Button -->
-      <button class="btn-desktop-download" id="btn-open-desktop-modal" title="下载 Windows / macOS 原生桌面客户端">
-        <span class="desktop-btn-icon">💻</span>
-        <span class="desktop-btn-text">桌面客户端</span>
-        <span class="desktop-btn-pill">Win / Mac</span>
-      </button>
-
       <!-- Export Dossier Button -->
       <button class="btn-export-dossier" id="btn-export-dossier" title="一键编译导出《PrismEra 个人升学光谱全案报告》">
         <span class="export-icon">💎</span>
         <span class="export-text">导出全案报告</span>
-        <span class="export-pill">交付中枢</span>
+      </button>
+
+      <!-- Desktop Download Button -->
+      <button class="btn-desktop-download" id="btn-open-desktop-modal" title="下载 Windows / macOS 原生桌面客户端">
+        <span class="desktop-btn-icon">💻</span>
+        <span class="desktop-btn-text">桌面端</span>
       </button>
 
       <!-- Prism System & Graph Console Button -->
       <button class="btn-console-trigger" id="btn-open-console" title="打开棱镜控制台 · 系统与图谱管理中心">
         <span class="console-icon">⚙️</span>
-        <span class="console-text">系统控制台</span>
-        <span class="console-pill">Admin</span>
+        <span class="console-text">控制台</span>
       </button>
 
       <button class="btn-ghost" id="new-session-btn" title="重置并开启新会话">
         <span class="btn-icon">↺</span> 新会话
       </button>
+
       <div class="status-indicator">
         <span class="status-dot"></span>
-        <span class="status-text" id="gateway-status">网关在线</span>
+        <span class="status-text" id="gateway-status">在线</span>
       </div>
     </div>
   </header>
@@ -105,19 +103,19 @@
           <div class="agent-badge">
             <span class="agent-badge-icon">✦</span>
             <span class="agent-badge-name">司光者 · The Luminary</span>
-            <span class="agent-badge-role">中枢光轴 · 意图解析</span>
+            <span class="agent-badge-role">中枢总控</span>
           </div>
-          <div class="message-bubble">
+          <div class="message-bubble welcome-bubble">
             <div class="bubble-content">
-              <p>你好，我是 <strong>PrismEra（棱镜纪）</strong> 的中枢主控——<strong>【司光者 · The Luminary】</strong>。</p>
-              <p>整座暗黑光学阵列已为你校准就绪：</p>
-              <ul>
-                <li>🔬 <strong>【切面师】</strong>：成绩单切面诊断、WES GPA 算法折算与先修课图谱核对；</li>
-                <li>🎯 <strong>【定焦师】</strong>：前置参数硬核剪枝、三级三维选校矩阵与零幻觉定校；</li>
-                <li>✍️ <strong>【折光师】</strong>：四阶状态机苏格拉底访谈、独家叙事大纲与去 AI 化文书淬炼；</li>
-                <li>📧 <strong>【共鸣者】</strong>：学术诚信红线验证、教授文献学术共振与 220 词黄金套磁信。</li>
-              </ul>
-              <p>轻点下方快捷意图胶囊，或直接向我陈述你的学术背景与规划诉求，我们即刻汇聚原光。</p>
+              <p class="welcome-heading">你好，我是 <strong>PrismEra 棱镜纪</strong> 的中枢主控——<strong>【司光者】</strong>。</p>
+              <p class="welcome-desc">全域多智能体暗黑光学阵列已为你校准就绪：</p>
+              <div class="welcome-agent-grid">
+                <div class="welcome-agent-item"><span class="w-icon">🔬</span> <strong>切面师</strong>：成绩单切面诊断与先修课对齐</div>
+                <div class="welcome-agent-item"><span class="w-icon">🎯</span> <strong>定焦师</strong>：三维选校坐标矩阵与硬核剪枝</div>
+                <div class="welcome-agent-item"><span class="w-icon">✍️</span> <strong>折光师</strong>：苏格拉底访谈与去AI化文书淬炼</div>
+                <div class="welcome-agent-item"><span class="w-icon">📧</span> <strong>共鸣者</strong>：顶会文献共振与黄金套磁信</div>
+              </div>
+              <p class="welcome-footer-hint">轻点下方快捷意图胶囊，或直接陈述你的学术背景与目标项目开始咨询。</p>
             </div>
           </div>
         </div>
@@ -126,31 +124,31 @@
       <!-- Quick Action Chips -->
       <div class="quick-chips-bar" id="quick-chips">
         <button class="chip-btn" data-prompt="你好，我是大三学生，想了解一下留学规划。">
-          🌟 1. 首次咨询触达
+          🌟 首次咨询
         </button>
         <button class="chip-btn" data-prompt="我想直接做选校定位，帮我看看能申哪些好学校？">
-          ⚠️ 2. 选校拦截测试
+          ⚠️ 拦截测试
         </button>
         <button class="chip-btn" data-prompt="我是浙江大学软件工程本科，目前均分88.5分，雅思总分7.5、口语7.0，目标是美研和英研CS项目！">
-          🎯 3. 补齐四维指标定焦
+          🎯 四维定焦
         </button>
         <button class="chip-btn" data-prompt="定校很有底了！请切面师帮我深度诊断一下成绩单和先修课，看看是否有结构性暗区？">
-          🔬 4. 切面师先修课诊断
+          🔬 先修课诊断
         </button>
         <button class="chip-btn" data-prompt="选校和背景都清晰了，我想开始准备 CMU 软件工程项目的 SOP 文书，怎么写比较出彩？">
-          ✍️ 5. 折光师文书追问
+          ✍️ 文书追问
         </button>
         <button class="chip-btn" data-prompt="我们在做分布式消息队列时，遇到网络分区下传统心跳算法导致雪崩的问题。我亲自编写了基于异步环形缓冲区的自适应调度器，调整了超时重试窗口，使系统在15%网络丢包下延迟降低了32ms。">
-          🧩 6. 回复工程细节生成大纲
+          🧩 经历提炼
         </button>
         <button class="chip-btn" data-prompt="我还想申请 UIUC 的分布式系统博士，想联系 Indranil Gupta 教授，请检索他的最新论文并帮我写一封高信噪比套磁信。">
-          📧 7. 共鸣者文献套磁信
+          📧 学术套磁
         </button>
         <button class="chip-btn" data-prompt="请回音壁为我发起卡耐基梅隆 MSIT-SE 项目的 Kira 模拟面试第一题，并对我作答进行评分。">
-          ⚡ 8. 回音壁 Kira 模拟面
+          ⚡ Kira模面
         </button>
         <button class="chip-btn" data-prompt="请帮我梳理当前锁定项目的网申时间轴、倒计时及推荐信催交节点。">
-          📅 9. 网申时间轴与推荐信催交
+          📅 网申时间轴
         </button>
       </div>
 
@@ -201,14 +199,75 @@
 
       <!-- TAB 1: 原石光谱档案 -->
       <div class="canvas-view-content active" id="view-profile">
-        <!-- Prism Document Upload Dropzone -->
+        <!-- 1. Executive Status & Metrics Matrix -->
+        <div class="canvas-card executive-metrics-card">
+          <!-- Completeness Meter -->
+          <div class="meter-card-inner">
+            <div class="meter-header">
+              <div class="meter-title">
+                <span class="optic-indicator"></span> 四维基准指标完备度 (Baseline Completeness)
+              </div>
+              <div class="meter-score" id="completeness-percentage">0%</div>
+            </div>
+            <div class="meter-bar-container">
+              <div class="meter-bar-fill" id="completeness-bar-fill" style="width: 0%;"></div>
+            </div>
+            <div class="meter-checkpoints" id="meter-checkpoints">
+              <div class="checkpoint" id="chk-tier">院校层级 <span class="chk-status">✕</span></div>
+              <div class="checkpoint" id="chk-gpa">GPA标尺 <span class="chk-status">✕</span></div>
+              <div class="checkpoint" id="chk-major">专业学科 <span class="chk-status">✕</span></div>
+              <div class="checkpoint" id="chk-target">目标与语言 <span class="chk-status">✕</span></div>
+            </div>
+          </div>
+
+          <!-- 4 Core Hard Metric Cards Grid -->
+          <div class="metrics-grid">
+            <div class="metric-glass-card" id="card-undergrad">
+              <div class="metric-card-header">
+                <span class="metric-card-icon">🏛️</span>
+                <span class="metric-card-title">本科院校 & 梯队</span>
+              </div>
+              <div class="metric-card-value" id="val-undergrad">尚未提供</div>
+              <div class="metric-card-sub" id="val-undergrad-sub">英国/港新名单准入：待校准</div>
+            </div>
+
+            <div class="metric-glass-card" id="card-gpa">
+              <div class="metric-card-header">
+                <span class="metric-card-icon">📊</span>
+                <span class="metric-card-title">GPA 均分与标尺</span>
+              </div>
+              <div class="metric-card-value" id="val-gpa">尚未提供</div>
+              <div class="metric-card-sub" id="val-gpa-sub">折算 4.0 / WES 算法：待测定</div>
+            </div>
+
+            <div class="metric-glass-card" id="card-language">
+              <div class="metric-card-header">
+                <span class="metric-card-icon">🗣️</span>
+                <span class="metric-card-title">语言与标化水位</span>
+              </div>
+              <div class="metric-card-value" id="val-language">尚未提供</div>
+              <div class="metric-card-sub" id="val-language-sub">口语小分阻断检测：待检测</div>
+            </div>
+
+            <div class="metric-glass-card" id="card-target">
+              <div class="metric-card-header">
+                <span class="metric-card-icon">🎯</span>
+                <span class="metric-card-title">申请靶向与方向</span>
+              </div>
+              <div class="metric-card-value" id="val-target">尚未设定</div>
+              <div class="metric-card-sub" id="val-target-sub">目标地区 & 专业方向</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Streamlined Document Upload Dropzone -->
         <div class="canvas-card upload-dropzone-card" id="dropzone-card">
           <div class="dropzone-inner" id="dropzone-area">
             <input type="file" id="resume-file-input" class="hidden-file-input" accept=".pdf,.txt,.md,.markdown">
             <div class="dropzone-icon">📄</div>
             <div class="dropzone-text-group">
               <div class="dropzone-title">拖拽简历 / 成绩单至此，或 <span class="dropzone-highlight">点击浏览上传</span></div>
-              <div class="dropzone-sub">支持 PDF 成绩单、Markdown、TXT 简历 · 自动提取院校、GPA、先修课、STAR经历</div>
+              <div class="dropzone-sub">支持 PDF 成绩单、Markdown、TXT 简历 · 自动对齐院校、GPA、先修课、STAR经历</div>
             </div>
             <button class="btn-primary-sm" id="btn-trigger-file-upload" type="button">
               <span class="btn-icon">📁</span> 选择文件
@@ -224,162 +283,113 @@
           </div>
         </div>
 
-        <!-- Completeness Meter -->
-        <div class="canvas-card meter-card">
-          <div class="meter-header">
-            <div class="meter-title">
-              <span class="optic-indicator"></span> 四维基准指标完备度标尺 (Baseline Completeness)
+        <!-- 3. Dual-Column Academic & Narrative Split -->
+        <div class="profile-dashboard-split">
+          <!-- Col A: Academic Prereqs & STAR Radar -->
+          <div class="profile-dashboard-col">
+            <!-- Prerequisite Graph Alignment & Blindspots Radar -->
+            <div class="canvas-card prereq-card" id="prereq-card">
+              <div class="card-title-row">
+                <div class="card-title">
+                  <span class="optic-indicator cyan"></span> 先修课知识图谱对齐与结构性暗区
+                </div>
+                <div class="prereq-header-actions">
+                  <span class="card-counter" id="prereq-coverage-badge">核验待诊断</span>
+                  <button class="btn-ghost-sm" id="btn-facet-prereq-audit" type="button" title="请求切面师深度诊断先修课暗区与补救方案">
+                    🔬 切面师诊断
+                  </button>
+                </div>
+              </div>
+              <div class="prereq-advice-box hidden" id="prereq-advice-box">
+                <span class="advice-icon">💡</span>
+                <span class="advice-text" id="prereq-advice-text"></span>
+              </div>
+              <div class="prereq-courses-grid" id="prereq-courses-grid">
+                <div class="empty-state-notice">暂未对齐先修课。导入成绩单或点击【切面师诊断】将自动对齐目标专业拓扑。</div>
+              </div>
             </div>
-            <div class="meter-score" id="completeness-percentage">0%</div>
-          </div>
-          <div class="meter-bar-container">
-            <div class="meter-bar-fill" id="completeness-bar-fill" style="width: 0%;"></div>
-          </div>
-          <div class="meter-checkpoints" id="meter-checkpoints">
-            <div class="checkpoint" id="chk-tier">院校层级 <span class="chk-status">✕</span></div>
-            <div class="checkpoint" id="chk-gpa">GPA标尺 <span class="chk-status">✕</span></div>
-            <div class="checkpoint" id="chk-major">专业学科 <span class="chk-status">✕</span></div>
-            <div class="checkpoint" id="chk-target">目标与语言 <span class="chk-status">✕</span></div>
-          </div>
-        </div>
 
-        <!-- 4 Core Hard Metric Cards Grid -->
-        <div class="metrics-grid">
-          <div class="metric-glass-card" id="card-undergrad">
-            <div class="metric-card-header">
-              <span class="metric-card-icon">🏛️</span>
-              <span class="metric-card-title">本科院校 & 梯队</span>
+            <!-- Mined Experiences STAR Evaluation -->
+            <div class="canvas-card experiences-card" id="experiences-card">
+              <div class="card-title-row">
+                <div class="card-title">
+                  <span class="optic-indicator purple"></span> 科研与工程经历 STAR 切面诊断
+                </div>
+                <span class="card-counter" id="experiences-counter">0 项经历</span>
+              </div>
+              <div class="experiences-list-container" id="experiences-list-container">
+                <div class="empty-state-notice">暂无结构化经历数据。上传简历或在左侧对话中阐述科研/实习后，系统将自动进行 STAR 完整度评估。</div>
+              </div>
             </div>
-            <div class="metric-card-value" id="val-undergrad">尚未提供</div>
-            <div class="metric-card-sub" id="val-undergrad-sub">英国/港新名单准入：待校准</div>
-          </div>
-
-          <div class="metric-glass-card" id="card-gpa">
-            <div class="metric-card-header">
-              <span class="metric-card-icon">📊</span>
-              <span class="metric-card-title">GPA 均分与标尺</span>
-            </div>
-            <div class="metric-card-value" id="val-gpa">尚未提供</div>
-            <div class="metric-card-sub" id="val-gpa-sub">折算 4.0 / WES 算法：待测定</div>
-          </div>
-
-          <div class="metric-glass-card" id="card-language">
-            <div class="metric-card-header">
-              <span class="metric-card-icon">🗣️</span>
-              <span class="metric-card-title">语言与标化水位</span>
-            </div>
-            <div class="metric-card-value" id="val-language">尚未提供</div>
-            <div class="metric-card-sub" id="val-language-sub">口语小分阻断检测：待检测</div>
           </div>
 
-          <div class="metric-glass-card" id="card-target">
-            <div class="metric-card-header">
-              <span class="metric-card-icon">🎯</span>
-              <span class="metric-card-title">申请靶向与方向</span>
+          <!-- Col B: Story Fragments & Manual Form -->
+          <div class="profile-dashboard-col">
+            <!-- Mined Story Fragments -->
+            <div class="canvas-card">
+              <div class="card-title-row">
+                <div class="card-title">
+                  <span class="optic-indicator purple"></span> 折光师已采集故事碎片标签
+                </div>
+                <span class="card-counter" id="fragment-counter">0 碎片</span>
+              </div>
+              <div class="fragment-tags-container" id="fragment-tags-container">
+                <div class="empty-state-notice">暂无已采集碎片，向【折光师】回复真实科研与工程挑战后将自动提炼收录。</div>
+              </div>
             </div>
-            <div class="metric-card-value" id="val-target">尚未设定</div>
-            <div class="metric-card-sub" id="val-target-sub">目标地区 & 专业方向</div>
-          </div>
-        </div>
 
-        <!-- Prerequisite Graph Alignment & Blindspots Radar -->
-        <div class="canvas-card prereq-card" id="prereq-card">
-          <div class="card-title-row">
-            <div class="card-title">
-              <span class="optic-indicator cyan"></span> 先修课知识图谱对齐与结构性暗区 (Prerequisite Alignment)
+            <!-- Quick Profile Editor / Manual Upload Form -->
+            <div class="canvas-card editor-card">
+              <div class="card-title-row">
+                <div class="card-title">
+                  <span class="optic-indicator cyan"></span> 手动校准学生硬指标 / 上传 JSON
+                </div>
+              </div>
+              <div class="profile-form-grid">
+                <div class="form-group">
+                  <label>本科院校</label>
+                  <input type="text" id="input-prof-school" placeholder="例如: 浙江大学">
+                </div>
+                <div class="form-group">
+                  <label>院校层级</label>
+                  <select id="input-prof-tier">
+                    <option value="">-- 请选择 --</option>
+                    <option value="985">985 院校</option>
+                    <option value="211">211 院校</option>
+                    <option value="双非一本">双非一本</option>
+                    <option value="海本">海本 (Overseas)</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>当前专业</label>
+                  <input type="text" id="input-prof-major" placeholder="例如: 软件工程">
+                </div>
+                <div class="form-group">
+                  <label>原始均分 / GPA</label>
+                  <input type="text" id="input-prof-gpa" placeholder="例如: 88.5/100 或 3.8/4.0">
+                </div>
+                <div class="form-group">
+                  <label>雅思/托福成绩</label>
+                  <input type="text" id="input-prof-ielts" placeholder="例如: 7.5 (口语 7.0)">
+                </div>
+                <div class="form-group">
+                  <label>目标国家与专业</label>
+                  <input type="text" id="input-prof-targets" placeholder="例如: US, UK / CS">
+                </div>
+              </div>
+              <div class="form-actions-row">
+                <button class="btn-primary" id="save-profile-btn">
+                  <span class="btn-icon">✓</span> 保存并同步
+                </button>
+                <button class="btn-ghost" id="json-paste-toggle-btn">
+                  <span class="btn-icon">{}</span> 粘贴 JSON
+                </button>
+              </div>
+              <div class="json-paste-area hidden" id="json-paste-area">
+                <textarea id="json-input" rows="4" placeholder='{"undergrad_name": "清华大学", "gpa_raw": "89/100", "target_regions": ["US"], "target_majors": ["CS"]}'></textarea>
+                <button class="btn-primary-sm" id="apply-json-btn">应用 JSON</button>
+              </div>
             </div>
-            <div class="prereq-header-actions">
-              <span class="card-counter" id="prereq-coverage-badge">核验待诊断</span>
-              <button class="btn-ghost-sm" id="btn-facet-prereq-audit" type="button" title="请求切面师深度诊断先修课暗区与补救方案">
-                🔬 切面师诊断
-              </button>
-            </div>
-          </div>
-          <div class="prereq-advice-box hidden" id="prereq-advice-box">
-            <span class="advice-icon">💡</span>
-            <span class="advice-text" id="prereq-advice-text"></span>
-          </div>
-          <div class="prereq-courses-grid" id="prereq-courses-grid">
-            <div class="empty-state-notice">暂未对齐先修课。导入成绩单或点击【切面师诊断】将自动对齐目标专业拓扑。</div>
-          </div>
-        </div>
-
-        <!-- Mined Experiences STAR Evaluation -->
-        <div class="canvas-card experiences-card" id="experiences-card">
-          <div class="card-title-row">
-            <div class="card-title">
-              <span class="optic-indicator purple"></span> 科研与工程经历 STAR 切面诊断 (Experiences & STAR Radar)
-            </div>
-            <span class="card-counter" id="experiences-counter">0 项经历</span>
-          </div>
-          <div class="experiences-list-container" id="experiences-list-container">
-            <div class="empty-state-notice">暂无结构化经历数据。上传简历或在左侧对话中阐述科研/实习后，系统将自动进行 STAR 完整度评估。</div>
-          </div>
-        </div>
-
-        <!-- Mined Story Fragments -->
-        <div class="canvas-card">
-          <div class="card-title-row">
-            <div class="card-title">
-              <span class="optic-indicator purple"></span> 折光师已采集故事碎片标签 (Mined Story Fragments)
-            </div>
-            <span class="card-counter" id="fragment-counter">0 碎片</span>
-          </div>
-          <div class="fragment-tags-container" id="fragment-tags-container">
-            <div class="empty-state-notice">暂无已采集碎片，向【折光师】回复真实科研与工程挑战后将自动提炼收录。</div>
-          </div>
-        </div>
-
-        <!-- Quick Profile Editor / Manual Upload Form -->
-        <div class="canvas-card editor-card">
-          <div class="card-title-row">
-            <div class="card-title">
-              <span class="optic-indicator cyan"></span> 手动校准学生硬指标 / 上传 JSON (Sync Profile)
-            </div>
-          </div>
-          <div class="profile-form-grid">
-            <div class="form-group">
-              <label>本科院校 (Undergrad Name)</label>
-              <input type="text" id="input-prof-school" placeholder="例如: 浙江大学">
-            </div>
-            <div class="form-group">
-              <label>院校层级 (Tier)</label>
-              <select id="input-prof-tier">
-                <option value="">-- 请选择 --</option>
-                <option value="985">985 院校</option>
-                <option value="211">211 院校</option>
-                <option value="双非一本">双非一本</option>
-                <option value="海本">海本 (Overseas)</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>当前专业 (Major)</label>
-              <input type="text" id="input-prof-major" placeholder="例如: 软件工程">
-            </div>
-            <div class="form-group">
-              <label>原始均分 / GPA</label>
-              <input type="text" id="input-prof-gpa" placeholder="例如: 88.5/100 或 3.8/4.0">
-            </div>
-            <div class="form-group">
-              <label>雅思总分与小分</label>
-              <input type="text" id="input-prof-ielts" placeholder="例如: 7.5 (口语 7.0)">
-            </div>
-            <div class="form-group">
-              <label>目标国家与专业</label>
-              <input type="text" id="input-prof-targets" placeholder="例如: US, UK / CS">
-            </div>
-          </div>
-          <div class="form-actions-row">
-            <button class="btn-primary" id="save-profile-btn">
-              <span class="btn-icon">✓</span> 保存并同步到光谱中枢
-            </button>
-            <button class="btn-ghost" id="json-paste-toggle-btn">
-              <span class="btn-icon">{}</span> 粘贴 JSON 格式
-            </button>
-          </div>
-          <div class="json-paste-area hidden" id="json-paste-area">
-            <textarea id="json-input" rows="4" placeholder='{"undergrad_name": "清华大学", "gpa_raw": "89/100", "target_regions": ["US"], "target_majors": ["CS"]}'></textarea>
-            <button class="btn-primary-sm" id="apply-json-btn">应用 JSON</button>
           </div>
         </div>
       </div>
@@ -454,7 +464,7 @@
           </div>
           <div class="matrix-actions-row">
             <button class="btn-primary-glow-sm" id="btn-open-add-prog-modal" type="button">
-              <span class="btn-icon">＋</span> 添加图谱项目到选校矩阵
+              <span class="btn-icon">＋</span> 添加图谱项目
             </button>
           </div>
         </div>
@@ -731,23 +741,23 @@
         <div class="canvas-card banner-card echo-banner" id="echo-banner">
           <div class="banner-badge-row">
             <span class="banner-pill pill-echo">⚡ 回音壁 · The Echo</span>
-            <span class="banner-sub">电光蓝 #38BDF8 · 全真靶向模拟面试与网申护航官</span>
+            <span class="banner-sub">全真模拟面试与网申护航官</span>
           </div>
           <p class="banner-desc" id="echo-overview-text">
-            声学与光学的交汇聚焦，消除表达杂音，校准作答振幅。提供 Kira 录像机面、校友行为面与导师学术面限时实训，依托【内容相关性】、【STAR结构完整度】与【语言地道度】三维雷达打分并输出高分示范；自动编排全球学府各轮次 Deadline 倒计时看板、推荐信（RL）阶梯式催交表与材料核查清单。
+            全真模拟面试与网申护航中枢：支持 Kira 录像机面、校友行为面与导师学术面限时实训，依托三维雷达即时评分复盘；自动编排全球项目 Deadline 倒计时看板、推荐信阶梯式催交表与材料核验清单。
           </p>
           <div class="echo-action-toolbar">
             <button class="btn-echo-action" id="btn-trigger-kira">
-              🎙️ 发起 Kira 模拟面 (45s/90s)
+              🎙️ Kira 模拟面 (45s/90s)
             </button>
             <button class="btn-echo-action" id="btn-trigger-alumni">
-              🤝 发起校友行为面 (STAR)
+              🤝 校友行为面 (STAR)
             </button>
             <button class="btn-echo-action" id="btn-trigger-tech">
-              🔬 发起导师学术面
+              🔬 导师学术面
             </button>
             <button class="btn-echo-action btn-accent-echo" id="btn-trigger-timeline">
-              📅 一键测算网申时间轴
+              📅 测算网申时间轴
             </button>
           </div>
         </div>
@@ -1043,10 +1053,10 @@
         <div class="canvas-card banner-card resonator-banner" id="resonator-banner">
           <div class="banner-badge-row">
             <span class="banner-pill pill-resonator">📧 共鸣者 · The Resonator</span>
-            <span class="banner-sub">翡翠绿 #10B981 · 导师学术图谱共振与 220 词黄金套磁信</span>
+            <span class="banner-sub">导师学术图谱共振与 220 词黄金套磁信</span>
           </div>
           <p class="banner-desc">
-            严守学术诚信红线，严禁编造论文。共鸣者检索导师近 3 年顶会论文与研究瓶颈，将你的工程实践与课题组科研方向毫厘不差对齐，输出严格控制在 180-240 词内的高信噪比套磁信。
+            严守学术诚信红线，检索导师近 3 年顶会论文与研究瓶颈，将工程实践与课题组方向精准对齐，生成严格控制在 180-240 词的高信噪比套磁信。
           </p>
           <div class="resonator-search-bar">
             <input type="text" id="resonator-prof-input" class="modal-input" placeholder="输入学者姓名（例如: Indranil Gupta, Stefanos Zafeiriou）或研究方向...">
@@ -1056,40 +1066,43 @@
           </div>
         </div>
 
-        <!-- Matched Scholar Cards Grid -->
-        <div class="canvas-card">
-          <div class="card-title-row">
-            <div class="card-title">
-              <span class="optic-indicator emerald"></span> 1. 已匹配学者档案与课题组招生动态 (Scholar Profiles)
+        <!-- 2-Column Scholar & Email Workbench -->
+        <div class="resonator-dual-split">
+          <!-- Left: Matched Scholar Cards Grid -->
+          <div class="canvas-card resonator-profs-card">
+            <div class="card-title-row">
+              <div class="card-title">
+                <span class="optic-indicator emerald"></span> 1. 已匹配学者档案与动态
+              </div>
+              <span class="card-counter" id="matched-profs-counter">0 学者</span>
             </div>
-            <span class="card-counter" id="matched-profs-counter">0 学者</span>
+            <div class="resonator-profs-grid" id="resonator-profs-grid">
+              <div class="empty-column-placeholder">尚未匹配学者。在上方输入学者姓名或向【共鸣者】发起提问即可生成文献共振。</div>
+            </div>
           </div>
-          <div class="resonator-profs-grid" id="resonator-profs-grid">
-            <div class="empty-column-placeholder">尚未匹配学者。在上方输入学者姓名或向【共鸣者】发起提问即可生成文献共振。</div>
-          </div>
-        </div>
 
-        <!-- 220-Word Golden Cold Email Display -->
-        <div class="canvas-card email-workbench-card">
-          <div class="card-title-row">
-            <div class="card-title">
-              <span class="optic-indicator gold"></span> 2. 220 词黄金标准套磁信草稿 (High-SNR Cold Email Draft)
+          <!-- Right: 220-Word Golden Cold Email Display -->
+          <div class="canvas-card email-workbench-card">
+            <div class="card-title-row">
+              <div class="card-title">
+                <span class="optic-indicator gold"></span> 2. 220 词黄金标准套磁信
+              </div>
+              <div class="email-actions-bar">
+                <span class="word-count-badge" id="cold-email-wordcount">0 词</span>
+                <button class="btn-ghost-sm" id="btn-copy-cold-email" type="button">📋 复制</button>
+              </div>
             </div>
-            <div class="email-actions-bar">
-              <span class="word-count-badge" id="cold-email-wordcount">0 词</span>
-              <button class="btn-ghost-sm" id="btn-copy-cold-email" type="button">📋 复制套磁信</button>
+            <div class="cold-email-box selectable-text" id="cold-email-box">
+              暂无已生成的套磁信草稿。在左侧聊天中发送“想联系某某教授写套磁信”，共鸣者将即刻基于真实论文为你撰写。
             </div>
-          </div>
-          <div class="cold-email-box selectable-text" id="cold-email-box">
-            暂无已生成的套磁信草稿。在左侧聊天中发送“想联系某某教授写套磁信”，共鸣者将即刻基于真实论文为你撰写。
-          </div>
-          <div class="email-strategy-box">
-            <div class="strategy-title">💡 共鸣者发送策略指引：</div>
-            <div class="strategy-items">
-              <span>• <strong>发送时间</strong>: 教授所在时区周二至周四上午 8:00 - 8:30；</span>
-              <span>• <strong>邮件主题</strong>: <code>Fall 2027 Graduate Research Inquiry - [Your Name] - [Undergrad]</code>；</span>
-              <span>• <strong>附件规范</strong>: 附带个人 CV 与成绩单（控制在 2MB 内）；</span>
-              <span>• <strong>Follow-up</strong>: 7 个工作日未回复可礼貌跟进一次。</span>
+            <div class="email-strategy-box">
+              <div class="strategy-title">💡 共鸣者发送策略指引：</div>
+              <div class="strategy-items">
+                <span>• <strong>最佳时间</strong>: 目标时区周二至周四上午 8:00 - 8:30</span>
+                <span>• <strong>邮件主题</strong>: <code>Fall 2027 Research Inquiry - [Name] - [School]</code></span>
+                <span>• <strong>附件规范</strong>: 个人学术简历 CV 与成绩单（控制在 2MB 内）</span>
+                <span>• <strong>跟进节点</strong>: 7 个工作日未回复可温和 Follow-up 一次</span>
+              </div>
             </div>
           </div>
         </div>

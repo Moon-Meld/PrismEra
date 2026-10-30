@@ -21,6 +21,7 @@ def test_workbench_static_assets_serving():
     assert "profile-switcher-wrapper" in resp_index.text
     assert "btn-export-dossier" in resp_index.text
     assert "export-dossier-modal" in resp_index.text
+    assert 'aria-haspopup="true"' in resp_index.text
 
     # 2. Dark optical CSS
     resp_css = client.get("/css/style.css")
@@ -34,6 +35,8 @@ def test_workbench_static_assets_serving():
     assert "c-resonator" in resp_css.text
     assert "btn-export-dossier" in resp_css.text
     assert "optic-modal-backdrop" in resp_css.text
+    assert ".profile-dropdown.hidden" in resp_css.text
+    assert ".hidden" in resp_css.text
 
     # 3. Dynamic client JS engine
     resp_js = client.get("/js/app.js")
@@ -43,6 +46,8 @@ def test_workbench_static_assets_serving():
     assert "handleSseEvent" in resp_js.text
     assert "loadProfileList" in resp_js.text
     assert "openExportModal" in resp_js.text
+    assert "toggleProfileDropdown" in resp_js.text
+    assert "closeProfileDropdown" in resp_js.text
 
 
 def test_api_health_endpoint():
